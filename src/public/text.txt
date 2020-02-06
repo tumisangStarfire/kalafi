@@ -1,0 +1,16 @@
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyCgo9xi6tzrY7WIARNUV9Pukv9HfyJmFyM",
+    authDomain: "mooki-8b1ae.firebaseapp.com",
+    databaseURL: "https://mooki-8b1ae.firebaseio.com",
+    projectId: "mooki-8b1ae",
+    storageBucket: "mooki-8b1ae.appspot.com",
+    messagingSenderId: "922543290063",
+    appId: "1:922543290063:web:e5baf6f22655729063e9ba",
+    measurementId: "G-ZZ7R7Y4H6L"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+</script>

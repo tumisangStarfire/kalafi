@@ -1,0 +1,25 @@
+{
+  "name": "mooki",
+  "version": "1.0.0",
+  "description": "server for mooki digital health card",
+  "main": "server.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "ts-node ./src/server.ts"
+  },
+  "author": "Tumisang Mogotsi",
+  "license": "ISC",
+  "dependencies": {
+    "@types/js-base64": "^2.3.1",
+    "envalid": "^6.0.0",
+    "eslint": "^6.8.0",
+    "express": "^4.17.1",
+    "ts-node": "^8.6.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.2",
+    "babel-preset-env": "^1.7.0",
+    "babel-register": "^6.26.0",
+    "typescript": "^3.7.5"
+  }
+}

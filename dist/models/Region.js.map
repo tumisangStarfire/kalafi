@@ -1,0 +1,1 @@
+{"version":3,"file":"Region.js","sourceRoot":"","sources":["../../src/models/Region.ts"],"names":[],"mappings":"AAAA,MAAM,OAAO,MAAM;IAYjB,YAAY,UAAkB;QAC5B,IAAI,CAAC,UAAU,GAAG,UAAU,CAAC;IAC/B,CAAC;IAVD,IAAI,aAAa,CAAC,UAAkB;QAClC,IAAI,CAAC,UAAU,GAAG,UAAU,CAAC;IAC/B,CAAC;IAED,IAAI,aAAa;QACf,OAAO,IAAI,CAAC,UAAU,CAAC;IACzB,CAAC;CAKF"}
