@@ -1,6 +1,21 @@
+import { createFile, deleteFileAfterUpload } from '../controller/FileCreaterController';
+const AWS = require('aws-sdk');
+const fs = require('fs');
+const uuid = require('uuid');
+
+
+
 import { databaseConnector } from '../database/databaseConnector';
 
+// Create S3 service object
+const s3 = new AWS.S3({
+  accessKeyId: process.env.AWS_ACCESS_KEY,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+});
+
+/**class for the users profile information */
 export class UserProfile {
+
   id?: number;
   userId: number;
   date_of_birth: Date;
@@ -9,8 +24,22 @@ export class UserProfile {
   profilePicture?: string;
   weight: number;
   height: number;
-  bmi: number;
-  bloodType: string;
+  bmi?: number;
+  bloodType?: string;
+
+
+  constructor(userId: number, date_of_birth: Date, weight: number, height: number, gender?: string, omang?: number, profilePicture?: string, bmi?: number, bloodType?: string) {
+    this.userId = userId;
+    this.date_of_birth = date_of_birth;
+    this.gender = gender;
+    this.omang = omang;
+    this.profilePicture = profilePicture;
+    this.weight = weight;
+    this.height = height;
+    this.bmi = bmi;
+    this.bloodType = bloodType;
+
+  }
 
   get getUserId(): number {
     return this.userId;
@@ -18,6 +47,10 @@ export class UserProfile {
 
   public calculateBMI(weight: number, height: number) {
     return this.bmi = weight / (height * height);
+  }
+
+  set setBMI(bmi: number) {
+    this.bmi = bmi;
   }
 
   public calculateAge(date_of_birth: Date): number {
@@ -100,11 +133,11 @@ export class UserProfile {
     }
   }
 
-  static update = async (userProfile: UserProfile, callback) => {
+  static update = async (userProfile: UserProfile, id, callback) => {
     try {
 
       const connection = await databaseConnector();
-      await connection.query('update users set ? where userId = ', [userProfile, userProfile.getUserId], function (err, row, fields) {
+      await connection.query('update users set ? where userId = ', [userProfile, id], function (err, row, fields) {
         //Do not throw err as it will crash the server. 
         if (err) {
           console.log(err.message);
@@ -170,4 +203,56 @@ export class UserProfile {
       console.log(error);
     }
   }
+
+  static uploadProfilePicture = async (base64File, userId, callback) => {
+    try {
+      //first s3 upload profile picture, then update column 
+      var uploadParams = {
+        Bucket: process.env.AWS_BUCKET,
+        Key: '',
+        Body: ''
+      };
+      const filename = 'profilePicture';
+      let ext = '.png';
+
+      await createFile(filename, base64File, ext, result => {
+        console.log(result);
+        //return callback(result);   
+        //  create the Path for s3 add the guuid at the end, read the file using a stream
+        let filePath = 'Users/' + 'ProfilePictures/' + userId + '/' + filename +'-'+ uuid() + ext;
+        var fileStream = fs.createReadStream(result);
+
+        uploadParams.Key = filePath;
+        uploadParams.Body = fileStream;
+
+        fileStream.on('error', function (err) {
+          console.log('File Error', err);
+        });
+
+        s3.upload(uploadParams, function (err, data) {
+          if (err) {
+            console.log("Error", err);
+          }
+          if (data) {
+            console.log("Upload Success", data.Location);
+            var deleteFile = deleteFileAfterUpload(result);
+            const jsonResponse = {
+              message: 'upload finished' + data.Location,
+              status: 'success',
+              statusCode: 200
+            }
+            return callback(jsonResponse);
+          }
+        });
+      });
+
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+
+
+
+
 }

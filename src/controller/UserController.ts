@@ -1,9 +1,6 @@
 import { Request, Response } from 'express';
-
-// DB
-import { databaseConnector } from '../database/databaseConnector';
 import { User, } from '../models/User';
-import { UserProfile } from '../models/UserProfile';
+
 
 
 export async function checkPhoneNumber(request: Request, response: Response) {

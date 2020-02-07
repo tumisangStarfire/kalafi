@@ -2,9 +2,10 @@
 import * as express from 'express';
 /* import * as bodyParser from 'body-parser'; */
 import router from './router/router';
-import { loggerMiddleware } from './middleware/loggerMiddleware'
+import { loggerMiddleware } from './middleware/loggerMiddleware';
+const dotenv = require('dotenv');
 
-
+dotenv.config()
 export class App {
 
     public app: express.Application;
@@ -26,7 +27,7 @@ export class App {
     }
 
     private initializeRoute() {
-        this.app.use('v1/api', router);
+        this.app.use('/v1/api', router);
     }
 
     private envSettings() {

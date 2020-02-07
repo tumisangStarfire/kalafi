@@ -1,0 +1,11 @@
+[ 
+    { 
+        "id" :1, 
+        "name" : "Princess Marina Hospital", 
+        "region" : 1, 
+        "Speciality" : { 
+            
+        }
+
+    }
+]

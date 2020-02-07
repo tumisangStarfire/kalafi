@@ -1,6 +1,7 @@
 const fs = require('fs');
 const AWS = require('aws-sdk');
 const dotenv = require('dotenv');
+const guuid = require('../services/generateGUID.js')
 var path = require('path');
 
 // Create S3 service object

@@ -14,9 +14,7 @@ export class User {
   private verified?: boolean;
   private address?: Address;
 
-  constructor(
-
-    firstName: string,
+  constructor( firstName: string,
     lastName: string,
     email: string,
     cellphone: string,
@@ -193,9 +191,11 @@ export class User {
     }
   }
 
-  static validateUserAccount = async () => {
+  static validateUserAccount = async (cellphone,otpcode) => {
     try {
-      // call the send otp function, 
+      // call the send otp function,  
+
+
     } catch (error) {
       console.log(error);
     }

@@ -1,6 +1,8 @@
 import { MedicalFileType } from "./MedicalFileType";
 import { databaseConnector } from "database/databaseConnector";
-import { Base64 } from 'js-base64';
+import { createFile, deleteFileAfterUpload } from '../controller/FileCreaterController';
+const uuid = require('uuid');
+
 const fs = require('fs');
 const AWS = require('aws-sdk');
 const dotenv = require('dotenv');
@@ -16,29 +18,28 @@ export class MedicalFile implements MedicalFileType {
     medical_file_type_id: number; /**the id of te medical file type */
 
     userId: number; /** users id*/
-    // file_size: string;
-    private date_uploaded: string;
+
+    private date_uploaded?: string;
 
     /**storage path in s3 */
     //s3 bucket -> Medical Files-> userId-> File Types (X-Rays)->file name  
-    private filePath: string;
+    private filePath?: string;
 
     /**Filename given by the User i.e left leg scan */
     private fileName: string;
 
 
     /** BASE 64 encdoded file */
-    private file: string;
+    private base64Stringfile: string;
 
     /**constructo */
-    constructor(medicalFile: MedicalFile) {
-        this.medical_file_type_id = medicalFile.medical_file_type_id;
-        this.userId = medicalFile.userId;
-        this.date_uploaded = medicalFile.date_uploaded;
-        this.filePath = medicalFile.filePath;
-        this.fileName = medicalFile.fileName;
-        this.file = medicalFile.file;
-        // this.file_size = medicalFile.file_size;
+    constructor(userId: number, medical_file_type_id: number, fileName: string, base64Stringfile: string, date_uploaded?: string, filePath?: string) {
+        this.userId = userId;
+        this.medical_file_type_id = medical_file_type_id;
+        this.fileName = fileName;
+        this.base64Stringfile = base64Stringfile;
+        this.date_uploaded = date_uploaded;
+        this.filePath = filePath;
 
     }
 
@@ -73,11 +74,11 @@ export class MedicalFile implements MedicalFileType {
     }
 
     public get getBase64File(): string {
-        return this.file;
+        return this.base64Stringfile;
     }
 
-    public set setBase54File(file: string) {
-        this.file = file;
+    public set setBase54File(base64Stringfile: string) {
+        this.base64Stringfile = base64Stringfile;
     }
 
 
@@ -134,70 +135,52 @@ export class MedicalFile implements MedicalFileType {
                 Body: ''
             };
 
-            let decodedFile = Base64.decode(medicalFile.getBase64File); /**expeting a base64 img */
+            let ext = '.png';
+            
+            medicalFile.setFilePath = 'MedicalFile/' + medicalFile.userId + '/' + medicalFile.getMedical_file_type_id + '/' + medicalFile.getFileName + '-' + uuid() + ext;
 
-            medicalFile.setFilePath = 'MedicalFile/' + medicalFile.userId + '/' + medicalFile.medical_file_type_id + '/' + medicalFile.fileName;
+            await createFile(medicalFile.getFileName, medicalFile.getBase64File, ext, result => {
+                //result has the created file path on the system
+                console.log(result);
+                //read the created file
+                var fileStream = fs.createReadStream(result);
 
+                //pass the file to the body 
+                uploadParams.Body = fileStream;
+                //pass the filename to key  
+                uploadParams.Key = medicalFile.getfilePath;
 
-            //pass the file to the body 
-            uploadParams.Body = decodedFile;
+                fileStream.on('error', function (err) {
+                    console.log('File Error', err);
+                });
 
-            //pass the filename to key  
-            uploadParams.Key = medicalFile.getfilePath;
+                s3.upload(uploadParams, async function (err, data) {
+                    if (err) {
+                        console.log(err);
+                        const jsonResponse = {
+                            message: 'something went wrong please try again',
+                            status: 'failed',
+                            statusCode: 501
+                        }
+                        return callback(err);
 
-            //TODO progress for the File upload 
+                    }
+                    if (data.Location !== null) { //check if the file has been uploaded to s3,
+                        console.log("Upload Success", data.Location);
 
-            //use a promise 
-            var uploader = s3.upload(uploadParams);
-            uploader.on('error', function (err) {
-                console.error("unable to upload:", err.stack);
-            });
-            uploader.on('progress', function () {
-                console.log("progress", uploader.progressMd5Amount,
-                    uploader.progressAmount, uploader.progressTotal);
-            });
-            uploader.on('end', function (data) {
-                console.log("done uploading");
-                console.log(data);
-                // if upload is complete to s3, then save the records to db 
-                var date_today = new Date();
-                medicalFile.setDateUploaded = date_today.toLocaleDateString();
-                console.log(medicalFile);
+                        //if upload is complete to s3, then save the records to db 
+                        var date_today = new Date();
+                        medicalFile.setDateUploaded = date_today.toLocaleDateString();
+                        console.log(medicalFile);
 
-                MedicalFile.create(medicalFile, result => {
-                    console.log(result);
-                    return callback(result);
+                        await MedicalFile.create(medicalFile, result => {
+                            console.log(result);
+                            return callback(result);
+                        });
+                    }
                 });
 
             });
-
-
-            /*    await s3.upload(uploadParams, async function (err, data) {
-                   if (err) {
-                       console.log(err);
-                       const jsonResponse = {
-                           message: 'something went wrong please try again',
-                           status: 'failed',
-                           statusCode: 501
-                       }
-                       return callback(err);
-   
-                   }
-                   if (data.Location !== null) { //check if the file has been uploaded to s3,
-                       console.log("Upload Success", data.Location);
-   
-                       /**if upload is complete to s3, then save the records to db 
-                       var date_today = new Date();
-                       medicalFile.setDateUploaded = date_today.toLocaleDateString();
-                       console.log(medicalFile);
-   
-                       await MedicalFile.create(medicalFile, result => {
-                           console.log(result);
-                           return callback(result);
-                       });
-                   }
-               }); */
-
         } catch (error) {
             console.log(error);
         }
@@ -229,7 +212,7 @@ export class MedicalFile implements MedicalFileType {
                     Key: '',
                 }
 
-                deleteParams.Key = medicalFile.filePath;  //pass it to the deleteParams json oject 
+                deleteParams.Key = medicalFile.getfilePath;  //pass it to the deleteParams json oject 
 
                 s3.deleteObject(deleteParams, function (s3err, data) {
                     if (s3err) {

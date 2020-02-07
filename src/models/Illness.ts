@@ -14,11 +14,12 @@ export class Illness {
     vitals: Vitals;
 
 
-    constructor(userId: number, type_of_illness: string, date_of_diagnosis: Date, doctorsNotes?: string, ) {
+    constructor(userId: number, type_of_illness: string, date_of_diagnosis: Date, vitals: Vitals, doctorsNotes?: string) {
         this.userId = userId;
         this.type_of_illness = type_of_illness;
         this.date_of_diagnosis = date_of_diagnosis;
         this.doctorsNotes = doctorsNotes;
+        this.vitals = vitals;
     }
 
     addInjuryPills(medicationPrescribed: PillPrescription) {

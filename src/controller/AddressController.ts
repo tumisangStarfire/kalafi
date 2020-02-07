@@ -4,7 +4,7 @@ import { Address } from '../models/Address';
 export async function updateAddress(request: Request, response: Response) {
 
     try {
-        let addresId = request.body.addresId;
+        let addresId = request.body.id;
         var address: Address = request.body;
         await Address.update(address, addresId, result => {
             console.log(result);

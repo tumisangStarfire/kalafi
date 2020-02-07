@@ -1,0 +1,42 @@
+[
+    {
+        "id": 1,
+        "name": "Abdominal Pain",
+        "description": "Tummy pain can be caused by the movement of food through your stomach and intestines, having gas (wind) trapped there, or eating too much.",
+        "severity": {
+            "mild": "",
+            "moderate": "",
+            "severe": ""
+        }
+    },
+    {
+        "id": 2,
+        "name": "Abnormal vaginal bleeding",
+        "description": "Abnormal or irregular vaginal bleeding is any bleeding from your vaginal area that is not part of a regular period. It can be caused by infection and hormonal changes, but can also be a symptom of more serious problems.",
+        "severity": {
+            "mild": "",
+            "moderate": "",
+            "severe": ""
+        }
+    },
+    {
+        "id": 3,
+        "name": "Arthritis",
+        "description": "Arthritis is a condition which affects your joints, making them stiff, painful and swollen",
+        "severity": {
+            "mild": "",
+            "moderate": "",
+            "severe": ""
+        }
+    },
+    {
+        "id": 4,
+        "name": "Asthma",
+        "description": "A person’s asthma triggers cause their airways to tighten, partially close up, swell inside and make more mucus.",
+        "severity": {
+            "mild": "The person can speak normally but may have a slight wheeze or mild cough – especially when excited or running",
+            "moderate": "The person may speak in half sentences; their breathing will be difficult and you may hear them wheezing; and they may have a persistent cough.",
+            "severe": "They could struggle to breathe; you may be able to see in-drawing (sucking in) of the muscles between their ribs but they may sound quiet (because of reduced air movement,"
+        }
+    }
+]

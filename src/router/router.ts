@@ -12,6 +12,8 @@ import { getAllRegions } from '../controller/RegionController';
 import { createAllergy, removeAllergy } from '../controller/UserAllergyController';
 import { createVaccination, removeVaccination } from '../controller/VaccinationController';
 
+import { updateProfilePicture } from '../controller/UserProfileController';
+
 
 const router = Router();
 router.use(bodyParser.json());
@@ -25,6 +27,9 @@ router.get("/", (req, res) => {
 /**user auth api routes */
 router.route('/register').post(registerUser);
 router.route('/login').post(login);
+
+/** user profile */
+router.route('/uploadProfilePicture').post(updateProfilePicture);
 
 /** */
 router.route('/healthFacilityData').get(healthFacilityData);

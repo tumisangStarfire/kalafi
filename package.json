@@ -10,11 +10,11 @@
   "author": "Tumisang Mogotsi",
   "license": "ISC",
   "dependencies": {
-    "@types/js-base64": "^2.3.1",
-    "envalid": "^6.0.0",
+    "envalid": "^6.0.1",
     "eslint": "^6.8.0",
     "express": "^4.17.1",
-    "ts-node": "^8.6.2"
+    "ts-node": "^8.6.2",
+    "uuid": "^3.4.0"
   },
   "devDependencies": {
     "@types/express": "^4.17.2",
