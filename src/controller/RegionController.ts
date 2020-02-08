@@ -1,11 +1,12 @@
-import { Region } from '../models/Region';
+
 import { Request, Response } from 'express';
+import { RegionLogic } from 'businesslogic/RegionLogic';
 
 /** get all the regions/distrits */
 
 export async function getAllRegions(request: Request, response: Response) {
     try {
-        await Region.getRegions(result => {
+        await RegionLogic.getRegions(result => {
             console.log(result);
             response.json(result);
         });

@@ -1,12 +1,13 @@
 import { Request, Response } from 'express';
 import { CurrentMedication } from '../models/CurrentMedication';
+import { CurrentMedicationLogic } from 'businesslogic/CurrentMedicationLogic';
 
 export async function saveCurrentMedication(request: Request, response: Response) {
     try {
 
         const newCurrentMedication: CurrentMedication = request.body;
 
-        await CurrentMedication.create(newCurrentMedication, result => {
+        await CurrentMedicationLogic.create(newCurrentMedication, result => {
             response.json(result);
         });
         // const sendOTP =  thorough email or sms
@@ -21,7 +22,7 @@ export async function removeCurrentMedication(request: Request, response: Respon
 
         let CurrentMedicationId = request.params.id;//send the id as a parameter
 
-        await CurrentMedication.remove(CurrentMedicationId, result => {
+        await CurrentMedicationLogic.remove(CurrentMedicationId, result => {
             response.json(result);
         });
         // const sendOTP =  thorough email or sms

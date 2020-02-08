@@ -1,10 +1,11 @@
 import { Vaccination } from '../models/Vaccination';
 import { Request, Response } from 'express';
+import { VaccinationLogic } from 'businesslogic/VacinationLogic';
 
 export async function createVaccination(request: Request, response: Response) {
     try {
         var newVaccination: Vaccination = request.body;
-        await Vaccination.create(newVaccination, result => {
+        await VaccinationLogic.create(newVaccination, result => {
             console.log(result);
             response.json(result);
         })
@@ -16,7 +17,7 @@ export async function createVaccination(request: Request, response: Response) {
 export async function removeVaccination(request: Request, response: Response) {
     try {
         var vaccinationId = request.params.id;
-        await Vaccination.remove(vaccinationId, result => {
+        await VaccinationLogic.remove(vaccinationId, result => {
             console.log(result);
             response.json(result);
         });
