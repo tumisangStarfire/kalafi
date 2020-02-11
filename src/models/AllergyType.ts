@@ -5,6 +5,9 @@ export class AllergyTypes {
     private allergyName: string;
     private allergySeverity: string;
     private allergyDescription: string;
+    private category: string;
+
+
 
     set setAllergyName(allergyName: string) {
         this.allergyName = allergyName;
@@ -25,6 +28,10 @@ export class AllergyTypes {
     }
     get getAllergyDescription(): string {
         return this.allergyDescription;
+    }
+
+    set setCategory(category: string) {
+        this.category = category;
     }
 
 

@@ -1,11 +1,578 @@
-[ 
-    { 
-        "id" :1, 
-        "name" : "Princess Marina Hospital", 
-        "region" : 1, 
-        "Speciality" : { 
-            
-        }
-
+[
+    {
+        "id": 1,
+        "name": "Princess Marina Hospital",
+        "region": 1,
+        "Speciality": {}
+    },
+    {
+        "id": 2,
+        "name": "Nyangabgwe Referral Hospital",
+        "region": 2,
+        "Speciality": {}
+    },
+    {
+        "id": 3,
+        "name": "Scottish Livingstone Hospital",
+        "region": 4,
+        "Speciality": {}
+    },
+    {
+        "id": 4,
+        "name": "Sekgoma Memorial Hospital",
+        "region": 5,
+        "Speciality": {}
+    },
+    {
+        "id": 5,
+        "name": "Bokamoso Private Hospital",
+        "region": 1,
+        "Speciality": {}
+    },
+    {
+        "id": 6,
+        "name": "Palapye Primary Hospital",
+        "region": 5,
+        "Speciality": {}
+    },
+    {
+        "id": 7,
+        "name": "Gaborone Private Hospital",
+        "region": 1,
+        "Speciality": {}
+    },
+    {
+        "id": 8,
+        "name": "Letsholathebe II Memorial Hospital",
+        "region": 9,
+        "Speciality": {}
+    },
+    {
+        "id": 9,
+        "name": "University Of Botswana Hospital",
+        "region": 1,
+        "Speciality": {}
+    },
+    {
+        "id": 10,
+        "name": "Good Hope Primary Hospital",
+        "region": 10,
+        "Speciality": {}
+    },
+    {
+        "id": 11,
+        "name": "Ghanzhi Primary Hospital",
+        "region": 7,
+        "Speciality": {}
+    },
+    {
+        "id": 12,
+        "name": "Gweta Primary Hospital",
+        "region": 8,
+        "Speciality": {}
+    },
+    {
+        "id": 13,
+        "name": "Hukunti Primary Hospital",
+        "region": 7,
+        "Speciality": {}
+    },
+    {
+        "id": 14,
+        "name": "Thamaga Primary Hospital",
+        "region": 4,
+        "Speciality": {}
+    },
+    {
+        "id": 15,
+        "name": "Sbrana Psychiatric Hospital",
+        "region": 1,
+        "Speciality": {}
+    },
+    {
+        "id": 16,
+        "name": "Athlone Hospital",
+        "region": 1,
+        "Speciality": {}
+    },
+    {
+        "id": 17,
+        "name": "Mahalapye Hospital",
+        "region": 5,
+        "Speciality": {}
+    },
+    {
+        "id": 18,
+        "name": "Deborah Retief Memorial Hospital",
+        "region": 3,
+        "Speciality": {}
+    },
+    {
+        "id": 19,
+        "name": "Bobonong Primary Hospital",
+        "region": 5,
+        "Speciality": {}
+    },
+    {
+        "id": 20,
+        "name": "Gumare Primary Hospital",
+        "region": 9,
+        "Speciality": {}
+    },
+    {
+        "id": 21,
+        "name": "Kasane Primary Hospital",
+        "region": 2,
+        "Speciality": {}
+    },
+    {
+        "id": 22,
+        "name": "Masunga Primary Hospital",
+        "region": 2,
+        "Speciality": {}
+    },
+    {
+        "id": 25,
+        "name": "Mmadinare Primary Hospitla",
+        "region": 5,
+        "Speciality": {}
+    },
+    {
+        "id": 23,
+        "name": "Sephare Primary Hospital",
+        "region": 5,
+        "Speciality": {}
+    },
+    {
+        "id": 24,
+        "name": "Rakops Primary Hospital",
+        "region": 5,
+        "Speciality": {}
+    },
+    {
+        "id": 25,
+        "name": "Tutume Primary Hospital",
+        "region": 2,
+        "Speciality": {}
+    },
+    {
+        "id": 26,
+        "name": "Botshabelo Clinic",
+        "region": 5,
+        "Speciality": {}
+    },
+    {
+        "id": 26,
+        "name": "Tsabong Primary Hospital",
+        "region": 3,
+        "Speciality": {}
+    },
+    {
+        "id": 27,
+        "name": "Letlhakane Primary Hospital",
+        "region": 5,
+        "Speciality": {}
+    },
+    {
+        "id": 28,
+        "name": "Block 9-Julia Molefhe Clinic",
+        "region": 1,
+        "Speciality": {}
+    },
+    {
+        "id": 29,
+        "name": "Extension 2 Clinic",
+        "region": 1,
+        "Speciality": {}
+    },
+    {
+        "id": 40,
+        "name": "Nkoyaphiri Clinic",
+        "region": 1,
+        "Speciality": {}
+    },
+    {
+        "id": 41,
+        "name": "Gaborone West Clinic",
+        "region": 1,
+        "Speciality": {}
+    },
+    {
+        "id": 42,
+        "name": "Broadhurst 3 Clinic",
+        "region": 1,
+        "Speciality": {}
+    },
+    {
+        "id": 43,
+        "name": "Mafitlhakgosi Clinic",
+        "region": 1,
+        "Speciality": {}
+    },
+    {
+        "id": 44,
+        "name": "Lesirane Clinic",
+        "region": 1,
+        "Speciality": {}
+    },
+    {
+        "id": 45,
+        "name": "Old Naledi Clinic",
+        "region": 1,
+        "Speciality": {}
+    },
+    {
+        "id": 46,
+        "name": "Bontleng Clinic",
+        "region": 1,
+        "Speciality": {}
+    },
+    {
+        "id": 47,
+        "name": "Village Clinic",
+        "region": 1,
+        "Speciality": {}
+    },
+    {
+        "id": 48,
+        "name": "Phase 2 Clinic",
+        "region": 1,
+        "Speciality": {}
+    },
+    {
+        "id": 49,
+        "name": "Area W Clinic",
+        "region": 2,
+        "Speciality": {}
+    },
+    {
+        "id": 50,
+        "name": "Gerald Clinic",
+        "region": 2,
+        "Speciality": {}
+    },
+    {
+        "id": 51,
+        "name": "Tati Siding Clinic",
+        "region": 2,
+        "Speciality": {}
+    },
+    {
+        "id": 52,
+        "name": "Tonota Clinic",
+        "region": 2,
+        "Speciality": {}
+    },
+    {
+        "id": 53,
+        "name": "Jubilee Clinic",
+        "region": 2,
+        "Speciality": {}
+    },
+    {
+        "id": 54,
+        "name": "Boseja II Clinic",
+        "region": 3,
+        "Speciality": {}
+    },
+    {
+        "id": 56,
+        "name": "Bokaa Clinic",
+        "region": 3,
+        "Speciality": {}
+    },
+    {
+        "id": 56,
+        "name": "Oodi Clinic",
+        "region": 3,
+        "Speciality": {}
+    },
+    {
+        "id": 57,
+        "name": "Sesame Clinic",
+        "region": 5,
+        "Speciality": {}
+    },
+    {
+        "id": 58,
+        "name": "Botshabelo Clinic",
+        "region": 5,
+        "Speciality": {}
+    },
+    {
+        "id": 59,
+        "name": "Tapologong Clinic",
+        "region": 5,
+        "Speciality": {}
+    },
+    {
+        "id": 60,
+        "name": "Siga Clinic",
+        "region": 1,
+        "Speciality": {}
+    },
+    {
+        "id": 61,
+        "name": "Otse Clinic",
+        "region": 1,
+        "Speciality": {}
+    },
+    {
+        "id": 62,
+        "name": "Phutadikobo Clinic",
+        "region": 4,
+        "Speciality": {}
+    },
+    {
+        "id": 63,
+        "name": "Takatokwane Clinic",
+        "region": 4,
+        "Speciality": {}
+    },
+    {
+        "id": 64,
+        "name": "Letlhakeng Clinic",
+        "region": 4,
+        "Speciality": {}
+    },
+    {
+        "id": 65,
+        "name": "Moshupa Clinic",
+        "region": 10,
+        "Speciality": {}
+    },
+    {
+        "id": 66,
+        "name": "Lerala Clinic",
+        "region": 5,
+        "Speciality": {}
+    },
+    {
+        "id": 67,
+        "name": "Boipelego Clinic",
+        "region": 5,
+        "Speciality": {}
+    },
+    {
+        "id": 68,
+        "name": "Peleng East Clinic",
+        "region": 1,
+        "Speciality": {}
+    },
+    {
+        "id": 69,
+        "name": "Tsopeng Clinic",
+        "region": 1,
+        "Speciality": {}
+    },
+    {
+        "id": 70,
+        "name": "Ditsweletse Clinic",
+        "region": 10,
+        "Speciality": {}
+    },
+    {
+        "id": 71,
+        "name": "Sese Clinic",
+        "region": 10,
+        "Speciality": {}
+    },
+    {
+        "id": 72,
+        "name": "Sebina Clinic",
+        "region": 2,
+        "Speciality": {}
+    },
+    {
+        "id": 73,
+        "name": "Nata Clinic",
+        "region": 2,
+        "Speciality": {}
+    },
+    {
+        "id": 74,
+        "name": "Kang Clinic",
+        "region": 6,
+        "Speciality": {}
+    },
+    {
+        "id": 75,
+        "name": "Airstrip Clinic",
+        "region": 5,
+        "Speciality": {}
+    },
+    {
+        "id": 76,
+        "name": "Shoshong Clinic",
+        "region": 5,
+        "Speciality": {}
+    },
+    {
+        "id": 77,
+        "name": "Boteti Clinic",
+        "region": 5,
+        "Speciality": {}
+    },
+    {
+        "id": 78,
+        "name": "Mabutsane Clinic",
+        "region": 10,
+        "Speciality": {}
+    },
+    {
+        "id": 79,
+        "name": "Khakhea Clinic",
+        "region": 10,
+        "Speciality": {}
+    },
+    {
+        "id": 80,
+        "name": "Charleshill Clinic",
+        "region": 7,
+        "Speciality": {}
+    },
+    {
+        "id": 81,
+        "name": "Kachikau Clinic",
+        "region": 9,
+        "Speciality": {}
+    },
+    {
+        "id": 82,
+        "name": "Mathete Clinic",
+        "region": 10,
+        "Speciality": {}
+    },
+    {
+        "id": 83,
+        "name": "Kanye Main Clinic",
+        "region": 10,
+        "Speciality": {}
+    },
+    {
+        "id": 84,
+        "name": "Kgwatlheng Clinic",
+        "region": 10,
+        "Speciality": {}
+    },
+    {
+        "id": 85,
+        "name": "Maun General Clinic",
+        "region": 8,
+        "Speciality": {}
+    },
+    {
+        "id": 86,
+        "name": "Moeti Clinic",
+        "region": 10,
+        "Speciality": {}
+    },
+    {
+        "id": 87,
+        "name": "Shakawe Clinic",
+        "region": 10,
+        "Speciality": {}
+    },
+    {
+        "id": 88,
+        "name": "Zeta Medical Clinic",
+        "region": 1,
+        "Speciality": {}
+    },
+    {
+        "id": 89,
+        "name": "Meriting Medical Center",
+        "region": 1,
+        "Speciality": {}
+    },
+    {
+        "id": 90,
+        "name": "Kalafhi Medical Center",
+        "region": 1,
+        "Speciality": {}
+    },
+    {
+        "id": 91,
+        "name": "Glen Valley BDF Clinic",
+        "region": 1,
+        "Speciality": {}
+    },
+    {
+        "id": 92,
+        "name": "LBK Physio Clinic,Village Medical Center",
+        "region": 1,
+        "Speciality": {}
+    },
+    {
+        "id": 93,
+        "name": "Medlane",
+        "region": 1,
+        "Speciality": {}
+    },
+    {
+        "id": 94,
+        "name": "Bongaka Health Care",
+        "region": 1,
+        "Speciality": {}
+    },
+    {
+        "id": 95,
+        "name": "Chiropractic Wellness Clinic",
+        "region": 1,
+        "Speciality": {}
+    },
+    {
+        "id": 96,
+        "name": "Cardiac clinic",
+        "region": 1,
+        "Speciality": {}
+    },
+    {
+        "id": 97,
+        "name": "Reproductive Health Services",
+        "region": 1,
+        "Speciality": {}
+    },
+    {
+        "id": 98,
+        "name": "Dr M H Khan Surgery",
+        "region": 1,
+        "Speciality": {}
+    },
+    {
+        "id": 98,
+        "name": "Muduli Medical Clinic",
+        "region": 1,
+        "Speciality": {}
+    },
+    {
+        "id": 98,
+        "name": "Always Open Clinic",
+        "region": 1,
+        "Speciality": {}
+    },
+    {
+        "id": 99,
+        "name": "Boitekanelo Occupational Health Solutions",
+        "region": 1,
+        "Speciality": {}
+    },
+    {
+        "id": 100,
+        "name": "Dr Patel Surgery",
+        "region": 1,
+        "Speciality": {}
+    },
+    {
+        "id": 101,
+        "name": "Karong Clinics",
+        "region": 1,
+        "Speciality": {}
+    },
+    {
+        "id": 102,
+        "name": "Physio Hub",
+        "region": 1,
+        "Speciality": {}
     }
 ]

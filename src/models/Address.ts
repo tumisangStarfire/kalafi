@@ -1,13 +1,26 @@
 import { Region } from "./Region";
-import { databaseConnector } from '../database/databaseConnector';
 
-export class Address {
+export class Address extends Document {
+
   city?: string;
   private town?: string;
   private village?: string;
   private streetName?: string;
   private houseNumber?: string;
-  private region: Region;
+  region: Region;
+
+  constructor(region: Region, city?: string, town?: string, village?: string, streetName?: string, houseNumber?: string) {
+    super();
+
+    this.region.getRegionId;
+    this.city = city;
+    this.town = town;
+    this.village = village;
+    this.streetName = streetName;
+    this.houseNumber = houseNumber;
+    this.region = region;
+
+  }
 
   get getCity(): string {
     return this.city;

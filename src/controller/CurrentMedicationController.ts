@@ -1,13 +1,13 @@
 import { Request, Response } from 'express';
 import { CurrentMedication } from '../models/CurrentMedication';
-import { CurrentMedicationLogic } from 'businesslogic/CurrentMedicationLogic';
+import { CurrentMedicationHelper } from '../databasehelper/CurrentMedicationHelper';
 
 export async function saveCurrentMedication(request: Request, response: Response) {
     try {
 
         const newCurrentMedication: CurrentMedication = request.body;
 
-        await CurrentMedicationLogic.create(newCurrentMedication, result => {
+        await CurrentMedicationHelper.create(newCurrentMedication, result => {
             response.json(result);
         });
         // const sendOTP =  thorough email or sms
@@ -22,11 +22,25 @@ export async function removeCurrentMedication(request: Request, response: Respon
 
         let CurrentMedicationId = request.params.id;//send the id as a parameter
 
-        await CurrentMedicationLogic.remove(CurrentMedicationId, result => {
-            response.json(result);
+        await CurrentMedicationHelper.remove(CurrentMedicationId, result => {
+            return response.json(result);
         });
         // const sendOTP =  thorough email or sms
     } catch (error) {
         throw (error)
     }
+}
+
+export async function getData(request: Request, response: Response) {
+    try {
+        let userId = request.params.id;
+
+        await CurrentMedicationHelper.getDataUsingUserId(userId, result => {
+            return response.json(result);
+        });
+
+    } catch (error) {
+        console.log(error);
+    }
+
 }

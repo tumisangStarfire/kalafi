@@ -2,14 +2,18 @@ import { databaseConnector } from '../database/databaseConnector';
 
 export class OTP {
 
-   
-    private id?: number;
+
+    private _id?: string;
     private cellphone: string;
     private otpcode: number;
 
     constructor(cellphone: string, otpcode: number) {
         this.cellphone = cellphone;
         this.otpcode = otpcode;
+    }
+
+    get getID(): string {
+        return this._id;
     }
 
     set setCellphone(cellphone: string) {

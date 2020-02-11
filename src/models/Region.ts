@@ -2,18 +2,29 @@ import { databaseConnector } from '../database/databaseConnector';
 
 export class Region {
   private id?: number;
-  private regionName: string;
+  private name: string;
 
-  set setRegionName(regionName: string) {
-    this.regionName = regionName;
+  /* constructor(id: number, name: string) {
+    this.id = id;
+    this.name = name;
+  } */
+
+  set setRegionName(name: string) {
+    this.name = name;
   }
 
   get getRegionName(): string {
-    return this.regionName;
+    return this.name;
   }
 
-  constructor(regionName: string) {
-    this.regionName = regionName;
+  set setRegionId(id: number) {
+    this.id = id;
   }
+
+  get getRegionId(): number {
+    return this.id;
+  }
+
+
 
 }

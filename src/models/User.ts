@@ -1,30 +1,40 @@
 import { Address } from "./Address";
 //TODO password hashing
+import mongoose, { Model, Schema, Document } from 'mongoose';
 
-import { validate, validateOrReject, Contains, IsInt, Length, IsEmail, IsFQDN, IsDate, Min, Max } from "class-validator";
+
+export class User extends Document {
+  id?: Number;
 
 
-export class User {
-  private id?: Number;
-  private firstName: string;
-  private lastName: string;
-  private email: string;
-  private cellphone: string;
-  private password: string;
-  private status?: number;
-  private verified?: boolean;
-  private address?: Address;
+  firstName: string;
+
+  lastName: string;
+
+
+  email: string;
+
+
+  cellphone: number;
+
+  password: string;
+  status?: number; //default status of the user
+  verified?: boolean;
+  address?: Address;
+  created_at: Date;
 
   constructor(firstName: string,
     lastName: string,
     email: string,
-    cellphone: string,
+    cellphone: number,
     password: string,
     status: number,
-    verified: boolean
+    verified: boolean,
+    address?: Address
   ) {
 
 
+    super();
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;
@@ -32,6 +42,7 @@ export class User {
     this.password = password;
     this.status = status;
     this.verified = verified;
+    this.address = address;
   }
 
 
@@ -75,11 +86,11 @@ export class User {
     this.password = password;
   }
 
-  get getCellphone(): string {
+  get getCellphone(): number {
     return this.cellphone;
   }
 
-  set setCellphone(cellphone: string) {
+  set setCellphone(cellphone: number) {
     this.cellphone = cellphone;
   }
 
@@ -100,3 +111,29 @@ export class User {
   }
 
 }
+
+const UserSchema: Schema = new Schema({
+  email: { type: String, required: true, unique: true },
+  firstName: { type: String, required: true },
+  lastName: { type: String, required: true },
+  cellphone: { type: Number, required: true },
+  password: { type: String, required: true },
+  status: { type: Number, default: 0 },
+  verified: { type: Boolean, required: false },
+  created_at: { type: Date, required: false },
+  updated_at: { type: Date, required: false },
+
+});
+
+/* UserSchema.pre("save", function (next) {
+  let now = new Date();
+  if (!this.created_at) {
+    this.created_at = now;
+  }
+  next();
+}); */
+//export interface UserModel extends Model<User> { };
+
+/**Your newly created interface needs to extend Document, an interface that extends MongooseDocument,
+ * NodeJS.EventEmitter & ModelProperties.
+ * This will add the required functions and fields to your interface, such as save(), remove(), __v, ect... */

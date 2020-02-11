@@ -1,8 +1,10 @@
 
-import { databaseConnector } from "database/databaseConnector";
+import { databaseConnector } from "../database/databaseConnector";
 import { createFile, deleteFileAfterUpload } from '../controller/FileCreaterController';
 import { MedicalFile } from "models/MedicalFile";
+import { MongoHelper } from "../database/MongoHelper";
 const uuid = require('uuid');
+var ObjectId = require('mongodb').ObjectID;
 
 const fs = require('fs');
 const AWS = require('aws-sdk');
@@ -19,40 +21,14 @@ export class MedicalFileLogic {
     /**creates and saves a new medicalfile for a patinet */
     static create = async (medicalFile: MedicalFile, callback) => {
         try {
-            const connection = await databaseConnector();
-            await connection.query('insert into MedicalFile set ?', [medicalFile], function (err, res) {
+            const query = await MongoHelper.client.db('Mooki_Development').collection('injury');
+            var result = await query.insertOne(medicalFile, function (err, data) {
                 if (err) {
-                    console.log(err.message);
-                    //rollback the operation  
-                    connection.end();
-                    const jsonResponse = {
-                        message: 'something went wrong please try again',
-                        status: 'failed',
-                        statusCode: 501
-                    }
-                    return callback(jsonResponse);
-
-                } else {
-                    console.log(res);
-                    if (res.insertId !== null) {
-                        const jsonResponse = {
-                            message: 'data saved',
-                            status: 'success',
-                            statusCode: 200
-                        }
-                        return callback(jsonResponse);
-                    } else {
-                        const jsonResponse = {
-                            message: 'something wrong please try again',
-                            status: 'failed',
-                            statusCode: 501
-                        }
-                        return callback(jsonResponse);
-                    }
+                    console.log(err);
                 }
-
+                console.log(data)
+                return callback(data.insertedId);
             });
-
 
         } catch (error) {
             console.log(error);
@@ -185,22 +161,16 @@ export class MedicalFileLogic {
 
 
     /**return all images/files of the user */
-    static getMedicalFiles = async (userId, callback) => {
+    static getMedicalFilesUsingUserId = async (userId, callback) => {
         try {
-            const connection = await databaseConnector();
-            let query = 'select * from MedicalFile where userId=' + connection.escape(userId);
-            await connection.query(query, function (err, rows, fields) {
+            const collection = MongoHelper.client.db('Mooki_Development').collection('medicalFiles');
+            var result = collection.findOne({ _id: new ObjectId(userId) }, function (err, res) {
                 if (err) {
                     console.log(err);
-                    const jsonResponse = {
-                        message: 'something went wrong please try again',
-                        status: 'failed',
-                        statusCode: 501
-                    }
-                    return callback(jsonResponse);
 
                 } else {
-                    if (rows !== null) {
+
+                    if (res !== null) {
                         //Take the row data and pass it into the object
                         console.log(rows);
                         var downloadOptions = {

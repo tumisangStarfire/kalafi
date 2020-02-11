@@ -3,7 +3,7 @@ const AWS = require('aws-sdk');
 const fs = require('fs');
 const uuid = require('uuid');
 
-
+import { validate, validateOrReject, Contains, IsInt, Length, IsEmail, IsFQDN, IsDate, Min, Max } from "class-validator";
 
 
 /**class for the users profile information */
@@ -11,6 +11,8 @@ export class UserProfile {
 
   id?: number;
   userId: number;
+
+  @IsDate()
   date_of_birth: Date;
   gender?: string;
   omang?: number;
@@ -36,6 +38,14 @@ export class UserProfile {
 
   get getUserId(): number {
     return this.userId;
+  }
+
+  get getDateofBirth(): Date {
+    return this.date_of_birth;
+  }
+
+  set setDateofBirth(date_of_birth: Date) {
+    this.date_of_birth = date_of_birth;
   }
 
   public calculateBMI(weight: number, height: number) {
@@ -83,7 +93,7 @@ export class UserProfile {
       return 'Extremely Obese';
     }
   }
- 
+
 
 
 

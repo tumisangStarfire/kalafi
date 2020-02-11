@@ -11,7 +11,7 @@ import { saveCurrentMedication, removeCurrentMedication } from '../controller/Cu
 import { getAllRegions } from '../controller/RegionController';
 import { createAllergy, removeAllergy } from '../controller/UserAllergyController';
 import { createVaccination, removeVaccination } from '../controller/VaccinationController';
-
+import { getUser } from '../controller/UserController';
 import { updateProfilePicture } from '../controller/UserProfileController';
 
 
@@ -27,6 +27,8 @@ router.get("/", (req, res) => {
 /**user auth api routes */
 router.route('/register').post(registerUser);
 router.route('/login').post(login);
+
+router.route('/getUser').get(getUser);
 
 /** user profile */
 router.route('/uploadProfilePicture').post(updateProfilePicture);

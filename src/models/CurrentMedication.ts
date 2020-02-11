@@ -12,7 +12,9 @@ export class CurrentMedication {
     this.pillName = pillName;
     this.date_prescribed = date_prescribed;
     this.dailyDosage = dailyDosage;
-  }
+  } 
+
+  
 
   
 

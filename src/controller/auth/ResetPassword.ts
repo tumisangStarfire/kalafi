@@ -1,5 +1,5 @@
 import * as express from 'express';
-import { User } from 'models/User';
+import { IUser } from 'models/User';
 // DB
 const mysqlconnection = require('database/databaseConnector.js');
 
@@ -13,9 +13,9 @@ export const forgotpassword = async (request: express.Request, response: express
     } catch (error) {
         console.log(error);
     }
-} 
+}
 
 //inside the application
-export const resetpasssword = async (request: express.Request, response: express.Response) => { 
-    
+export const resetpasssword = async (request: express.Request, response: express.Response) => {
+
 }

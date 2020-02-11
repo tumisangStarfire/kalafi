@@ -1,4 +1,4 @@
-import { databaseConnector } from "database/databaseConnector";
+import { databaseConnector } from "../database/databaseConnector";
 import { PillPrescription } from "models/PillPrescription";
 
 export class PillPrescriptionLogic {
@@ -41,5 +41,7 @@ export class PillPrescriptionLogic {
         } catch (error) {
 
         }
-    }
+    } 
+
+    /**API call to get various pill information */
 }

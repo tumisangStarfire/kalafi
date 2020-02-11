@@ -1,5 +1,5 @@
 
-import { User } from '../models/User';
+import { User } from './User';
 export class EmergencyContact {
   id?: number;
   userId: number;

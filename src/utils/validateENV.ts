@@ -4,10 +4,10 @@ import envalid, { cleanEnv, str, port } from 'envalid';
 
 export function validateEnv() {
     cleanEnv(process.env, {
-        DB_HOST: str(),
-        DB_DATABASE: str(),
-        DB_USERNAME: str(),
-        DB_PASSWORD: str(),
+        MONGO_Url: str(),
+        MONGO_DATABASE: str(),
+        MONGO_USER: str(),
+        MONGO_PASSWORD: str(),
         PORT: port(),
         NODE_ENV: str(),
 

@@ -1,5 +1,6 @@
 
 import * as express from 'express';
+import { MongoHelper } from './database/MongoHelper';
 /* import * as bodyParser from 'body-parser'; */
 import router from './router/router';
 import { loggerMiddleware } from './middleware/loggerMiddleware';
@@ -43,6 +44,17 @@ export class App {
     async listen() {
         this.app.listen(this.app.get('port'));
         console.log('Server on port', this.app.get('port'));
+        /**Now, instead of having the server just print out a message, we’ll also try connecting to our instance of Mongo. */
+        try {
+
+
+            //TODO to replace this
+            await MongoHelper.connect();
+
+            console.info(`Connected to Mongo!`);
+        } catch (err) {
+            console.error(`Unable to connect to Mongo!`, err);
+        }
     }
 
 }

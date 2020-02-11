@@ -1,6 +1,6 @@
 import { UserAllergy } from '../models/UserAllergy';
 import { Request, Response } from 'express';
-import { UserAllergyLogic } from 'businesslogic/UserAllergyLogic';
+import { UserAllergyLogic } from '../databasehelper/UserAllergyHelper';
 
 /** create the allergey post */
 export async function createAllergy(request: Request, response: Response) {

@@ -1,12 +1,12 @@
 import { Illness } from '../models/Illness';
 import { Request, Response } from 'express';
-import { IllnessLogic } from 'businesslogic/IllnessLogic';
+import { IllnessHelper } from '../databasehelper/IllnessHelper';
 
 /** create the illness  */
 export async function createIllness(request: Request, response: Response) {
     try {
         var newIllness: Illness = request.body; /** reqeust body sent  */
-        await IllnessLogic.create(newIllness, result => {
+        await IllnessHelper.create(newIllness, result => {
             console.log(result);
             response.json(result);
         });
@@ -18,8 +18,8 @@ export async function createIllness(request: Request, response: Response) {
 
 export async function userIllnessData(request: Request, response: Response) {
     try {
-        var userId = request.body.userId;
-        await IllnessLogic.getUserIllness(userId, result => {
+        var userId = request.params.userId;
+        await IllnessHelper.getUserIllnessDataUsingUserId(userId, result => {
             console.log(result);
             response.json(result);
         });
@@ -32,7 +32,7 @@ export async function userIllnessData(request: Request, response: Response) {
 export async function deleteIllness(request: Request, response: Response) {
     try {
         var illnessId = request.params.id; //send the id as a parameter
-        await IllnessLogic.remove(illnessId, result => {
+        await IllnessHelper.remove(illnessId, result => {
             console.log(result);
             response.json(result);
         });
