@@ -1,6 +1,6 @@
 
 import { User } from './User';
-export class EmergencyContact {
+export interface EmergencyContact {
   id?: number;
   userId: number;
   firstName: string;

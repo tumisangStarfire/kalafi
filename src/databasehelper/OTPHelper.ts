@@ -1,12 +1,12 @@
 import { OTP } from "../models/OTP";
-import { generateOTP } from "../services/generateOTP";
+import generateOTP = require("../services/generateOTP");
 import { MongoHelper } from "../database/MongoHelper";
 var ObjectId = require('mongodb').ObjectID;
 
 
 export class OTPHelper {
 
-    static async deleteOTP(id, callback) {
+    static async deleteOTP(id: string, callback) {
         try {
             const query = await MongoHelper.client.db('Mooki_Development').collection('otp');
             var deleteParams = { _id: new ObjectId(id) };
@@ -24,20 +24,21 @@ export class OTPHelper {
     }
 
     /** functiont to save a new OTP code */
-    static async saveOTP(cellphone, callback) {
+    static async saveOTP(cellphone: number, callback) {
         try {
+            console.log(cellphone);
+            let otpcode = Math.floor(100000 + Math.random() * 900000);
+            console.log(otpcode);
 
-            var otp: OTP;
-            otp.setCellphone = cellphone;
-            otp.setOtpCode = 111111 //needs to be dynamic
-            const query = await MongoHelper.client.db('Mooki_Development').collection('otp');
-            var result = await query.insertOne(otp, function (err, data) {
+            const collection = MongoHelper.client.db('Mooki_Development').collection('otp');
+            var result = collection.insertOne({ cellphone: cellphone, otpcode: otpcode }, function (err, data) {
                 if (err) {
                     console.log(err);
                 }
-                console.log(data)
-                return callback(data.insertedId);
-            });
+                //console.log(data);
+                return callback('OTP ID', data);
+            }); 
+            
 
         } catch (error) {
             console.log(error);
@@ -48,7 +49,7 @@ export class OTPHelper {
     static validateOTP = async (otp: OTP, callback) => {
         try {
             const collection = MongoHelper.client.db('Mooki_Development').collection('otp');
-            var findParams = { cellphone: otp.getCellphone, otpcode: otp.getOtpCode }
+            var findParams = { cellphone: otp.cellphone, otpcode: otp.otpcode }
             var result = await collection.findOne(findParams, function (err, res) {
                 if (err) {
                     console.log(err);
@@ -58,7 +59,7 @@ export class OTPHelper {
 
                 //if it exists delete it from the db 
                 if (otp !== null) {
-                    OTPHelper.deleteOTP(otp.getID, resp => {
+                    OTPHelper.deleteOTP(otp._id, resp => {
                         console.log(resp)
                     });
                 }

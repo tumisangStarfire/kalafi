@@ -1,6 +1,7 @@
 
 import * as express from 'express';
 import { MongoHelper } from './database/MongoHelper';
+import { mongooseConnector } from './database/mongooseConnector';
 /* import * as bodyParser from 'body-parser'; */
 import router from './router/router';
 import { loggerMiddleware } from './middleware/loggerMiddleware';
@@ -50,6 +51,7 @@ export class App {
 
             //TODO to replace this
             await MongoHelper.connect();
+            //await mongooseConnector();
 
             console.info(`Connected to Mongo!`);
         } catch (err) {

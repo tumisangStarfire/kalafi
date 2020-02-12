@@ -1,5 +1,6 @@
 import { Region } from "./Region";
-
+import mongoose, { model, Schema, Document, MongooseDocument } from 'mongoose';
+import { AddressSchema } from "../schemas/AddressSchema";
 export class Address extends Document {
 
   city?: string;
@@ -63,7 +64,5 @@ export class Address extends Document {
     this.houseNumber = houseNumber;
   }
 
-
-
-
 }
+export const AddressModel = model<Address>('Address', AddressSchema);

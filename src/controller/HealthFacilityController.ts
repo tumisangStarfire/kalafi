@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
-import { HealthFacility } from '../models/HealthFacility';
+import { HealthFacilityHelper } from '../databasehelper/HealthFacilityHelper';
 
 export async function healthFacilityData(request: Request, response: Response) {
     try {
-        await HealthFacility.getData(result => {
+        await HealthFacilityHelper.getHealthFacilities(result => {
             console.log('result', result);
             response.json(result).status(200);
         });

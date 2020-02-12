@@ -1,4 +1,4 @@
-import { databaseConnector } from '../database/databaseConnector';
+
 
 export class Region {
   private id?: number;

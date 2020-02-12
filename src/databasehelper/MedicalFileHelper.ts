@@ -21,7 +21,7 @@ export class MedicalFileLogic {
     /**creates and saves a new medicalfile for a patinet */
     static create = async (medicalFile: MedicalFile, callback) => {
         try {
-            const query = await MongoHelper.client.db('Mooki_Development').collection('injury');
+            const query = await MongoHelper.client.db('Mooki_Development').collection('medicalfile');
             var result = await query.insertOne(medicalFile, function (err, data) {
                 if (err) {
                     console.log(err);
@@ -97,58 +97,39 @@ export class MedicalFileLogic {
 
     static removeUploadedFile = async (id, callback) => {
         try {
-            //first the the key from the Database, use the key to remove th file from s3, after that delete from DB 
+            //first the the s3key from the Database, use the key to remove th file from s3, after that delete from DB 
             const connection = await databaseConnector();
-            let query = connection.query('select * from MedicalFile where id =' + connection.escape(id));
-            await query.on('error', function (err, res, fields) {
+            const collection = await MongoHelper.client.db('Mooki_Development').collection('medicalfile');
+            var result = await collection.findOne({ _id: new ObjectId(id) }, async function (err, res) {
                 console.log(err);
                 if (err) {
                     console.log(err);
-                    const jsonResponse = {
-                        message: 'something went wrong please try again',
-                        status: 'failed',
-                        statusCode: 501
-                    }
                     return callback(err);
 
                 }
-            }).on('result', function (row, index) {
-                // index refers to the statement this result belongs to (starts at 0)  
-                console.log(row);
-                var medicalFile: MedicalFile = row; // pass the medical fiel result to the Class
+                console.log(res);
+                var medicalFile: MedicalFile = res; // pass the medical fiel result to the Class
                 const deleteParams = {
                     Bucket: process.env.AWS_BUCKET,
                     Key: '',
                 }
-
                 deleteParams.Key = medicalFile.getfilePath;  //pass it to the deleteParams json oject 
 
-                s3.deleteObject(deleteParams, function (s3err, data) {
+                await s3.deleteObject(deleteParams, function (s3err, data) {
                     if (s3err) {
                         console.log(s3err);
                         return callback(s3err);
                     }
                     console.log(data);
                     //after deleting the file on s3, delete it from db
-                    connection.query('delete from medicalfile where id =' + connection.escape(id), function (deleteErr, res) {
-                        if (deleteErr) throw deleteErr;
-                        if (row.affectedRows < 0) { /** get the number of affected rows */
-                            const jsonResponse = {
-                                message: 'removed',
-                                status: 'success',
-                                statusCode: 200
-                            }
-                            return callback(jsonResponse);
-                        } else {
-                            const jsonResponse = {
-                                message: 'something wrong please try again',
-                                status: 'failed',
-                                statusCode: 501
-                            }
-                            return callback(jsonResponse);
-                        }
-                    });
 
+                });
+
+                await collection.deleteOne({ _id: new ObjectId(id) }, function (deleteErr, res) {
+                    if (deleteErr) {
+                        console.log('delete Err', deleteErr);
+                        return callback(deleteErr);
+                    }
                 });
 
 
@@ -172,14 +153,14 @@ export class MedicalFileLogic {
 
                     if (res !== null) {
                         //Take the row data and pass it into the object
-                        console.log(rows);
+                        console.log(res);
                         var downloadOptions = {
                             Bucket: process.env.AWS_BUCKET,
                             Key: '',
                         };
                         //this returns a object  [ { id:1 ,  filename : name : file_path : path }]  
                         var mediclFileArray: Array<MedicalFile>;
-                        mediclFileArray.push(rows);
+                        mediclFileArray.push(res);
 
                         mediclFileArray.forEach(row => {
                             downloadOptions.Key = row.getfilePath;

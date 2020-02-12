@@ -1,6 +1,7 @@
 import * as mongo from 'mongodb';
 const mongoClient = require('mongodb').MongoClient;
 const dotenv = require('dotenv');
+import mongoose from 'mongoose';
 
 dotenv.config()
 
@@ -9,7 +10,7 @@ var mongoURL = process.env.MONGO_Url;
 var MongoDatabase = process.env.MONGO_DATABASE;
 var MongoUser = process.env.MONGO_USER;
 var MONGO_PASSWORD = process.env.MONGO_PASSWORD;
-const connectionString = `mongodb+srv://${MongoUser}:${MONGO_PASSWORD}${mongoURL}/test?retryWrites=true&w=majority`;
+const connectionString = `mongodb+srv://${MongoUser}:${MONGO_PASSWORD}${mongoURL}/${MongoDatabase}?retryWrites=true&w=majority`;
 
 export class MongoHelper {
   public static client: mongo.MongoClient;
@@ -27,6 +28,7 @@ export class MongoHelper {
         } else {
           MongoHelper.client = client;
           this.database = client.db('test');
+
 
           resolve(client.db('test'));
         }

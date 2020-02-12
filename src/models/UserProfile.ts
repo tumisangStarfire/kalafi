@@ -1,20 +1,22 @@
+import { Document } from "mongoose";
 
 const AWS = require('aws-sdk');
 const fs = require('fs');
 const uuid = require('uuid');
 
-import { validate, validateOrReject, Contains, IsInt, Length, IsEmail, IsFQDN, IsDate, Min, Max } from "class-validator";
 
 
+enum Gender {
+  Male = 1,
+  Female = 0
+}
 /**class for the users profile information */
-export class UserProfile {
+export class UserProfile extends Document {
 
-  id?: number;
+  _id: string;
   userId: number;
-
-  @IsDate()
   date_of_birth: Date;
-  gender?: string;
+  gender?: Gender;
   omang?: number;
   profilePicture?: string;
   weight: number;
@@ -23,7 +25,8 @@ export class UserProfile {
   bloodType?: string;
 
 
-  constructor(userId: number, date_of_birth: Date, weight: number, height: number, gender?: string, omang?: number, profilePicture?: string, bmi?: number, bloodType?: string) {
+  constructor(userId: number, date_of_birth: Date, weight: number, height: number, gender?: Gender, omang?: number, profilePicture?: string, bmi?: number, bloodType?: string) {
+    super();
     this.userId = userId;
     this.date_of_birth = date_of_birth;
     this.gender = gender;

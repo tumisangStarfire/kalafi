@@ -14,7 +14,7 @@
         "allowJs": true,
     },
     "include": [
-        "src/**/*.ts", "src/middleware/loggerMiddleware.ts",
+        "src/**/*.ts", "src/middleware/loggerMiddleware.ts", "src/services/generateOTP.js",
     ],
     "exclude": [
         "node_modules"

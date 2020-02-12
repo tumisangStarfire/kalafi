@@ -1,11 +1,11 @@
 import { PillPrescription } from "./PillPrescription";
-import { databaseConnector } from '../database/databaseConnector';
 import { Vitals } from "./Vitals";
+import mongoose, { Model, Schema, Document } from 'mongoose';
 
 /**Illness has vitals */
-export class Illness {
+export class Illness extends Document {
 
-    id?: number;
+    _id: string;
     userId: number;
     type_of_illness: string;
     date_of_diagnosis: Date;
@@ -15,6 +15,7 @@ export class Illness {
 
 
     constructor(userId: number, type_of_illness: string, date_of_diagnosis: Date, vitals: Vitals, doctorsNotes?: string) {
+        super();
         this.userId = userId;
         this.type_of_illness = type_of_illness;
         this.date_of_diagnosis = date_of_diagnosis;
@@ -25,5 +26,5 @@ export class Illness {
     addInjuryPills(medicationPrescribed: PillPrescription) {
         this.medicationPrescribed.push(medicationPrescribed);
     }
-  
+
 }

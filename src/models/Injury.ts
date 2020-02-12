@@ -1,18 +1,20 @@
-import { databaseConnector } from '../database/databaseConnector';
+
 import { PillPrescription } from './PillPrescription';
 import { Vitals } from './Vitals';
+import mongoose, { Model, Schema, Document, set, get } from 'mongoose';
 
-export class Injury {
+export class Injury extends Document {
 
-  private id?: number;
-  private userId: number;
-  private injuryType: string;
-  private date_of_injury: Date;
-  private vitals: Vitals;
-  private medicationPrescribed: Array<PillPrescription>; //pills given to the patient [ { id: 1 } ]
-  private doctorsNotes?: string;
+  _id: string;
+  userId: number;
+  injuryType: string;
+  date_of_injury: Date;
+  vitals: Vitals;
+  medicationPrescribed: Array<PillPrescription>; //pills given to the patient [ { id: 1 } ]
+  doctorsNotes?: string;
 
   constructor(userId: number, injuryType: string, date_of_injury: Date, doctorsNotes?: string) {
+    super();
     this.userId = userId;
     this.injuryType = injuryType;
     this.date_of_injury = date_of_injury;
@@ -21,12 +23,12 @@ export class Injury {
 
   addInjuryPills(medicationPrescribed: PillPrescription) {
     this.medicationPrescribed.push(medicationPrescribed);
-  }  
+  }
 
-  get getUserId():number{ 
+  get getUserId(): number {
     return this.userId;
-  } 
-  set setUserId(userId:number){ 
+  }
+  set setUserId(userId: number) {
     this.userId = userId;
   }
 

@@ -1,8 +1,9 @@
 import { MedicalFileType } from "./MedicalFileType";
+import { Document } from 'mongoose';
 
 
-export class MedicalFile implements MedicalFileType {
-    id?: number;
+export class MedicalFile extends Document implements MedicalFileType {
+    _id: string;
     medical_file_type_id: number; /**the id of te medical file type */
 
     userId: number; /** users id*/
@@ -22,6 +23,7 @@ export class MedicalFile implements MedicalFileType {
 
     /**constructo */
     constructor(userId: number, medical_file_type_id: number, fileName: string, base64Stringfile: string, date_uploaded?: string, filePath?: string) {
+        super();
         this.userId = userId;
         this.medical_file_type_id = medical_file_type_id;
         this.fileName = fileName;
@@ -71,5 +73,5 @@ export class MedicalFile implements MedicalFileType {
 
 
 
-  
+
 }

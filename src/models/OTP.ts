@@ -1,26 +1,29 @@
-import { databaseConnector } from '../database/databaseConnector';
 
-export class OTP {
+import mongoose, { model, Document } from 'mongoose';
+import { OTPSchema } from '../schemas/OTPSchema';
+export class OTP extends Document {
 
 
-    private _id?: string;
-    private cellphone: string;
-    private otpcode: number;
+    _id: string;
+    cellphone: number;
+    otpcode: number;
 
-    constructor(cellphone: string, otpcode: number) {
+    constructor(cellphone: number, otpcode: number) {
+        super();
         this.cellphone = cellphone;
         this.otpcode = otpcode;
+
     }
 
     get getID(): string {
         return this._id;
     }
 
-    set setCellphone(cellphone: string) {
+    set setCellphone(cellphone: number) {
         this.cellphone = cellphone;
     }
 
-    get getCellphone(): string {
+    get getCellphone(): number {
         return this.cellphone;
     }
     set setOtpCode(otpcode: number) {
@@ -33,3 +36,4 @@ export class OTP {
 
 
 }
+export const OTPModel = model<OTP>('OTP', OTPSchema);

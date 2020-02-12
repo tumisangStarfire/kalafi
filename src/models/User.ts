@@ -1,26 +1,20 @@
 import { Address } from "./Address";
 //TODO password hashing
-import mongoose, { Model, Schema, Document } from 'mongoose';
+import mongoose, { model, Schema, Document } from 'mongoose';
+import { UserSchema } from "../schemas/UserSchema";
+var ObjectId = require('mongodb').ObjectID;
 
 
 export class User extends Document {
-  id?: Number;
-
-
+  _id: string;
   firstName: string;
-
   lastName: string;
-
-
   email: string;
-
-
   cellphone: number;
-
   password: string;
   status?: number; //default status of the user
   verified?: boolean;
-  address?: Address;
+  address_id: string;
   created_at: Date;
 
   constructor(firstName: string,
@@ -30,7 +24,7 @@ export class User extends Document {
     password: string,
     status: number,
     verified: boolean,
-    address?: Address
+    address_id: string,
   ) {
 
 
@@ -42,7 +36,7 @@ export class User extends Document {
     this.password = password;
     this.status = status;
     this.verified = verified;
-    this.address = address;
+    this.address_id = address_id;
   }
 
 
@@ -112,27 +106,7 @@ export class User extends Document {
 
 }
 
-const UserSchema: Schema = new Schema({
-  email: { type: String, required: true, unique: true },
-  firstName: { type: String, required: true },
-  lastName: { type: String, required: true },
-  cellphone: { type: Number, required: true },
-  password: { type: String, required: true },
-  status: { type: Number, default: 0 },
-  verified: { type: Boolean, required: false },
-  created_at: { type: Date, required: false },
-  updated_at: { type: Date, required: false },
-
-});
-
-/* UserSchema.pre("save", function (next) {
-  let now = new Date();
-  if (!this.created_at) {
-    this.created_at = now;
-  }
-  next();
-}); */
-//export interface UserModel extends Model<User> { };
+export const UserModel = model<User>('User', UserSchema);
 
 /**Your newly created interface needs to extend Document, an interface that extends MongooseDocument,
  * NodeJS.EventEmitter & ModelProperties.
