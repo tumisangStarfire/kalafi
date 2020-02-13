@@ -1,4 +1,5 @@
 import { Document } from "mongoose";
+import { ObjectId } from "mongodb";
 
 const AWS = require('aws-sdk');
 const fs = require('fs');
@@ -11,23 +12,33 @@ enum Gender {
   Female = 0
 }
 /**class for the users profile information */
-export class UserProfile extends Document {
+export class UserProfile {
 
-  _id: string;
-  userId: number;
-  date_of_birth: Date;
-  gender?: Gender;
-  omang?: number;
-  profilePicture?: string;
-  weight: number;
-  height: number;
-  bmi?: number;
-  bloodType?: string;
+  _id: ObjectId;
 
+  /** private modeifies allows us to use access modifiers get and set, strong coding practices. Consistency, Readbility */
+  private date_of_birth: Date;
+  private gender?: Gender;
+  private omang?: number;
+  private profilePicture?: string;
+  private weight: number;
+  private height: number;
+  private bmi?: number;
+  private bloodType?: string;
 
-  constructor(userId: number, date_of_birth: Date, weight: number, height: number, gender?: Gender, omang?: number, profilePicture?: string, bmi?: number, bloodType?: string) {
-    super();
-    this.userId = userId;
+  /** User Profile Document Structure 
+   *  _id = ObjectId(121221qwqwqw) 
+   * date_of_birth : 1990-05-12, [required]
+   * gender : 1  
+   * omang : xxxxxxxxx 
+   * profile_picture: link to s3 
+   * weight : 75 [required], 
+   * height :  176, 
+   * 
+   * 
+   */
+  constructor(date_of_birth: Date, weight: number, height: number, gender?: Gender, omang?: number, profilePicture?: string, bmi?: number, bloodType?: string) {
+
     this.date_of_birth = date_of_birth;
     this.gender = gender;
     this.omang = omang;
@@ -39,26 +50,65 @@ export class UserProfile extends Document {
 
   }
 
-  get getUserId(): number {
-    return this.userId;
-  }
-
-  get getDateofBirth(): Date {
-    return this.date_of_birth;
-  }
 
   set setDateofBirth(date_of_birth: Date) {
     this.date_of_birth = date_of_birth;
   }
 
-  public calculateBMI(weight: number, height: number) {
-    return this.bmi = weight / (height * height);
+  get getDateofBirth(): Date {
+    return this.date_of_birth;
+
+  }
+
+  set setGender(gender: Gender) {
+    this.gender = gender;
+  }
+
+  get getGender(): Gender {
+    return this.gender;
+  }
+
+  set setOmang(omang: number) {
+    this.omang = omang;
+  }
+
+  get getOmang(): number {
+    return this.omang;
+  }
+
+  set setProfilePicture(profilePicture: string) {
+    this.profilePicture = profilePicture;
+  }
+
+  get getProfilePicture(): string {
+    return this.profilePicture;
+  }
+
+  set setWeight(weight: number) {
+    this.weight = weight;
+  }
+
+  get getWeight(): number {
+    return this.weight;
+  }
+
+  set setHeight(height: number) {
+    this.height = height;
+  }
+
+  get getHeight(): number {
+    return this.height;
   }
 
   set setBMI(bmi: number) {
     this.bmi = bmi;
   }
 
+  get getBMI(): number {
+    return this.bmi;
+  }
+
+  /**calculate the age of the user */
   public calculateAge(date_of_birth: Date): number {
     var todaysDate = new Date();
     const birthDate = new Date(date_of_birth);
@@ -67,7 +117,13 @@ export class UserProfile extends Document {
     return age;
   }
 
+  /**calculate the Body mass index */
+  public calculateBMI(weight: number, height: number) {
+    return this.bmi = weight / (height * height);
+  }
 
+
+  /**produce the health risk associated with the bmi number */
   getHealthRisk(bmi: number): string {
     if (bmi < 15) {
 

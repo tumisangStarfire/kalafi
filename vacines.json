@@ -1,0 +1,104 @@
+[
+    {
+        "id": 1,
+        "name": "Measles",
+        "typeofVacineRef": 1
+    },
+    {
+        "id": 2,
+        "name": "Mumps",
+        "typeofVacineRef": 1
+    },
+    {
+        "id": 3,
+        "name": "Rubella",
+        "typeofVacineRef": 1
+    },
+    {
+        "id": 4,
+        "name": "Rotavirus",
+        "typeofVacineRef": 1
+    },
+    {
+        "id": 5,
+        "name": "SmallPox",
+        "typeofVacineRef": 1
+    },
+    {
+        "id": 6,
+        "name": "ChickenPox",
+        "typeofVacineRef": 1
+    },
+    {
+        "id": 7,
+        "name": "YellowFever",
+        "typeofVacineRef": 1
+    },
+    {
+        "id": 8,
+        "name": "Hepatitis A",
+        "typeofVacineRef": 2
+    },
+    {
+        "id": 9,
+        "name": "Flu (shot only)",
+        "typeofVacineRef": 2
+    },
+    {
+        "id": 10,
+        "name": "Polio (shot only)",
+        "typeofVacineRef": 2
+    },
+    {
+        "id": 11,
+        "name": "Rabies",
+        "typeofVacineREf": 2
+    },
+    {
+        "id": 12,
+        "name": "Hib (Haemophilus influenzae type b) disease",
+        "typeofVacineREf": 3
+    },
+    {
+        "id": 13,
+        "name": "Hepatitis B",
+        "typeofVacineREf": 3
+    },
+    {
+        "id": 14,
+        "name": "HPV (Human papillomavirus)",
+        "typeofVacineREf": 3
+    },
+    {
+        "id": 15,
+        "name": "Whooping cough",
+        "typeofVacineREf": 3
+    },
+    {
+        "id": 16,
+        "name": "Pneumococcal disease",
+        "typeofVacineREf": 3
+    },
+    {
+        "id": 17,
+        "name": "Meningococcal disease",
+        "typeofVacineREf": 3
+    }, 
+    {
+        "id": 18,
+        "name": "Shingles",
+        "typeofVacineREf": 3
+    },
+    {
+        "id": 19,
+        "name": " Diphtheria",
+        "typeofVacineREf": 3
+    },  
+    {
+        "id": 20,
+        "name": "Tetanus",
+        "typeofVacineREf": 3
+    }
+
+
+]

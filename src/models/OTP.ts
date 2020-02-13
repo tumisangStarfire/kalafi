@@ -1,21 +1,24 @@
-
-import mongoose, { model, Document } from 'mongoose';
-import { OTPSchema } from '../schemas/OTPSchema';
-export class OTP extends Document {
+import { ObjectId } from "mongodb";
+export class OTP {
 
 
-    _id: string;
-    cellphone: number;
-    otpcode: number;
+    private _id: ObjectId;
+    private cellphone: number;
+    private otpcode: number;
 
+    /**OTP document structure  
+     * _id : ObjectId(121221qwqwqw)  
+     * cellphone : 74232323 
+     * otp_code : 111111
+    */
     constructor(cellphone: number, otpcode: number) {
-        super();
+
         this.cellphone = cellphone;
         this.otpcode = otpcode;
 
     }
 
-    get getID(): string {
+    get getID(): ObjectId {
         return this._id;
     }
 
@@ -34,6 +37,4 @@ export class OTP extends Document {
     }
 
 
-
 }
-export const OTPModel = model<OTP>('OTP', OTPSchema);

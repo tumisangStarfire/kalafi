@@ -1,19 +1,15 @@
 import { Region } from "./Region";
-import mongoose, { model, Schema, Document, MongooseDocument } from 'mongoose';
-import { AddressSchema } from "../schemas/AddressSchema";
-export class Address extends Document {
+export class Address {
 
-  city?: string;
+  private city?: string;
   private town?: string;
   private village?: string;
   private streetName?: string;
   private houseNumber?: string;
-  region: Region;
+  private region: Region;
 
   constructor(region: Region, city?: string, town?: string, village?: string, streetName?: string, houseNumber?: string) {
-    super();
 
-    this.region.getRegionId;
     this.city = city;
     this.town = town;
     this.village = village;
@@ -65,4 +61,3 @@ export class Address extends Document {
   }
 
 }
-export const AddressModel = model<Address>('Address', AddressSchema);

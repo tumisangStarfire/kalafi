@@ -1,5 +1,6 @@
 import { HealthFacility } from "../models/HealthFacility";
 import { MongoHelper } from "../database/MongoHelper";
+const fs = require("fs");
 
 
 export class HealthFacilityHelper {
@@ -14,6 +15,24 @@ export class HealthFacilityHelper {
                 var healthFacility: Array<HealthFacility>;
                 healthFacility = res;
                 return callback(healthFacility);
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    static uploadHealthFacilityData = async callback => {
+        try {
+            const dataFile = fs.readFileSync("./medicalFacility.json");
+
+            const healthfacilitiesData = JSON.parse(dataFile); //pass the data as a JSON JSON object
+            const query = await MongoHelper.client.db('Mooki_Development').collection('healthfacilities');
+            query.insertMany(healthfacilitiesData, function (err, res) {
+                if (err) {
+                    console.log(err);
+                }
+                /**get the number of inserted data */
+                return callback(res.insertedCount);
             });
         } catch (error) {
             console.log(error);

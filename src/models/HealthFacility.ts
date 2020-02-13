@@ -1,7 +1,8 @@
 import { Region } from '../models/Region'
-import { Document } from 'mongoose';
+import { Address } from './Address';
 
-export interface HealthFacility extends Document {
+
+export interface HealthFacility extends Address {
     id?: number;
     latitude: number;
     longitude: number;

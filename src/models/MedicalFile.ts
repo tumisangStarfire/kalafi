@@ -1,15 +1,13 @@
 import { MedicalFileType } from "./MedicalFileType";
-import { Document } from 'mongoose';
+import { ObjectId } from "mongodb";
 
 
-export class MedicalFile extends Document implements MedicalFileType {
-    _id: string;
-    medical_file_type_id: number; /**the id of te medical file type */
+export class MedicalFile {
 
-    userId: number; /** users id*/
+    _id: ObjectId;
 
+    userId: string; /** users id*/
     private date_uploaded?: string;
-
     /**storage path in s3 */
     //s3 bucket -> Medical Files-> userId-> File Types (X-Rays)->file name  
     private filePath?: string;
@@ -21,16 +19,28 @@ export class MedicalFile extends Document implements MedicalFileType {
     /** BASE 64 encdoded file */
     private base64Stringfile: string;
 
-    /**constructo */
-    constructor(userId: number, medical_file_type_id: number, fileName: string, base64Stringfile: string, date_uploaded?: string, filePath?: string) {
-        super();
+    private medicalFileType: MedicalFileType;
+
+    /**Medical File Document Structure 1:N 
+     *  _id : ObjectId(121221qwqwqw),
+     * userID :   ObjectId(23232wewew)
+     * fileName : Head Injury scan 
+     * filePath : s3 file Path 
+     * date_uploaded :2020-02-13 
+     * medicalFileType{ 
+     *       "id": 3,
+             "name": "CAT-Scan"
+     * }
+     * 
+     */
+    constructor(userId: string, medicalFileType: MedicalFileType, fileName: string, base64Stringfile: string, date_uploaded?: string, filePath?: string) {
+
         this.userId = userId;
-        this.medical_file_type_id = medical_file_type_id;
         this.fileName = fileName;
         this.base64Stringfile = base64Stringfile;
         this.date_uploaded = date_uploaded;
         this.filePath = filePath;
-
+        this.medicalFileType = medicalFileType;
     }
 
     /**accessors */
@@ -48,12 +58,7 @@ export class MedicalFile extends Document implements MedicalFileType {
         this.filePath = filePath;
     }
 
-    public get getMedical_file_type_id(): number {
-        return this.medical_file_type_id;
-    }
-    public set setMedical_file_type_id(value: number) {
-        this.medical_file_type_id = value;
-    }
+
 
     public get getDateUploaded(): string {
         return this.date_uploaded;

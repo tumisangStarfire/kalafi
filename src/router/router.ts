@@ -4,11 +4,11 @@ import * as bodyParser from 'body-parser';
 
 import { registerUser } from '../controller/auth/RegisterController';
 import { login } from '../controller/auth/LoginController';
-import { healthFacilityData } from '../controller/HealthFacilityController';
+import { healthFacilityData, uploadHealthFacilities } from '../controller/HealthFacilityController';
 import { createIllness, userIllnessData, deleteIllness } from '../controller/IllnessController';
 import { createInjury, userInjuryData, deleteInjury } from '../controller/InjuryController';
 import { saveCurrentMedication, removeCurrentMedication } from '../controller/CurrentMedicationController';
-import { getAllRegions } from '../controller/RegionController';
+import { getAllRegions, uploadRegionData } from '../controller/RegionController';
 import { createAllergy, removeAllergy } from '../controller/UserAllergyController';
 import { createVaccination, removeVaccination } from '../controller/VaccinationController';
 import { getUser } from '../controller/UserController';
@@ -35,7 +35,10 @@ router.route('/uploadProfilePicture').post(updateProfilePicture);
 
 /** */
 router.route('/healthFacilityData').get(healthFacilityData);
+router.route('/uploadHealthFacilitesData').get(uploadHealthFacilities);
+
 router.route('/getAllRegions').get(getAllRegions);
+router.route('/uploadRegionData').get(uploadRegionData);
 
 router.route('/saveCurrentMedication').post(saveCurrentMedication);
 router.route('/removeCurrentMedication:id').delete(removeCurrentMedication);
@@ -55,5 +58,7 @@ router.route('/removeVaccination:id').delete(removeVaccination);
 router.route('/createInjury').post(createInjury);
 router.route('/userInjuryData:userId').get(userInjuryData);
 router.route('/deleteInjury:userId').delete(deleteInjury);
+
+
 
 export default router;

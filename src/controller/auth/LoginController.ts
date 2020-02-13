@@ -1,28 +1,18 @@
 import { Request, Response } from 'express';
 import { User } from 'models/User';
+import { UserHelper } from 'databasehelper/UserHelper';
+import { LoginInterface } from 'interfaces/LoginInterface';
 // DB
-import { databaseConnector } from '../../database/databaseConnector';
+
 
 export async function login(request: Request, response: Response) {
     try {
-        //TODO login with cellphone or email
-        console.log(request.body.email);
-
-        const connection = await databaseConnector();
-        let query = 'SELECT * FROM users WHERE email =' + connection.escape(request.body.email) + ' AND firstName =' + connection.escape(request.body.password);
-
-        await connection.query(query, function (connectionErr, rows, fields) {
-            if (connectionErr) {
-                console.log('error', connectionErr);
-            } else {
-                if (rows[0]) {
-                    console.log(rows[0]);
-                    return response.json({ user: rows[0], status: "success", message: "Login succesfull" }).status(200);
-                }
-
-            }
-        });
-
+        //TODO login with cellphone and password  
+        const loginCredentials: LoginInterface = request.body;
+        await UserHelper.login(loginCredentials, result => {
+            console.log(result);
+            return response.json(result).status(result.code);
+        })
 
     } catch (error) {
         console.log(error);

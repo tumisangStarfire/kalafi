@@ -1,51 +1,69 @@
-import { Address } from "./Address";
-//TODO password hashing
-import mongoose, { model, Schema, Document } from 'mongoose';
-import { UserSchema } from "../schemas/UserSchema";
-var ObjectId = require('mongodb').ObjectID;
+
+import { ObjectId, Timestamp } from "mongodb";
+
+/*constants */
+
+enum Status {
+  Non_Active = 0,
+  Active = 1,
+  Suspended = 2
+
+}
+/** a class */
+export class User {
+
+  /**Defines primary id that will be used as _id of the mongo collection. */
+  _id: ObjectId;
+
+  private firstName: string;
+  private lastName: string;
+  private cellphone: number;
+  private password: string;
+  private email?: string;
+  private status?: Status; //default status of the user
+  private verified?: boolean;
+  private created_at: string;
 
 
-export class User extends Document {
-  _id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  cellphone: number;
-  password: string;
-  status?: number; //default status of the user
-  verified?: boolean;
-  address_id: string;
-  created_at: Date;
-
-  constructor(firstName: string,
+  /** user document structure 
+   *  _id = ObjectId(121221qwqwqw) ,
+   * firstName : John [required], 
+   * lastName : Doe [required],  
+   * cellphone : 76221221 , [required] 
+   * password : 1221221 [required]
+   * email : johndoe.mail.com, optional  
+   * status : 0 
+   * verified : false
+   * 
+   */
+  constructor(
+    firstName: string,
     lastName: string,
-    email: string,
     cellphone: number,
     password: string,
-    status: number,
-    verified: boolean,
-    address_id: string,
+    email?: string,
+    status?: Status,
+    verified?: boolean,
   ) {
-
-
-    super();
     this.firstName = firstName;
     this.lastName = lastName;
-    this.email = email;
     this.cellphone = cellphone;
     this.password = password;
+    this.email = email;
     this.status = status;
     this.verified = verified;
-    this.address_id = address_id;
+
+    /*initialize the timestamp when saving the documennt*/
+    this.created_at = Date.now().toString();
   }
 
 
-  get getUserId(): Number {
-    return this.id;
+  get getUserId(): ObjectId {
+    return this._id;
   }
 
-  set setUserId(id: Number) {
-    this.id = id;
+  set setUserId(_id: ObjectId) {
+    this._id = _id;
   }
 
   get getFirstName(): string {
@@ -88,11 +106,11 @@ export class User extends Document {
     this.cellphone = cellphone;
   }
 
-  get getStatus(): number {
+  get getStatus(): Status {
     return this.status;
   }
 
-  set setStatus(status: number) {
+  set setStatus(status: Status) {
     this.status = status;
   }
 
@@ -106,8 +124,5 @@ export class User extends Document {
 
 }
 
-export const UserModel = model<User>('User', UserSchema);
 
-/**Your newly created interface needs to extend Document, an interface that extends MongooseDocument,
- * NodeJS.EventEmitter & ModelProperties.
- * This will add the required functions and fields to your interface, such as save(), remove(), __v, ect... */
+

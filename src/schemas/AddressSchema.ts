@@ -6,4 +6,8 @@ export const AddressSchema: Schema = new Schema({
     village: { type: String, required: false },
     streetName: { type: String, required: false },
     houseNumber: { type: Number, required: false },
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: 'users'
+    },
 });

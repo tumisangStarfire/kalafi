@@ -1,6 +1,7 @@
 
 import { Region } from "models/Region";
 import { MongoHelper } from "../database/MongoHelper";
+const fs = require("fs");
 
 
 export class RegionHelper {
@@ -13,7 +14,7 @@ export class RegionHelper {
 
     static getRegions = async callback => {
         try {
-            const query = await MongoHelper.client.db('Mooki_Development').collection('otp');
+            const query = await MongoHelper.client.db('Mooki_Development').collection('region');
             query.find({}).toArray(function (err, res) {
                 if (err) {
                     console.log(err)
@@ -21,6 +22,24 @@ export class RegionHelper {
                 var region: Array<Region>;
                 region = res;
                 return callback(region);
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    static uploadRegionData = async callback => {
+        try {
+            const dataFile = fs.readFileSync("./regions.json");
+
+            const regionData = JSON.parse(dataFile); //pass the data as a JSON JSON object
+            const query = await MongoHelper.client.db('Mooki_Development').collection('region');
+            query.insertMany(regionData, function (err, res) {
+                if (err) {
+                    console.log(err);
+                }
+                /**get the number of inserted data */
+                return callback(res.insertedCount);
             });
         } catch (error) {
             console.log(error);

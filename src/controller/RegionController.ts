@@ -8,9 +8,20 @@ export async function getAllRegions(request: Request, response: Response) {
     try {
         await RegionHelper.getRegions(result => {
             console.log(result);
-            response.json(result);
+            return response.json(result);
         });
     } catch (error) {
-        console.log(error)
+        console.log(error);
+    }
+}
+
+export async function uploadRegionData(request: Request, response: Response) {
+    try {
+        await RegionHelper.uploadRegionData(result => {
+            console.log(result);
+            return response.json(result).status(200);
+        })
+    } catch (error) {
+        console.log(error);
     }
 }

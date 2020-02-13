@@ -1,13 +1,15 @@
-import { Document } from "mongoose";
-import { AllergyTypes } from './AllergyType';
 
-export class UserAllergy extends Document {
-  _id: string;
+import { AllergyTypes } from './AllergyType';
+import { ObjectId } from "mongodb";
+
+export class UserAllergy {
+ 
+  _id: ObjectId;
   userId: number;
   allergyType: Array<AllergyTypes>;
 
   constructor(userID: number, allergyType: AllergyTypes) {
-    super();
+
     this.userId = userID;
     this.allergyType.push(allergyType);
 

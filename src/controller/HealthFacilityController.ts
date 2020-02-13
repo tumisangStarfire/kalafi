@@ -12,3 +12,14 @@ export async function healthFacilityData(request: Request, response: Response) {
         console.log('request error : ', error);
     }
 }
+
+export async function uploadHealthFacilities(request: Request, response: Response) {
+    try {
+        await HealthFacilityHelper.uploadHealthFacilityData(result => {
+            console.log('result', result);
+            response.json(result).status(200);
+        });
+    } catch (error) {
+        console.log('request error : ', error);
+    }
+}

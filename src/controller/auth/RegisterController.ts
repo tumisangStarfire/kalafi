@@ -1,8 +1,6 @@
 import { Request, Response } from 'express';
 import { UserHelper } from '../../databasehelper/UserHelper';
 import { User, UserModel } from '../../models/User';
-import { OTP, OTPModel } from '../../models/OTP';
-import { OTPHelper } from '../../databasehelper/OTPHelper';
 
 export async function registerUser(request: Request, response: Response, next) {
     try {

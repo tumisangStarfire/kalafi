@@ -1,0 +1,34 @@
+[
+    {
+        "id": 1,
+        "name": "x-ray"
+    },
+    {
+        "id": 2,
+        "name": "Lab Result"
+    },
+    {
+        "id": 3,
+        "name": "CAT-Scan"
+    },
+    {
+        "id": 4,
+        "name": "MRI"
+    },
+    {
+        "id": 5,
+        "name": "Ultrasound"
+    },
+    {
+        "id": 6,
+        "name": "PET/CT"
+    },
+    {
+        "id": 7,
+        "name": "Bone densitometry (DEXA)"
+    },
+    {
+        "id": 8,
+        "name": "fluoroscopy"
+    }
+]

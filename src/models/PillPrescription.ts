@@ -1,9 +1,7 @@
-import { databaseConnector } from '../database/databaseConnector';
-
 
 export class PillPrescription {
   id?: number;
-  pill_prescribed_to: number; // what was the pill presribed to illness/injury
+  pillPrescribedToTreatment: number; // what was the pill presribed to illness/injury
   pillName: string;
   date_prescribed: Date;
   dailyDosage: number;
@@ -22,6 +20,6 @@ export class PillPrescription {
     return result;
   }
 
- 
+
 
 }

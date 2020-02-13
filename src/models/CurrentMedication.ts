@@ -1,6 +1,7 @@
-import mongoose, { Model, Schema, Document, MongooseDocument } from 'mongoose';
 
-export class CurrentMedication extends MongooseDocument {
+
+export class CurrentMedication {
+  
   id?: number;
   userId: number;
   pillName: string;
@@ -8,7 +9,7 @@ export class CurrentMedication extends MongooseDocument {
   dailyDosage: number;
 
   constructor(userId: number, pillName: string, date_prescribed: Date, dailyDosage: number) {
-    super();
+
     this.userId = userId;
     this.pillName = pillName;
     this.date_prescribed = date_prescribed;
