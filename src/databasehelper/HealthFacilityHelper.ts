@@ -23,10 +23,10 @@ export class HealthFacilityHelper {
 
     static uploadHealthFacilityData = async callback => {
         try {
-            const dataFile = fs.readFileSync("./medicalFacility.json");
+            const dataFile = fs.readFileSync("./typeofvaccines.json");
 
             const healthfacilitiesData = JSON.parse(dataFile); //pass the data as a JSON JSON object
-            const query = await MongoHelper.client.db('Mooki_Development').collection('healthfacilities');
+            const query = await MongoHelper.client.db('Mooki_Development').collection('typeofvaccines');
             query.insertMany(healthfacilitiesData, function (err, res) {
                 if (err) {
                     console.log(err);

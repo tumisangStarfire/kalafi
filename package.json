@@ -10,14 +10,15 @@
   "author": "Tumisang Mogotsi",
   "license": "ISC",
   "dependencies": {
+    "@types/bcrypt": "^3.0.0",
+    "bcrypt": "^3.0.8",
     "class-validator": "^0.11.0",
     "envalid": "^6.0.1",
     "eslint": "^6.8.0",
     "express": "^4.17.1",
     "mongo-models": "^3.0.2",
-    "mongodb": "^3.5.2",
-    "mongodb-typescript": "^2.2.0",
-    "mongoose": "^5.8.11",
+    "mongodb": "^3.5.3",
+    "mongoose": "^5.9.0",
     "ts-node": "^8.6.2",
     "uuid": "^3.4.0"
   },

@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { User } from 'models/User';
-import { UserHelper } from 'databasehelper/UserHelper';
+import { User } from '../../models/User';
+import { UserHelper } from '../../databasehelper/UserHelper';
 import { LoginInterface } from 'interfaces/LoginInterface';
 // DB
 

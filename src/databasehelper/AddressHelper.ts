@@ -28,7 +28,7 @@ export class AddressHelper {
                     console.log(err);
                 }
                 console.log(res)
-                return callback(res.upsertedId);
+                return callback(res.upsertedCount);
             });
 
         } catch (error) {

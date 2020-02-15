@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { UserHelper } from '../../databasehelper/UserHelper';
-import { User, UserModel } from '../../models/User';
+import { User } from '../../models/User';
 
 export async function registerUser(request: Request, response: Response, next) {
     try {

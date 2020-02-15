@@ -6,7 +6,7 @@ var ObjectId = require('mongodb').ObjectID;
 
 export class OTPHelper {
 
-    static async deleteOTP(id: string, callback) {
+    static async deleteOTP(id, callback) {
         try {
             const query = await MongoHelper.client.db('Mooki_Development').collection('otp');
             var deleteParams = { _id: new ObjectId(id) };
@@ -37,8 +37,8 @@ export class OTPHelper {
                 }
                 //console.log(data);
                 return callback('OTP ID', data);
-            }); 
-            
+            });
+
 
         } catch (error) {
             console.log(error);
@@ -49,7 +49,7 @@ export class OTPHelper {
     static validateOTP = async (otp: OTP, callback) => {
         try {
             const collection = MongoHelper.client.db('Mooki_Development').collection('otp');
-            var findParams = { cellphone: otp.cellphone, otpcode: otp.otpcode }
+            var findParams = { cellphone: otp.getCellphone, otpcode: otp.getOtpCode }
             var result = await collection.findOne(findParams, function (err, res) {
                 if (err) {
                     console.log(err);
@@ -59,7 +59,7 @@ export class OTPHelper {
 
                 //if it exists delete it from the db 
                 if (otp !== null) {
-                    OTPHelper.deleteOTP(otp._id, resp => {
+                    OTPHelper.deleteOTP(otp.getID, resp => {
                         console.log(resp)
                     });
                 }

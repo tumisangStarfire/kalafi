@@ -2,6 +2,7 @@
 import { PillPrescription } from './PillPrescription';
 import { Vitals } from './Vitals';
 import { ObjectId } from 'mongodb';
+import { HealthFacility } from './HealthFacility';
 
 export class Injury {
 
@@ -9,7 +10,8 @@ export class Injury {
   userId: string;
   injuryType: string;
   date_of_injury: Date;
-  medicationPrescribed: Array<PillPrescription>;
+  medicationPrescribed: Array<PillPrescription>; 
+  healthFacility : HealthFacility
   vitals: Vitals; //pills given to the patient [ { id: 1 } ]
   doctorsNotes?: string;
 
@@ -22,18 +24,26 @@ export class Injury {
    *    date of injury : 2013-04-23,
    *    pillPrescription : { _id : objectId, name : paracetamol }, 
    *    vitals: { temp: 39, bp: 85  }
-   *    doctorsNotes : 
+   *    doctorsNotes :  
+   *    healthFacility : { 
+   *      id: 2,
+   *      name: Extension 2 Clinic, 
+   *      region :1
+   *      speciality :{}
+   *      
+   *    }
    * 
    * } 
    * 
    */
-  constructor(userId: string, vitals: Vitals, injuryType: string, date_of_injury: Date, doctorsNotes?: string) {
+  constructor(userId: string, vitals: Vitals,healthFacility :HealthFacility, injuryType: string, date_of_injury: Date, doctorsNotes?: string) {
 
     this.userId = userId;
     this.injuryType = injuryType;
     this.date_of_injury = date_of_injury;
     this.doctorsNotes = doctorsNotes;
-    this.vitals = vitals;
+    this.vitals = vitals; 
+    this.healthFacility = healthFacility;
   }
 
   addInjuryPills(medicationPrescribed: PillPrescription) {
