@@ -2,6 +2,7 @@ import { Illness } from '../models/Illness';
 import { Request, Response } from 'express';
 import { IllnessHelper } from '../databasehelper/IllnessHelper';
 
+
 /** create the illness  */
 export async function createIllness(request: Request, response: Response) {
     try {
@@ -35,6 +36,21 @@ export async function deleteIllness(request: Request, response: Response) {
         await IllnessHelper.remove(illnessId, result => {
             console.log(result);
             response.json(result);
+        });
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export function getAPIIllness(request: Request, response: Response) {
+    try {
+        var result = IllnessHelper.illnessApi(res => {
+            var strings = ["transmission", "diagnosis", "treatment", "prevention"]
+            let data = res.data;
+            var cleanUp = JSON.stringify(data);
+            cleanUp.replace('\n\t', '');
+
+            return response.json(data.diseases)
         });
     } catch (error) {
         console.log(error);

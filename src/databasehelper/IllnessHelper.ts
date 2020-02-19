@@ -1,6 +1,8 @@
 import { Illness } from 'models/Illness';
 import { MongoHelper } from '../database/MongoHelper';
 var ObjectId = require('mongodb').ObjectID;
+const axios = require('axios').default;
+var stringify = require('json-stringify-safe');
 
 export class IllnessHelper {
     /**creates and saves a new illness a patient has gone through */
@@ -50,6 +52,23 @@ export class IllnessHelper {
                 illness = res;
                 console.log(illness);
                 return callback(illness);
+            });
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    static illnessApi = callback => {
+        try {
+            let url = 'https://disease-info-api.herokuapp.com/diseases';
+            axios.get(url).then((res) => {
+
+                var data = stringify(res, null, 2);
+
+                return callback(JSON.parse(data));
+            }).catch((err) => {
+                console.log(err);
             });
 
         } catch (error) {

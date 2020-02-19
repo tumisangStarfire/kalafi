@@ -25,6 +25,7 @@ export class UserProfile {
   private height: number;
   private bmi?: number;
   private bloodType?: string;
+  private waistSize: number;
 
   /** User Profile Document Structure 
    *  _id = ObjectId(121221qwqwqw) 
@@ -37,7 +38,7 @@ export class UserProfile {
    * 
    * 
    */
-  constructor(date_of_birth: Date, weight: number, height: number, gender?: Gender, omang?: number, profilePicture?: string, bmi?: number, bloodType?: string) {
+  constructor(date_of_birth: Date, weight: number, height: number, gender?: Gender, omang?: number, profilePicture?: string, bmi?: number, bloodType?: string, waistSize?: number) {
 
     this.date_of_birth = date_of_birth;
     this.gender = gender;
@@ -47,6 +48,7 @@ export class UserProfile {
     this.height = height;
     this.bmi = bmi;
     this.bloodType = bloodType;
+    this.waistSize = waistSize;
 
   }
 

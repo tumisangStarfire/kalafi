@@ -3,7 +3,7 @@ const mongoClient = require('mongodb').MongoClient;
 const dotenv = require('dotenv');
 import mongoose from 'mongoose';
 
-dotenv.config()
+dotenv.config();
 
 
 var mongoURL = process.env.MONGO_Url;

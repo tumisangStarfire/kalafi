@@ -2,8 +2,13 @@ import { User } from '../models/User';
 import { MongoHelper } from '../database/MongoHelper';
 import { OTPHelper } from './OTPHelper';
 import { LoginInterface } from '../interfaces/LoginInterface';
+import { TokenData } from '../interfaces/TokenData';
 var ObjectId = require('mongodb').ObjectID;
 import * as bcrypt from 'bcrypt';
+import * as jwt from "jsonwebtoken";
+const dotenv = require('dotenv');
+dotenv.config();
+import { JWT_SECRET_KEY } from '../utils/jwebtoken';
 
 
 
@@ -19,7 +24,7 @@ export class UserHelper {
             if (await query.findOne({ cellphone: user.getCellphone })) {
                 var JsonResponse = {
                     status: 'failed',
-                    message: 'user with that email exists',
+                    message: 'user with that cellphone exists',
                     code: 404
                 }
                 return callback(JsonResponse);
@@ -158,6 +163,47 @@ export class UserHelper {
             console.log(error);
         }
     }
+
+    static createToken = (device_uniqueID, userId, callback) => {
+        try {
+            const today = new Date();
+            const expirationDate = new Date(today);
+            expirationDate.setDate(today.getDate() + 60);
+
+            let token = btoa(JWT_SECRET_KEY + userId + device_uniqueID); // the token is encoded using base64
+            var tokenData: TokenData = {
+                token: token,
+                userId: userId,
+                device_uniqueID: '', //unique id of the device, 
+                applicationEnv: process.env.NODE_ENV,
+                applicationId: '', //id of the application from google play store Store or apple play store,   
+                expirationTimestamp: expirationDate
+
+            }
+            return callback(tokenData);
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    static saveAccessToken = (tokenData: TokenData, callback) => {
+        try {
+            const collection = MongoHelper.client.db('Mooki_Development').collection('users');
+            var result = collection.insertOne(tokenData).then(() => callback(null))
+                .catch(error => callback(error))
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    /* validate token for API calls**/
+    static validateToken = () => {
+
+    }
+
+
+
 
 }
 

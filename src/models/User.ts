@@ -1,5 +1,6 @@
 
 import { ObjectId, Timestamp } from "mongodb";
+import * as bcrypt from 'bcrypt';
 
 /*constants */
 
@@ -23,6 +24,7 @@ export class User {
   private status?: Status; //default status of the user
   private verified?: boolean;
   private created_at: string;
+
 
 
   /** user document structure 
@@ -120,6 +122,14 @@ export class User {
 
   set setVerified(verified: boolean) {
     this.verified = verified;
+  }
+
+  public hashPassword() {
+    this.password = bcrypt.hashSync(this.password, 8);
+  }
+
+  checkIfUnencryptedPasswordIsValid(unencryptedPassword: string) {
+    return bcrypt.compareSync(unencryptedPassword, this.password);
   }
 
 }

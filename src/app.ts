@@ -5,8 +5,8 @@ import { mongooseConnector } from './database/mongooseConnector';
 /* import * as bodyParser from 'body-parser'; */
 import router from './router/router';
 import { loggerMiddleware } from './middleware/loggerMiddleware';
+var path = require('path');
 const dotenv = require('dotenv');
-
 dotenv.config()
 export class App {
 
@@ -17,8 +17,6 @@ export class App {
         this.initializeMiddlewares();
         this.envSettings();
         this.initializeRoute();
-
-
     }
 
     private initializeMiddlewares() {
@@ -26,10 +24,21 @@ export class App {
         this.app.use(express.json());
         this.app.use(express.urlencoded({ extended: true }));
         this.app.use(loggerMiddleware);
+        this.app.use(express.static(path.join(__dirname + 'public')));
+        //this.app.set('views', path.join(__dirname + '/public/web'));
+        //this.app.engine('html', require('ejs').renderFile);
+        //this.app.set('view engine', 'html');
+        /**remove this line in prod */
+        process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+
+
     }
 
     private initializeRoute() {
         this.app.use('/v1/api', router);
+        this.app.get("/", function (req, res) {
+            res.sendFile('./public/web/views/index.html', { root: __dirname });
+        })
     }
 
     private envSettings() {
