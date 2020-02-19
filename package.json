@@ -10,6 +10,7 @@
   "author": "Tumisang Mogotsi",
   "license": "ISC",
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.12.1",
     "@types/bcrypt": "^3.0.0",
     "axios": "^0.19.2",
     "bcrypt": "^3.0.8",
