@@ -23,7 +23,7 @@ const sendEmail = async (to, subject = null, text, attachmemt = null) => {
         to: to,
         subject: subject,
         text: text,
-        html: "<b>Email sent over node js</b>" // html body
+        html: "<b>Thank you for beta registration, we will send you a link to download our beta platfrom once it is ready</b>" // html body
     }).then(function (response) {
         console.log(response);
     }).catch(function (error) {

@@ -1,0 +1,1 @@
+{"version":3,"file":"UserAllergy.js","sourceRoot":"","sources":["../../src/models/UserAllergy.ts"],"names":[],"mappings":";;AAIA,MAAa,WAAW;IAMtB,YAAY,MAAc,EAAE,WAAyB;QAEnD,IAAI,CAAC,MAAM,GAAG,MAAM,CAAC;QACrB,IAAI,CAAC,WAAW,CAAC,IAAI,CAAC,WAAW,CAAC,CAAC;IAErC,CAAC;IAED,IAAI,SAAS;QACX,OAAO,IAAI,CAAC,MAAM,CAAC;IACrB,CAAC;CAKF;AApBD,kCAoBC"}

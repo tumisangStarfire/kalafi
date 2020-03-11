@@ -1,4 +1,14 @@
-export class Address {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+class Address {
+    constructor(region, city, town, village, streetName, houseNumber) {
+        this.city = city;
+        this.town = town;
+        this.village = village;
+        this.streetName = streetName;
+        this.houseNumber = houseNumber;
+        this.region = region;
+    }
     get getCity() {
         return this.city;
     }
@@ -29,11 +39,6 @@ export class Address {
     set setHouseNumber(houseNumber) {
         this.houseNumber = houseNumber;
     }
-    set setAddressRegion(regionName) {
-        this.region.setRegionName;
-    }
-    setRegion() {
-        this.region.id;
-    }
 }
+exports.Address = Address;
 //# sourceMappingURL=Address.js.map

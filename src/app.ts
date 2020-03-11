@@ -5,7 +5,11 @@ import { mongooseConnector } from './database/mongooseConnector';
 /* import * as bodyParser from 'body-parser'; */
 import router from './router/router';
 import { loggerMiddleware } from './middleware/loggerMiddleware';
-var path = require('path');
+import * as jsdom from 'jsdom';
+const { JSDOM } = jsdom;   
+import jQuery from 'jquery'
+const $ = jQuery; 
+var path = require('path'); 
 const dotenv = require('dotenv');
 process.env.PWD = process.cwd()
 dotenv.config()
@@ -17,7 +21,9 @@ export class App {
         this.app = express();
         this.initializeMiddlewares();
         this.envSettings();
-        this.initializeRoute();
+        this.initializeRoute(); 
+        this.testPublicPath();
+       
     }
 
     private initializeMiddlewares() {
@@ -25,20 +31,27 @@ export class App {
         this.app.use(express.json());
         this.app.use(express.urlencoded({ extended: true }));
         this.app.use(loggerMiddleware);
-        this.app.use(express.static(process.env.PWD + './public'));
+        this.app.use(express.static(path.join(process.env.PWD ,'/public'))); 
+        this.app.use(express.static(path.join(__dirname , '/public'))); 
+       
         //this.app.set('views', path.join(__dirname + '/public/web'));
         //this.app.engine('html', require('ejs').renderFile);
         //this.app.set('view engine', 'html');
-        /**remove this line in prod */
-        process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+     
 
 
+    }  
+    public testPublicPath(){
+        var test =  path.join(process.env.PWD ,'/public');
+        console.log(test);
     }
 
     private initializeRoute() {
         this.app.use('/v1/api', router);
         this.app.get("/", function (req, res) {
-            res.sendFile('./public/web/views/index.html', { root: __dirname });
+            var page_template= res.sendFile('./public/web/views/index.html', { root: __dirname });
+            var document = new jsdom.JSDOM(page_template); 
+           
         });
         this.app.get('/legal/privacy-policy', function (req, res) {
             res.sendFile('./public/web/views/privacy_policy.html', { root: __dirname });

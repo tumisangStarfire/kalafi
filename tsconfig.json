@@ -12,7 +12,8 @@
         "allowSyntheticDefaultImports": true,
         "baseUrl": "./src",
         "rootDir": "src",
-        "allowJs": true,
+        "allowJs": true
+      
     },
     "include": [
         "src/**/*.ts", "src/public/*", "src/middleware/loggerMiddleware.ts", "src/services/generateOTP.js",

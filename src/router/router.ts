@@ -1,7 +1,7 @@
 import { Router } from "express";
 /* const index = require('../public/html') */
 import * as bodyParser from 'body-parser';
-
+import { registerBeta } from '../controller/auth/RegisterController';
 import { registerUser } from '../controller/auth/RegisterController';
 import { login } from '../controller/auth/LoginController';
 import { healthFacilityData, uploadHealthFacilities } from '../controller/HealthFacilityController';
@@ -29,7 +29,7 @@ router.get("/", (req, res) => {
 /**user auth api routes */
 router.route('/register').post(registerUser);
 router.route('/login').post(login);
-
+router.route('/registerBeta').post(registerBeta);
 router.route('/getUser').get(getUser);
 
 /** user profile */

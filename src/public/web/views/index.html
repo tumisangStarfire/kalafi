@@ -18,29 +18,39 @@
             margin: auto;
             max-width: 300px;
         }
-    </style>
+    </style> 
+     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet"
         href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
     <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    
+    <link rel="icon" href="http://localhost:3000/web/views/img/logo.png"> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> 
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+    crossorigin="anonymous"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script> 
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+
 </head>
 
 <body>
     <div class="container-fluid">
-        <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
-            <div class="col-md-5 p-lg-5 mx-auto my-5">
+        <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center text-light bg-info">
+            <div class="col-md-5 p-lg-5 mx-auto my-5"> 
+                
                 <h1 class="display-4 font-weight-normal">Mooki Digital Health Card</h1>
-                <p class="lead font-weight-normal">Take control of your health, take control of your families health.
+                <p class="lead font-weight-normal">Take control of your health
                 </p>
-                <a class="btn btn-outline-info" href="#">Coming Soon</a>
+                <a class="btn btn-danger" href="#">Coming Soon</a>
             </div>
             <div class="product-device shadow-sm d-none d-md-block"></div>
             <div class="product-device product-device-2 shadow-sm d-none d-md-block"></div>
         </div>
 
-        <div class="row p-md-5 text-center">
+        <div class="row p-md-2 text-center  text-danger">
             <div class="col-sm-3">
                 <img class="img-responsive" src="https://image.flaticon.com/icons/svg/2345/2345500.svg"
                     alt="Mooki Digital Health Card Data Protection" width="100" height="100">
@@ -83,64 +93,195 @@
                 <!--  <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p> -->
             </div>
         </div>
+        <div class="centered">
+            <div class="col ">
+                <img class="img-responsive " src="http://localhost:3000/web/views/img/img3.jpg" alt="Mooki Digital Health Card"width="300"height="500">
+            </div>
+        </div>
 
-        <div class="centered p-md-5 border border-info">
-            <div class="col-md-5 p-lg-5 mx-auto">
-                <img class="img-responsive" src="screenshot1.png" alt="Mooki Digital Health Card">
+        <div class="row p-md-5  bg-danger">
+            <div class="col-6"> 
+                <h1 class="text-light">Sign Up as a Beta Tester</h1>
+                <form id="registerBeta"  class="text-light"> 
+                    <div class="form-group">  
+                        <label for="firstname">First Name</label> 
+                        <input type="text"  class="form-control" name="firstname" id="firstname" placeholder="Enter First Name">
+                    </div> 
+                    <div class="form-group">  
+                        <label for="lastname">Last Name</label> 
+                        <input type="text"  class="form-control" name="lastname" id="lastname" placeholder="Enter Last Name">
+                    </div>
+                    <div class="form-group">
+                      <label for="email">Email address</label>
+                      <input type="email" class="form-control validateGroup1" name="email" id="email" aria-describedby="emailHelp" placeholder="jdoe@gmail">
+                      <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                    </div>
+                    <div class="form-group">
+                      <label for="cellphone">Cellphone</label>
+                      <input type="tel" class="form-control validateGroup1" name="cellphone" id="cellphone" placeholder="+267 7...">
+                    </div>
+                   
+                    <button  type="submit" class="btn btn-info">Submit</button>
+                  </form>
+            </div>  
+            <div class="col-1"></div>
+            <div class="col-3 ">
+                    <img src="http://localhost:3000/web/views/img/img4.jpg" class="img-fluid" alt="mooki digital health card" >
             </div>
         </div>
 
 
-        <footer class="footer mt-2">
-            <div class="row bg-dark text-light">
-                <div class="col-sm-3 mt-5">
+        
+    </div><footer class="footer ">
+        <div class="row p-md-5 bg-dark text-light">
+            <div class="col-sm-3">
 
-                    <h3 class="text-info">Mooki Digital
-                        Health Card</h3>
-                </div>
-                <div class="col-sm-3 mt-5">
-                    <h5>Features</h5>
-                    <ul>
-                        <li>Partner With Us</li>
-                        <li>Clinical Research</li>
-                    </ul>
-
-                </div>
-                <div class="col-sm-3 mt-5">
-                    <h5>About</h5>
-                    <ul>
-                        <li>Team</li>
-                        <li>Location</li>
-                        <li>Privacy</li>
-                        <li>Terms and Conditions</li>
-                    </ul>
-
-                </div>
-                <div class="col-sm-3 mt-5">
-                    <h5>Connect</h5>
-                    <ul>
-                        <li><a href="#" class="text-light"><i class="lab la-facebook"></i>Facebook</a></li>
-                        <li><a href="#" class="text-light"><i class="fab fa-twitter"></i>Twitter</a></li>
-                        <li><a href="#" class="text-light"><i class="fab fa-linkedin-in"></i>Linked In</a></li>
-                        <li><a href="#" class="text-light"><i class="fab fa-youtube"></i>Youtube</a></li>
-                    </ul>
-                </div>
+                <h3 class="text-info">Mooki Digital
+                    Health Card</h3> 
             </div>
-            <div class="row">
-                <div class="col bg-light">
-                    <p class="text-center">Copyright @ 2020 Mooki Digital Health</p>
-                </div>
+            <div class="col-sm-3">
+                <h5>Contribution</h5>
+                <ul>
+                    <li>Partner With Us</li>
+                    <li>Clinical Research</li>
+                </ul>
+
             </div>
-        </footer>
-    </div>
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
-    </script>
+            <div class="col-sm-3">
+                <h5>About</h5>
+                <ul>
+                    <li>Developer</li>
+                    <li>Location</li>
+                    <li><a href="http://localhost:3000/legal/privacy-policy" class="text-light">Privacy</a> </li>
+                    <li><a href="#" class="text-light">Terms and Conditions</a></li>
+                </ul>
+
+            </div>
+            <div class="col-sm-3">
+                <h5>Connect  <span>+267 73310406</span> </h5>
+                <ul>
+                    <li><a href="https://web.facebook.com/mookidigitalhealthcard" class="text-light"><i class="lab la-facebook"></i>  Facebook</a></li>
+                    <li><a href="#" class="text-light"><i class="lab la-twitter"></i> Twitter</a></li>
+                    <li><a href="#" class="text-light"><i class="lab la-linkedin-in"></i> Linked In</a></li>
+                    <li><a href="#" class="text-light"><i class="lab la-youtube"></i> Youtube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col bg-info">
+                <p class="text-center">Copyright @ 2020 Mooki Digital Health</p>
+            </div>
+        </div>
+    </footer>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
         integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
     </script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
+    </script>  
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>  
+  
+    <script type="text/javascript"> 
+      function registerSuccess(){ 
+            Toastify({
+                text: "Successful registration",
+                duration: 6000,
+                newWindow: true,
+                gravity: "top", // `top` or `bottom`
+                center: true, // `true` or `false`
+                backgroundColor: "#1fcf08",
+            }).showToast();   
+        }  
+        function registerFailed(){ 
+            Toastify({
+                text: "Problem with registration, please try again later",
+                duration: 4000,
+                newWindow: true,
+                gravity: "top", // `top` or `bottom`
+                center: true, // `true` or `false`
+                backgroundColor: "#CC0000",
+            }).showToast();   
+        }
+    </script> 
+    <script>  
+      
+    </script>
+    <script type="text/javascript">    
+        $(document).ready(function() {    
+            $('#registerBeta').submit(function(event){ 
+                event.preventDefault();   
+                $("#registerBeta").validate({
+                    rules :{ 
+                        firstname : {
+                            required:true, 
+                            minlength:2,  
+                            maxlength:30
+                        },
+                        lastname : {
+                            required:true, 
+                            minlength:2, 
+                            maxlength:30,
+                        }, 
+                        email : {
+                            require_from_group: [1, '.validateGroup1'],
+                            email:true
+                        }, 
+                        cellphone :{ 
+                            require_from_group: [1, '.validateGroup1'],
+                        }
+                    },
+                    groups: {
+                            validateGroup1: "email cellphone"
+                    }, 
+                    messages:{ 
+                        firstname :{ 
+                            required : "Please enter your first name"
+                        }, 
+                        lastname :{ 
+                            required : "Please enter your last name"
+                        },
+                        email :{ 
+                            require_from_group: "Please provide either your email address or cellphone so we can get in contact with you", 
+                        
+                        },
+                        cellphone :{ 
+                            require_from_group: "Please provide either your email address or cellphone so we can get in contact with you",
+                        }
+                    },
+                    submitHandler: function(form) {
+                        var firstname = $('#firstname').val(); 
+                        var lastname = $('#lastname').val(); 
+                        var email = $('#email').val(); 
+                        var cellphone = $('#cellphone').val();  
+                        console.log(firstname, cellphone);
+                        $.ajax({
+                            type: 'post', 
+                            
+                            url: 'http://localhost:3000/v1/api/registerBeta',
+                            data: { 
+                                'firstname' : firstname, 
+                                'lastname' : lastname, 
+                                'email' : email, 
+                                'cellphone' : cellphone
+                            },
+                            dataType: 'JSON',
+                            success: function (res) {
+                                console.log(res);  
+                                registerSuccess();
+                            }, 
+                            error : function(err){ 
+                                console.log(err); 
+                                registerFailed();
+                            }
+                        });
+                    }
+
+                 });
+              
+            }); 
+        });
+        
+        
     </script>
 </body>
 

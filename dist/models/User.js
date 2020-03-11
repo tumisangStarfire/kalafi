@@ -1,18 +1,42 @@
-export class User {
-    constructor(firstName, lastName, email, cellphone, password, status, verified) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const bcrypt = require("bcrypt");
+/*constants */
+var Status;
+(function (Status) {
+    Status[Status["Non_Active"] = 0] = "Non_Active";
+    Status[Status["Active"] = 1] = "Active";
+    Status[Status["Suspended"] = 2] = "Suspended";
+})(Status || (Status = {}));
+/** a class */
+class User {
+    /** user document structure
+     *  _id = ObjectId(121221qwqwqw) ,
+     * firstName : John [required],
+     * lastName : Doe [required],
+     * cellphone : 76221221 , [required]
+     * password : 1221221 [required]
+     * email : johndoe.mail.com, optional
+     * status : 0
+     * verified : false
+     *
+     */
+    constructor(firstName, lastName, cellphone, password, email, status, verified) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.email = email;
         this.cellphone = cellphone;
         this.password = password;
+        this.email = email;
         this.status = status;
         this.verified = verified;
+        /*initialize the timestamp when saving the documennt*/
+        this.created_at = Date.now().toString();
     }
     get getUserId() {
-        return this.id;
+        return this._id;
     }
-    set setUserId(id) {
-        this.id = id;
+    set setUserId(_id) {
+        this._id = _id;
     }
     get getFirstName() {
         return this.firstName;
@@ -56,5 +80,12 @@ export class User {
     set setVerified(verified) {
         this.verified = verified;
     }
+    hashPassword() {
+        this.password = bcrypt.hashSync(this.password, 8);
+    }
+    checkIfUnencryptedPasswordIsValid(unencryptedPassword) {
+        return bcrypt.compareSync(unencryptedPassword, this.password);
+    }
 }
+exports.User = User;
 //# sourceMappingURL=User.js.map

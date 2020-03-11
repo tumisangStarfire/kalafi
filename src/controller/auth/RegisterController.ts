@@ -14,4 +14,16 @@ export async function registerUser(request: Request, response: Response, next) {
     } catch (error) {
         response.json(error);
     }
+}     
+
+export   async  function registerBeta(request: Request, response: Response){
+    try {
+        const newUser: User = request.body;
+        var createUser = await UserHelper.registerBetaUser(newUser, result => {
+            console.log(result);
+            return response.json(result).status(200);
+        });
+    } catch (error) {
+        response.json(error);
+    }
 }

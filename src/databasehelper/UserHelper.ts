@@ -141,6 +141,30 @@ export class UserHelper {
         } catch (error) {
             console.log(error);
         }
+    } 
+
+    static registerBetaUser = async (user: User, callback) =>{ 
+        try {
+            const query = MongoHelper.client.db('Mooki_Development').collection('betaUsers');
+
+            
+
+                var result = query.insertOne(user,function(err,res){
+                    if(err){ 
+                        console.log(err)
+                    } 
+                    console.log(res); 
+                    var JsonResponse = {
+                        status: 'success',
+                        message: 'Beta User registered',
+                        code: 200
+                    } 
+                    return callback(JsonResponse);
+                });
+            
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     static verifyUserCellphone = (cellphone: number, callback) => {

@@ -1,3 +1,4 @@
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -7,12 +8,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { App } from './app';
-const validateENV = require('./utils/validateENV');
-validateENV();
+Object.defineProperty(exports, "__esModule", { value: true });
+const app_1 = require("./app");
+const validateENV_1 = require("./utils/validateENV");
+validateENV_1.validateEnv();
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
-        const app = new App();
+        const app = new app_1.App();
         app.listen();
     });
 }

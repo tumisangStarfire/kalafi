@@ -5,26 +5,30 @@
   "main": "server.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "ts-node ./src/server.ts"
+    "dev": "nodemon",
+    "build": "tsc"
   },
   "author": "Tumisang Mogotsi",
   "license": "ISC",
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.12.1",
     "@types/bcrypt": "^3.0.0",
+    "@types/bcryptjs": "^2.4.2",
+    "aws-sdk": "^2.634.0",
     "axios": "^0.19.2",
     "bcrypt": "^3.0.8",
+    "bcryptjs": "^2.4.3",
     "class-validator": "^0.11.0",
     "ejs": "^3.0.1",
     "envalid": "^6.0.1",
-    "eslint": "^6.8.0",
     "express": "^4.17.1",
+    "jquery": "^3.4.1",
+    "jsdom": "^16.2.1",
     "json-stringify-safe": "^5.0.1",
     "jsonwebtoken": "^8.5.1",
     "mongo-models": "^3.0.2",
     "mongodb": "^3.5.3",
     "mongoose": "^5.9.0",
-    "ts-node": "^8.6.2",
     "uuid": "^3.4.0"
   },
   "devDependencies": {
@@ -32,8 +36,25 @@
     "@types/jsonwebtoken": "^8.3.7",
     "@types/mongodb": "^3.3.16",
     "@types/mongoose": "^5.7.1",
+    "@types/node": "^13.7.7",
     "babel-preset-env": "^1.7.0",
     "babel-register": "^6.26.0",
-    "typescript": "^3.7.5"
-  }
+    "eslint": "^6.8.0",
+    "eslint-plugin-import": "^2.20.1",
+    "nodemon": "^2.0.2",
+    "ts-node": "^8.6.2",
+    "typescript": "^3.8.3",
+    "webpack-dev-server": "^3.9.0"
+  },
+  "engines": {
+    "node": "10.x"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tumisangStarfire/expressJSDBAPI.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tumisangStarfire/expressJSDBAPI/issues"
+  },
+  "homepage": "https://github.com/tumisangStarfire/expressJSDBAPI#readme"
 }

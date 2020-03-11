@@ -1,12 +1,8 @@
-import * as express from 'express';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 function loggerMiddleware(request, response, next) {
     console.log(`${request.method} ${request.path}`);
     next();
 }
-const app = express();
-app.use(loggerMiddleware);
-app.get('/hello', (request, response) => {
-    response.send('Hello world!');
-});
-app.listen(5000);
+exports.loggerMiddleware = loggerMiddleware;
 //# sourceMappingURL=loggerMiddleware.js.map

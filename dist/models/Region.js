@@ -1,12 +1,6 @@
-export class Region {
-    constructor(regionName) {
-        this.regionName = regionName;
-    }
-    set setRegionName(regionName) {
-        this.regionName = regionName;
-    }
-    get getRegionName() {
-        return this.regionName;
-    }
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+class Region {
 }
+exports.Region = Region;
 //# sourceMappingURL=Region.js.map
