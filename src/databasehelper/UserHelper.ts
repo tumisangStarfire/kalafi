@@ -147,8 +147,6 @@ export class UserHelper {
         try {
             const query = MongoHelper.client.db('Mooki_Development').collection('betaUsers');
 
-            
-
                 var result = query.insertOne(user,function(err,res){
                     if(err){ 
                         console.log(err)
