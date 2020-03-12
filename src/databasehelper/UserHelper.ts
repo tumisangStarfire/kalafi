@@ -8,9 +8,9 @@ import * as bcrypt from 'bcrypt';
 import * as jwt from "jsonwebtoken";
 const dotenv = require('dotenv');
 dotenv.config();
-import { JWT_SECRET_KEY } from '../utils/jwebtoken';
 
 
+export const JWT_SECRET_KEY = process.env.JWT_SECRET;
 
 export class UserHelper {
 
