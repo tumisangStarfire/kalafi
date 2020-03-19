@@ -15,7 +15,7 @@ var ObjectId = require('mongodb').ObjectID;
 const bcrypt = require("bcrypt");
 const dotenv = require('dotenv');
 dotenv.config();
-const jwebtoken_1 = require("../utils/jwebtoken");
+exports.JWT_SECRET_KEY = process.env.JWT_SECRET;
 class UserHelper {
 }
 exports.UserHelper = UserHelper;
@@ -137,6 +137,26 @@ UserHelper.resetPassword = (id, password, confirmPassword, callback) => {
         console.log(error);
     }
 };
+UserHelper.registerBetaUser = (user, callback) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const query = MongoHelper_1.MongoHelper.client.db('Mooki_Development').collection('betaUsers');
+        var result = query.insertOne(user, function (err, res) {
+            if (err) {
+                console.log(err);
+            }
+            console.log(res);
+            var JsonResponse = {
+                status: 'success',
+                message: 'Beta User registered',
+                code: 200
+            };
+            return callback(JsonResponse);
+        });
+    }
+    catch (error) {
+        console.log(error);
+    }
+});
 UserHelper.verifyUserCellphone = (cellphone, callback) => {
     try {
         var cellphoneExists = false;
@@ -162,7 +182,7 @@ UserHelper.createToken = (device_uniqueID, userId, callback) => {
         const today = new Date();
         const expirationDate = new Date(today);
         expirationDate.setDate(today.getDate() + 60);
-        let token = btoa(jwebtoken_1.JWT_SECRET_KEY + userId + device_uniqueID); // the token is encoded using base64
+        let token = btoa(exports.JWT_SECRET_KEY + userId + device_uniqueID); // the token is encoded using base64
         var tokenData = {
             token: token,
             userId: userId,

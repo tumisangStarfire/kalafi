@@ -4,6 +4,7 @@ const express_1 = require("express");
 /* const index = require('../public/html') */
 const bodyParser = require("body-parser");
 const RegisterController_1 = require("../controller/auth/RegisterController");
+const RegisterController_2 = require("../controller/auth/RegisterController");
 const LoginController_1 = require("../controller/auth/LoginController");
 const HealthFacilityController_1 = require("../controller/HealthFacilityController");
 const IllnessController_1 = require("../controller/IllnessController");
@@ -22,8 +23,9 @@ router.get("/", (req, res) => {
     console.log('here');
 });
 /**user auth api routes */
-router.route('/register').post(RegisterController_1.registerUser);
+router.route('/register').post(RegisterController_2.registerUser);
 router.route('/login').post(LoginController_1.login);
+router.route('/registerBeta').post(RegisterController_1.registerBeta);
 router.route('/getUser').get(UserController_1.getUser);
 /** user profile */
 router.route('/uploadProfilePicture').post(UserProfileController_1.updateProfilePicture);

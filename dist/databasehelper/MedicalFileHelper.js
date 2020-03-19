@@ -51,7 +51,7 @@ MedicalFileLogic.uploadMedicalFile = (medicalFile, callback) => __awaiter(void 0
             Body: ''
         };
         let ext = '.png';
-        medicalFile.setFilePath = 'MedicalFile/' + medicalFile.userId + '/' + medicalFile.getMedical_file_type_id + '/' + medicalFile.getFileName + '-' + uuid() + ext;
+        medicalFile.setFilePath = 'MedicalFile/' + medicalFile.userId + '/' + medicalFile.getFileName + '-' + uuid() + ext;
         yield FileCreaterController_1.createFile(medicalFile.getFileName, medicalFile.getBase64File, ext, result => {
             //result has the created file path on the system
             console.log(result);

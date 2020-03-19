@@ -14,7 +14,7 @@ class MongoHelper {
     }
     static connect() {
         return new Promise((resolve, reject) => {
-            console.log(connectionString);
+            // console.log(connectionString);
             mongo.MongoClient.connect(connectionString, { useUnifiedTopology: true, useNewUrlParser: true }, (err, client) => {
                 if (err) {
                     reject(err);

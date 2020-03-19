@@ -25,4 +25,19 @@ function registerUser(request, response, next) {
     });
 }
 exports.registerUser = registerUser;
+function registerBeta(request, response) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const newUser = request.body;
+            var createUser = yield UserHelper_1.UserHelper.registerBetaUser(newUser, result => {
+                console.log(result);
+                return response.json(result).status(200);
+            });
+        }
+        catch (error) {
+            response.json(error);
+        }
+    });
+}
+exports.registerBeta = registerBeta;
 //# sourceMappingURL=RegisterController.js.map
