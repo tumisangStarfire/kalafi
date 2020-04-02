@@ -31,11 +31,11 @@ export async function removeCurrentMedication(request: Request, response: Respon
     }
 }
 
-export async function getData(request: Request, response: Response) {
+export async function getUserMedicationData(request: Request, response: Response) {
     try {
-        let userId = request.params.id;
+        let userId = request.params.userId;
 
-        await CurrentMedicationHelper.getDataUsingUserId(userId, result => {
+        await CurrentMedicationHelper.getMedicationDataUsingUserId(userId, result => {
             return response.json(result);
         });
 

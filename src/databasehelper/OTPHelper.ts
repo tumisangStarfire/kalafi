@@ -59,7 +59,7 @@ export class OTPHelper {
 
                 //if it exists delete it from the db 
                 if (otp !== null) {
-                    OTPHelper.deleteOTP(otp.getID, resp => {
+                    OTPHelper.deleteOTP(otp.getStorageId, resp => {
                         console.log(resp)
                     });
                 }

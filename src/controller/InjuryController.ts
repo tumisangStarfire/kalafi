@@ -1,12 +1,25 @@
-import { Injury } from '../models/Injury';
+import { UserInjury } from '../models/UserInjury';
 import { Request, Response } from 'express';
 import { InjuryHelper } from '../databasehelper/InjuryHelper';
 
 /** create the injury  */
 export async function createInjury(request: Request, response: Response) {
     try {
-        var newInjury: Injury = request.body; /** request body sent from client */
+        var newInjury: UserInjury = request.body; /** request body sent from client */
         await InjuryHelper.create(newInjury, result => {
+            console.log(result);
+            response.json(result);
+        });
+    } catch (error) {
+        console.log(error);
+    }
+} 
+
+/**get all injuries */ 
+
+export async function getAllInjuries(request:Request, response:Response){ 
+    try {
+        await InjuryHelper.getAllInjuryData(result =>{  
             console.log(result);
             response.json(result);
         });

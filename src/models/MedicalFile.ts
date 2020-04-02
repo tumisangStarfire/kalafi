@@ -1,10 +1,11 @@
 import { MedicalFileType } from "./MedicalFileType";
-import { ObjectId } from "mongodb";
+import { ObjectId } from "mongodb"; 
+import { Document } from "mongoose";
 
 
-export class MedicalFile {
+export class MedicalFile extends Document {
 
-    _id: ObjectId;
+    _id: string;
 
     userId: string; /** users id*/
     private date_uploaded?: string;
@@ -34,14 +35,22 @@ export class MedicalFile {
      * 
      */
     constructor(userId: string, medicalFileType: MedicalFileType, fileName: string, base64Stringfile: string, date_uploaded?: string, filePath?: string) {
-
+        super();
         this.userId = userId;
         this.fileName = fileName;
         this.base64Stringfile = base64Stringfile;
         this.date_uploaded = date_uploaded;
         this.filePath = filePath;
         this.medicalFileType = medicalFileType;
-    }
+    } 
+
+    get getStorageId() : string { 
+        return this._id; 
+     } 
+    
+     set getStorageId(storageId: string) {
+       this._id = storageId;
+     } 
 
     /**accessors */
     public get getFileName(): string {

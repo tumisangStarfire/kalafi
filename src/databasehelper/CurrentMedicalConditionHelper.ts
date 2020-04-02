@@ -1,25 +1,25 @@
-import { CurrentMedication } from 'models/CurrentMedication';
-import { MongoHelper } from '../database/MongoHelper';
-import { JsonResponseInterface } from '../interfaces/JsonResponseInterface';
-var ObjectId = require('mongodb').ObjectID;
+import { CurrentMedicalCondition } from "../models/CurrentMedicalCondition";
+import { JsonResponseInterface } from "interfaces/JsonResponseInterface";
+import { MongoHelper } from "database/MongoHelper";
 
-export class CurrentMedicationHelper {
+export class CurrentMedicalConditionHelper {
+   
 
-    static create = async (currentMedication: CurrentMedication, callback) => {
+    static create = async (currentMedicalCondition: CurrentMedicalCondition, callback) => {
         try {
-            const query =  MongoHelper.client.db('Mooki_Development').collection('currentmedication');
-            var result = query.insertOne(currentMedication, function (err, res) {
+            const query =  MongoHelper.client.db('Mooki_Development').collection('currentmedicalcondition');
+            var result = query.insertOne(currentMedicalCondition, function (err, res) {
                 if (err) {
                     console.log(err); 
                     var jsonRes : JsonResponseInterface; 
                     jsonRes.status = 'failed';  
-                    jsonRes.message ='failed to add medication information'; 
+                    jsonRes.message ='failed to add medical information'; 
                     jsonRes.data =err; 
                     jsonRes.code =404;
                 }   
                 var jsonRes : JsonResponseInterface; 
                     jsonRes.status = 'success';  
-                    jsonRes.message ='medication information added succesfully'; 
+                    jsonRes.message ='medical information added succesfully'; 
                     jsonRes.data =res.insertedId; 
                     jsonRes.code =200;
 
@@ -29,25 +29,25 @@ export class CurrentMedicationHelper {
         } catch (error) {
             console.log(error);
         }
-    }
+    }    
 
     static remove = async (storageId:string, callback) => {
         try {
-            const query =  MongoHelper.client.db('Mooki_Development').collection('currentmedication');
+            const query =  MongoHelper.client.db('Mooki_Development').collection('currentmedicalcondition');
             var deleteParams = { _id: storageId };
             var result = query.deleteOne(deleteParams, function (err, res) {
                 if (err) {
                     console.log(err); 
                     var jsonRes : JsonResponseInterface; 
                     jsonRes.status = 'failed';  
-                    jsonRes.message ='failed to delete medication information'; 
+                    jsonRes.message ='failed to delete medical information'; 
                     jsonRes.data =err; 
                     jsonRes.code =404;
                 }
                 console.log(res);
                 var jsonRes : JsonResponseInterface; 
                     jsonRes.status = 'success';  
-                    jsonRes.message ='medication information deleted succesfully'; 
+                    jsonRes.message ='medical information deleted succesfully'; 
                     jsonRes.data =res.deletedCount; 
                     jsonRes.code =201;
                 return callback(jsonRes);
@@ -58,9 +58,9 @@ export class CurrentMedicationHelper {
         }
     }
 
-    static getMedicationDataUsingUserId = async (userId:string, callback) => {
+    static getMedicationConditionDataUsingUserId=async(userId: string, callback) =>  {
         try {
-            const collection = MongoHelper.client.db('Mooki_Development').collection('currentmedication');
+            const collection = MongoHelper.client.db('Mooki_Development').collection('currentmedicalcondition');
 
             var result = collection.find({ userId: userId }).toArray(function (err, res) {
                 if (err) {
@@ -76,7 +76,7 @@ export class CurrentMedicationHelper {
                 }  
 
                 //array of medical data 
-                var currentmedication: Array<CurrentMedication>;
+                var currentmedication: Array<CurrentMedicalCondition>;
                 currentmedication = res;
                // console.log(currentmedication); 
                 var jsonres : JsonResponseInterface; 

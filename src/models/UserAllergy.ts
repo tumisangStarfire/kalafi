@@ -5,17 +5,17 @@ import { ObjectId } from "mongodb";
 export class UserAllergy {
  
   _id: ObjectId;
-  userId: number;
+  userId: string;
   allergyType: Array<AllergyTypes>;
 
-  constructor(userID: number, allergyType: AllergyTypes) {
+  constructor(userID: string, allergyType: AllergyTypes) {
 
     this.userId = userID;
     this.allergyType.push(allergyType);
 
   }
 
-  get getUserId(): number {
+  get getUserId(): string {
     return this.userId;
   }
 

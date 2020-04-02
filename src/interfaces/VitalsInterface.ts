@@ -1,7 +1,7 @@
 
 
-export interface Vitals {
-    recorded_on: Date;
+export interface VitalsInterface {
+    recordedOn: Date;
     temperature: number;
     bloodPressure: number;
     pulseRate?: number;

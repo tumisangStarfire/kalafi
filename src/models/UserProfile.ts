@@ -9,15 +9,16 @@ const uuid = require('uuid');
 
 enum Gender {
   Male = 1,
-  Female = 0
+  Female = 0,
+  other=2
 }
 /**class for the users profile information */
-export class UserProfile {
+export class UserProfile  extends Document {
 
-  _id: ObjectId;
-
+  _id: string;
+  userId: string;
   /** private modeifies allows us to use access modifiers get and set, strong coding practices. Consistency, Readbility */
-  private date_of_birth: Date;
+  private dob: Date;
   private gender?: Gender;
   private omang?: number;
   private profilePicture?: string;
@@ -38,9 +39,23 @@ export class UserProfile {
    * 
    * 
    */
-  constructor(date_of_birth: Date, weight: number, height: number, gender?: Gender, omang?: number, profilePicture?: string, bmi?: number, bloodType?: string, waistSize?: number) {
-
-    this.date_of_birth = date_of_birth;
+  constructor( 
+    userId: string,
+    dob: Date,
+    weight: number,
+    height: number, 
+    gender?: Gender,
+    omang?: number, 
+    profilePicture?: string,
+    bmi?: number,
+    bloodType?: string, 
+    storageId?:string,
+    waistSize?: number,
+      ) {
+    super();
+    this._id=storageId;
+    this.userId=userId;
+    this.dob = dob;
     this.gender = gender;
     this.omang = omang;
     this.profilePicture = profilePicture;
@@ -51,14 +66,29 @@ export class UserProfile {
     this.waistSize = waistSize;
 
   }
+  
+  get getStorageId(): string {
+    return this._id;
+  }
+    
+  set setStorageId(storageId: string) {
+    this._id = storageId;
+   }
 
+  get getUserId(): string {
+    return this.userId;
+   }
+    
+  set setUserId(userId: string) {
+    this.userId = userId;
+  } 
 
-  set setDateofBirth(date_of_birth: Date) {
-    this.date_of_birth = date_of_birth;
+  set setDateofBirth(dob: Date) {
+    this.dob = dob;
   }
 
   get getDateofBirth(): Date {
-    return this.date_of_birth;
+    return this.dob;
 
   }
 
@@ -108,7 +138,23 @@ export class UserProfile {
 
   get getBMI(): number {
     return this.bmi;
+  } 
+
+  set  SetBloodType(bloodType:string){
+    this.bloodType=bloodType;
+  } 
+
+  get getBloodType():string{
+    return  this.bloodType;
+  } 
+  set  setWaistSize(waistSize:number){
+    this.waistSize=waistSize;
+  } 
+
+  get setWaistSize():number{
+    return  this.waistSize;
   }
+  
 
   /**calculate the age of the user */
   public calculateAge(date_of_birth: Date): number {

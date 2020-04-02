@@ -1,7 +1,8 @@
 import { User } from '../models/User';
 import { MongoHelper } from '../database/MongoHelper';
 import { OTPHelper } from './OTPHelper';
-import { LoginInterface } from '../interfaces/LoginInterface';
+import { LoginInterface } from '../interfaces/LoginInterface'; 
+import { JsonResponseInterface } from '../interfaces/JsonResponseInterface';
 import { TokenData } from '../interfaces/TokenData';
 var ObjectId = require('mongodb').ObjectID;
 import * as bcrypt from 'bcrypt';
@@ -29,24 +30,27 @@ export class UserHelper {
                 }
                 return callback(JsonResponse);
             } else {
-                //this is a synchronous call, if there is an error on creating the user the program wil stop 
-                const hashedPassword = await bcrypt.hash(user.getPassword, 10);
-                user.setPassword = hashedPassword;
-
-                var result = query.insertOne(user);
+                var result = query.insertOne(user); 
+                
                 result.then(async (res) => {
                     //id user created
                     await OTPHelper.saveOTP(user.getCellphone, result => {
                         //console.log(result);
-                        //return the response 
-                        return callback(res.insertedCount);
+                        //return the response  
+                        var JsonResponse = {
+                            status: 'success',
+                            message: 'user sucessfully created', 
+                            data: res.insertedCount,
+                            code: 200
+                        } 
+                        const jsonres : JsonResponseInterface =JsonResponse ;
+                        return callback(jsonres);
                     });
                 });
                 /** return the error to the response  */
                 result.catch((err) => {
                     return callback(err);
                 });
-
 
             }
 
@@ -81,18 +85,82 @@ export class UserHelper {
         } catch (error) {
             console.log(error);
         }
+    } 
+    //User creates password
+    static createPassword =async (userId,password,confirmPassword,callback) => { 
+       
+        const match = User.checkIfPasswordAndConfirmPasswordMatch(password, confirmPassword); 
+
+        if(match == true){  
+            const collection = MongoHelper.client.db('Mooki_Development').collection('users');
+            var findUser = collection.findOne({ _id: new ObjectId(userId) });
+            /**if user exists then do the following */
+            findUser.then((res) => {
+                //password hashing  
+                const hashedPassword = bcrypt.hash(password, 10);
+
+                var password = { $set: { password: hashedPassword } };
+                var createdPassword = collection.updateOne({ _id: new ObjectId(userId) }, password, function (err, res) {
+                    if (err) {
+                        /***return failed to create password to user */
+                        console.log(err);
+                    }
+                    /**return password reset */
+                    console.log(res); 
+                    var JsonResponse = {
+                        status: 'success',
+                        message: 'password Created', 
+                        data: res.upsertedCount,
+                        code: 200
+                    } 
+                    const jsonres : JsonResponseInterface =JsonResponse ;
+                    return callback(jsonres);
+                });
+            }); 
+
+             /** return the error to the response  */
+             findUser.catch((err) => {
+                return callback(err);
+            });
+
+        }else{
+            var JsonResponse = {
+                status: 'failed',
+                message: 'password and confirm password should match', 
+                data: {},
+                code: 400
+            }  
+           var jsonres : JsonResponseInterface = JsonResponse ; 
+            return callback(jsonres);
+        }
+
+
     }
 
     static getUserById = async (id, callback) => {
         try {
             const collection = MongoHelper.client.db('Mooki_Development').collection('users');
             var result = collection.findOne({ _id: new ObjectId(id) }, function (err, res) {
-                if (err) {
-                    console.log(err);
+                if (err) { 
+                    var JsonResponse = {
+                        status: 'failed',
+                        message: 'failed to fetch user', 
+                        data: {},
+                        code: 404
+                    }   
+                     console.log(err);
+                    var jsonres : JsonResponseInterface = JsonResponse ; 
+                    return callback(jsonres);
+                   
                 }
                 const user: User = res;
-                console.log(user);
-                return callback(user);
+                console.log(user); 
+                var jsonres : JsonResponseInterface; 
+                 jsonres.status = 'success';
+                 jsonres.message = 'user data has been fetched'; 
+                 jsonres.data = user; 
+                 jsonres.code =200; 
+                return callback(jsonres);
 
             });
 
@@ -104,7 +172,7 @@ export class UserHelper {
     static resetPassword = (id, password: string, confirmPassword: string, callback) => {
         try {
             //find the user with id, check if password and confirmPassword strings match,  if they match save the password. 
-            if (password === confirmPassword) {
+            if (User.checkIfPasswordAndConfirmPasswordMatch(password,confirmPassword)) {
                 const collection = MongoHelper.client.db('Mooki_Development').collection('users');
                 var findUser = collection.findOne({ _id: new ObjectId(id) });
                 /**if user exists then do the following */
@@ -116,11 +184,25 @@ export class UserHelper {
                     var updateUserPassword = collection.updateOne({ _id: new ObjectId(id) }, newPassword, function (err, updateRes) {
                         if (err) {
                             /***return failed to reset password to user */
-                            console.log(err);
+                            var JsonResponse = {
+                                status: 'failed',
+                                message: 'failed to reset user password', 
+                                data: {},
+                                code: 400
+                            }   
+                             console.log(err);
+                            var jsonres : JsonResponseInterface = JsonResponse ; 
+                            return callback(jsonres);
                         }
                         /**return password reset */
-                        console.log(updateRes);
-                        return callback(updateRes.upsertedCount);
+                     
+                       var jsonres : JsonResponseInterface; 
+                        jsonres.status = 'success';
+                        jsonres.message = 'user password has been reset'; 
+                        jsonres.data = updateRes.upsertedCount; 
+                        jsonres.code =200; 
+                        return callback(jsonres);
+                       
                     });
                 });
 

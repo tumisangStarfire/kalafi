@@ -18,7 +18,7 @@ export async function createUserProfile(request: Request, response: Response) {
 
 export async function updateUserProfile(request: Request, response: Response) {
     try {
-        let id = request.body.id;
+        let id = request.params.id;
         var updateProfile: UserProfile = request.body;
         await UserProfileHelper.update(updateProfile, id, result => {
             console.log(result);
@@ -35,6 +35,20 @@ export async function updateProfilePicture(request: Request, response: Response)
         let userId = request.body.userId;
         // console.log(file);
         await UserProfileHelper.uploadProfilePicture(file, userId, result => {
+            console.log(result);
+            return response.json(result);
+        })
+    } catch (error) {
+        console.log(error);
+    }
+} 
+
+export async function getUserProfile(request: Request, response: Response) {
+    try {
+        
+        let userId = request.body.userId;
+        // console.log(file);
+        await UserProfileHelper.getUserProfile(userId, result => {
             console.log(result);
             return response.json(result);
         })
