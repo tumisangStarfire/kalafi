@@ -1,6 +1,6 @@
 
 import { PillPrescription } from './PillPrescription';
-import { Vitals } from './Vitals';
+
 import { ObjectId } from 'mongodb';
 import { HealthFacility } from './HealthFacility';
 
@@ -12,7 +12,7 @@ export class Injury {
   date_of_injury: Date;
   medicationPrescribed: Array<PillPrescription>; 
   healthFacility : HealthFacility
-  vitals: Vitals; //pills given to the patient [ { id: 1 } ]
+ //  vitals: Vitals; //pills given to the patient [ { id: 1 } ]
   doctorsNotes?: string;
 
   /** when you create the injury add vitals information to create a complete document
