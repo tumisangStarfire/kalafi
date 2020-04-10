@@ -19,8 +19,8 @@ exports.IllnessHelper = IllnessHelper;
 /**creates and saves a new illness a patient has gone through */
 IllnessHelper.create = (illness, callback) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const query = yield MongoHelper_1.MongoHelper.client.db('Mooki_Development').collection('illness');
-        var result = yield query.insertOne(illness, function (err, data) {
+        const query = MongoHelper_1.MongoHelper.client.db('Mooki_Development').collection('illness');
+        var result = query.insertOne(illness, function (err, data) {
             if (err) {
                 console.log(err);
             }
@@ -35,7 +35,7 @@ IllnessHelper.create = (illness, callback) => __awaiter(void 0, void 0, void 0, 
 /**removes any illness data */
 IllnessHelper.remove = (id, callback) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const query = yield MongoHelper_1.MongoHelper.client.db('Mooki_Development').collection('illness');
+        const query = MongoHelper_1.MongoHelper.client.db('Mooki_Development').collection('illness');
         var deleteParams = { _id: new ObjectId(id) };
         var result = query.deleteOne(deleteParams, function (err, res) {
             if (err) {

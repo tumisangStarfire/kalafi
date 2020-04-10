@@ -57,7 +57,7 @@ UserProfileHelper.update = (userProfile, id, callback) => __awaiter(void 0, void
 UserProfileHelper.getUserProfile = (userId, callback) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const collection = MongoHelper_1.MongoHelper.client.db('Mooki_Development').collection('userprofile');
-        var result = collection.findOne({ _id: new ObjectId(userId) }, function (err, res) {
+        var result = collection.findOne({ _id: userId }, function (err, res) {
             if (err) {
                 console.log(err);
             }

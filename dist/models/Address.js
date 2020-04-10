@@ -1,13 +1,30 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-class Address {
-    constructor(region, city, town, village, streetName, houseNumber) {
+const mongoose_1 = require("mongoose");
+class Address extends mongoose_1.Document {
+    constructor(userId, region, storageId, city, town, village, streetName, houseNumber, ward) {
+        super();
+        this._id = storageId;
+        this.userId = userId;
         this.city = city;
         this.town = town;
         this.village = village;
         this.streetName = streetName;
         this.houseNumber = houseNumber;
+        this.ward = ward;
         this.region = region;
+    }
+    get getStorageId() {
+        return this._id;
+    }
+    set getStorageId(storageId) {
+        this._id = storageId;
+    }
+    get getUserId() {
+        return this.userId;
+    }
+    set setUserId(userId) {
+        this.userId = userId;
     }
     get getCity() {
         return this.city;
@@ -34,10 +51,16 @@ class Address {
         this.streetName = streetName;
     }
     get getHouseNumber() {
-        return this, this.houseNumber;
+        return this.houseNumber;
     }
     set setHouseNumber(houseNumber) {
         this.houseNumber = houseNumber;
+    }
+    get getWard() {
+        return this.ward;
+    }
+    set setWard(ward) {
+        this.ward = ward;
     }
 }
 exports.Address = Address;

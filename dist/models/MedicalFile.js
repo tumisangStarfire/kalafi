@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-class MedicalFile {
+const mongoose_1 = require("mongoose");
+class MedicalFile extends mongoose_1.Document {
     /**Medical File Document Structure 1:N
      *  _id : ObjectId(121221qwqwqw),
      * userID :   ObjectId(23232wewew)
@@ -14,12 +15,19 @@ class MedicalFile {
      *
      */
     constructor(userId, medicalFileType, fileName, base64Stringfile, date_uploaded, filePath) {
+        super();
         this.userId = userId;
         this.fileName = fileName;
         this.base64Stringfile = base64Stringfile;
         this.date_uploaded = date_uploaded;
         this.filePath = filePath;
         this.medicalFileType = medicalFileType;
+    }
+    get getStorageId() {
+        return this._id;
+    }
+    set getStorageId(storageId) {
+        this._id = storageId;
     }
     /**accessors */
     get getFileName() {

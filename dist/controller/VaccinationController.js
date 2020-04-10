@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const VaccinationHelper_1 = require("../databasehelper/VaccinationHelper");
-function createVaccination(request, response) {
+function createUserVaccination(request, response) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             var newVaccination = request.body;
@@ -24,8 +24,8 @@ function createVaccination(request, response) {
         }
     });
 }
-exports.createVaccination = createVaccination;
-function removeVaccination(request, response) {
+exports.createUserVaccination = createUserVaccination;
+function removeUserVaccination(request, response) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             var vaccinationId = request.params.id;
@@ -39,5 +39,34 @@ function removeVaccination(request, response) {
         }
     });
 }
-exports.removeVaccination = removeVaccination;
+exports.removeUserVaccination = removeUserVaccination;
+function getAllVaccines(request, response) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            yield VaccinationHelper_1.VaccinationHelper.getAllVaccines(result => {
+                console.log(result);
+                response.json(result);
+            });
+        }
+        catch (error) {
+            console.log(error);
+        }
+    });
+}
+exports.getAllVaccines = getAllVaccines;
+function getUserVaccines(request, response) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const userId = request.params.userId;
+            yield VaccinationHelper_1.VaccinationHelper.getAllUserVaccineData(userId, result => {
+                console.log(result);
+                response.json(result);
+            });
+        }
+        catch (error) {
+            console.log(error);
+        }
+    });
+}
+exports.getUserVaccines = getUserVaccines;
 //# sourceMappingURL=VaccinationController.js.map

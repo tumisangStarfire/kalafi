@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const User_1 = require("../models/User");
 const MongoHelper_1 = require("../database/MongoHelper");
 const OTPHelper_1 = require("./OTPHelper");
 var ObjectId = require('mongodb').ObjectID;
@@ -32,16 +33,20 @@ UserHelper.create = (user, callback) => __awaiter(void 0, void 0, void 0, functi
             return callback(JsonResponse);
         }
         else {
-            //this is a synchronous call, if there is an error on creating the user the program wil stop 
-            const hashedPassword = yield bcrypt.hash(user.getPassword, 10);
-            user.setPassword = hashedPassword;
             var result = query.insertOne(user);
             result.then((res) => __awaiter(void 0, void 0, void 0, function* () {
                 //id user created
                 yield OTPHelper_1.OTPHelper.saveOTP(user.getCellphone, result => {
                     //console.log(result);
-                    //return the response 
-                    return callback(res.insertedCount);
+                    //return the response  
+                    var JsonResponse = {
+                        status: 'success',
+                        message: 'user sucessfully created',
+                        data: res.insertedCount,
+                        code: 200
+                    };
+                    const jsonres = JsonResponse;
+                    return callback(jsonres);
                 });
             }));
             /** return the error to the response  */
@@ -82,16 +87,73 @@ UserHelper.login = (login, callback) => __awaiter(void 0, void 0, void 0, functi
         console.log(error);
     }
 });
+//User creates password
+UserHelper.createPassword = (userId, password, confirmPassword, callback) => __awaiter(void 0, void 0, void 0, function* () {
+    const match = User_1.User.checkIfPasswordAndConfirmPasswordMatch(password, confirmPassword);
+    if (match == true) {
+        const collection = MongoHelper_1.MongoHelper.client.db('Mooki_Development').collection('users');
+        var findUser = collection.findOne({ _id: new ObjectId(userId) });
+        /**if user exists then do the following */
+        findUser.then((res) => {
+            //password hashing  
+            const hashedPassword = bcrypt.hash(password, 10);
+            var password = { $set: { password: hashedPassword } };
+            var createdPassword = collection.updateOne({ _id: new ObjectId(userId) }, password, function (err, res) {
+                if (err) {
+                    /***return failed to create password to user */
+                    console.log(err);
+                }
+                /**return password reset */
+                console.log(res);
+                var JsonResponse = {
+                    status: 'success',
+                    message: 'password Created',
+                    data: res.upsertedCount,
+                    code: 200
+                };
+                const jsonres = JsonResponse;
+                return callback(jsonres);
+            });
+        });
+        /** return the error to the response  */
+        findUser.catch((err) => {
+            return callback(err);
+        });
+    }
+    else {
+        var JsonResponse = {
+            status: 'failed',
+            message: 'password and confirm password should match',
+            data: {},
+            code: 400
+        };
+        var jsonres = JsonResponse;
+        return callback(jsonres);
+    }
+});
 UserHelper.getUserById = (id, callback) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const collection = MongoHelper_1.MongoHelper.client.db('Mooki_Development').collection('users');
         var result = collection.findOne({ _id: new ObjectId(id) }, function (err, res) {
             if (err) {
+                var JsonResponse = {
+                    status: 'failed',
+                    message: 'failed to fetch user',
+                    data: {},
+                    code: 404
+                };
                 console.log(err);
+                var jsonres = JsonResponse;
+                return callback(jsonres);
             }
             const user = res;
             console.log(user);
-            return callback(user);
+            var jsonres;
+            jsonres.status = 'success';
+            jsonres.message = 'user data has been fetched';
+            jsonres.data = user;
+            jsonres.code = 200;
+            return callback(jsonres);
         });
     }
     catch (error) {
@@ -101,7 +163,7 @@ UserHelper.getUserById = (id, callback) => __awaiter(void 0, void 0, void 0, fun
 UserHelper.resetPassword = (id, password, confirmPassword, callback) => {
     try {
         //find the user with id, check if password and confirmPassword strings match,  if they match save the password. 
-        if (password === confirmPassword) {
+        if (User_1.User.checkIfPasswordAndConfirmPasswordMatch(password, confirmPassword)) {
             const collection = MongoHelper_1.MongoHelper.client.db('Mooki_Development').collection('users');
             var findUser = collection.findOne({ _id: new ObjectId(id) });
             /**if user exists then do the following */
@@ -112,11 +174,23 @@ UserHelper.resetPassword = (id, password, confirmPassword, callback) => {
                 var updateUserPassword = collection.updateOne({ _id: new ObjectId(id) }, newPassword, function (err, updateRes) {
                     if (err) {
                         /***return failed to reset password to user */
+                        var JsonResponse = {
+                            status: 'failed',
+                            message: 'failed to reset user password',
+                            data: {},
+                            code: 400
+                        };
                         console.log(err);
+                        var jsonres = JsonResponse;
+                        return callback(jsonres);
                     }
                     /**return password reset */
-                    console.log(updateRes);
-                    return callback(updateRes.upsertedCount);
+                    var jsonres;
+                    jsonres.status = 'success';
+                    jsonres.message = 'user password has been reset';
+                    jsonres.data = updateRes.upsertedCount;
+                    jsonres.code = 200;
+                    return callback(jsonres);
                 });
             });
             /** return the error to the response  */

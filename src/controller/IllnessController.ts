@@ -1,4 +1,4 @@
-import { Illness } from '../models/Illness';
+import { UserIllness } from '../models/UserIllness';
 import { Request, Response } from 'express';
 import { IllnessHelper } from '../databasehelper/IllnessHelper';
 
@@ -6,7 +6,7 @@ import { IllnessHelper } from '../databasehelper/IllnessHelper';
 /** create the illness  */
 export async function createIllness(request: Request, response: Response) {
     try {
-        var newIllness: Illness = request.body; /** reqeust body sent  */
+        var newIllness: UserIllness = request.body; /** reqeust body sent  */
         await IllnessHelper.create(newIllness, result => {
             console.log(result);
             response.json(result);

@@ -1,5 +1,6 @@
 
-import * as express from 'express';
+import * as express from 'express'; 
+var cors = require('cors');
 import { MongoHelper } from './database/MongoHelper';
 import { mongooseConnector } from './database/mongooseConnector';
 /* import * as bodyParser from 'body-parser'; */
@@ -27,7 +28,8 @@ export class App {
     }
 
     private initializeMiddlewares() {
-        //this.app.use(bodyParser.json()); 
+        //this.app.use(bodyParser.json());  
+        this.app.use(cors());
         this.app.use(express.json());
         this.app.use(express.urlencoded({ extended: true }));
         this.app.use(loggerMiddleware);

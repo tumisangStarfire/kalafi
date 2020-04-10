@@ -1,5 +1,4 @@
 import { PillPrescription } from "./PillPrescription";
-import { Vitals } from "./Vitals";
 import mongoose, { Model, Schema, Document } from 'mongoose';
 import { HealthFacility } from "./HealthFacility";
 
@@ -12,7 +11,6 @@ export class Illness extends Document {
     date_of_diagnosis: Date;
     doctorsNotes?: string;
     medicationPrescribed: Array<PillPrescription>;
-    vitals: Vitals;
     healthFacility: HealthFacility
 
     /** when you create the illness add vitals information to create a complete document

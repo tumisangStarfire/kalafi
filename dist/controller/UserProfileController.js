@@ -28,7 +28,7 @@ exports.createUserProfile = createUserProfile;
 function updateUserProfile(request, response) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            let id = request.body.id;
+            let id = request.params.id;
             var updateProfile = request.body;
             yield UserProfileHelper_1.UserProfileHelper.update(updateProfile, id, result => {
                 console.log(result);
@@ -58,4 +58,20 @@ function updateProfilePicture(request, response) {
     });
 }
 exports.updateProfilePicture = updateProfilePicture;
+function getUserProfile(request, response) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            let userId = request.body.userId;
+            // console.log(file);
+            yield UserProfileHelper_1.UserProfileHelper.getUserProfile(userId, result => {
+                console.log(result);
+                return response.json(result);
+            });
+        }
+        catch (error) {
+            console.log(error);
+        }
+    });
+}
+exports.getUserProfile = getUserProfile;
 //# sourceMappingURL=UserProfileController.js.map

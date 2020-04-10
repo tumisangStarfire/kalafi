@@ -66,7 +66,7 @@ OTPHelper.validateOTP = (otp, callback) => __awaiter(void 0, void 0, void 0, fun
             console.log(otp);
             //if it exists delete it from the db 
             if (otp !== null) {
-                OTPHelper.deleteOTP(otp.getID, resp => {
+                OTPHelper.deleteOTP(otp.getStorageId, resp => {
                     console.log(resp);
                 });
             }

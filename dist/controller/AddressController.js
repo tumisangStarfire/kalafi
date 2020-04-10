@@ -9,13 +9,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const AddressHelper_1 = require("databasehelper/AddressHelper");
+const AddressHelper_1 = require("../databasehelper/AddressHelper");
+//post
 function updateAddress(request, response) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            let addresId = request.body.id;
+            let storageId = request.body.storageId;
             var address = request.body;
-            yield AddressHelper_1.AddressHelper.update(address, addresId, result => {
+            yield AddressHelper_1.AddressHelper.update(address, storageId, result => {
                 console.log(result);
                 response.json(result).status(200);
             });
@@ -26,4 +27,34 @@ function updateAddress(request, response) {
     });
 }
 exports.updateAddress = updateAddress;
+//post
+function createAddress(request, response) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const address = request.body;
+            var result = yield AddressHelper_1.AddressHelper.create(address, res => {
+                return res;
+            });
+        }
+        catch (error) {
+            console.log(error);
+        }
+    });
+}
+exports.createAddress = createAddress;
+//get 
+function getUserAddress(request, response) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            let userId = request.params.userId;
+            var result = yield AddressHelper_1.AddressHelper.getUserAddress(userId, res => {
+                return res;
+            });
+        }
+        catch (error) {
+            console.log(error);
+        }
+    });
+}
+exports.getUserAddress = getUserAddress;
 //# sourceMappingURL=AddressController.js.map

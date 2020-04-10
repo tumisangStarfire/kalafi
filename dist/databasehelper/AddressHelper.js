@@ -17,27 +17,81 @@ exports.AddressHelper = AddressHelper;
 AddressHelper.create = (address, callback) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const query = yield MongoHelper_1.MongoHelper.client.db('Mooki_Development').collection('address');
-        var result = yield query.insertOne(address, function (err, data) {
+        var result = yield query.insertOne(address, function (err, res) {
             if (err) {
                 console.log(err);
+                var JsonResponse = {
+                    status: 'failed',
+                    message: 'failed to created address information',
+                    data: err,
+                    code: 400
+                };
+                const jsonres = JsonResponse;
+                return callback(jsonres);
             }
-            console.log(data);
-            return callback(data.insertedId);
+            console.log(res);
+            var jsonRes;
+            jsonRes.status = 'success';
+            jsonRes.message = 'address information successfully created';
+            jsonRes.data = res.insertedId;
+            jsonRes.code = 200;
+            return callback(jsonRes);
         });
     }
     catch (error) {
         console.log(error);
     }
 });
-AddressHelper.update = (address, addressId, callback) => __awaiter(void 0, void 0, void 0, function* () {
+AddressHelper.update = (address, storageId, callback) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const query = yield MongoHelper_1.MongoHelper.client.db('Mooki_Development').collection('address');
-        var result = query.updateOne({ _id: new ObjectId(addressId) }, { address }, function (err, res) {
+        var result = query.updateOne({ _id: storageId }, { address }, function (err, res) {
             if (err) {
                 console.log(err);
+                var JsonResponse = {
+                    status: 'failed',
+                    message: 'failed to update address information',
+                    data: err,
+                    code: 400
+                };
+                const jsonres = JsonResponse;
+                return callback(jsonres);
             }
             console.log(res);
-            return callback(res.upsertedCount);
+            var jsonRes;
+            jsonRes.status = 'success';
+            jsonRes.message = 'address information updated successdully ';
+            jsonRes.data = res.upsertedId;
+            jsonRes.code = 200;
+        });
+    }
+    catch (error) {
+        console.log(error);
+    }
+});
+AddressHelper.getUserAddress = (userId, callback) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const collection = MongoHelper_1.MongoHelper.client.db('Mooki_Development').collection('address');
+        var result = collection.findOne({ _id: userId }, function (err, res) {
+            if (err) {
+                var JsonResponse = {
+                    status: 'failed',
+                    message: 'failed to fetch user address information',
+                    data: {},
+                    code: 404
+                };
+                console.log(err);
+                var jsonres = JsonResponse;
+                return callback(jsonres);
+            }
+            const address = res;
+            console.log(address);
+            var jsonres;
+            jsonres.status = 'success';
+            jsonres.message = 'user address data has been fetched';
+            jsonres.data = address;
+            jsonres.code = 200;
+            return callback(jsonres);
         });
     }
     catch (error) {

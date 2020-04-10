@@ -1,17 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-class OTP {
+const mongoose_1 = require("mongoose");
+class OTP extends mongoose_1.Document {
     /**OTP document structure
      * _id : ObjectId(121221qwqwqw)
      * cellphone : 74232323
      * otp_code : 111111
     */
-    constructor(cellphone, otpcode) {
+    constructor(cellphone, otpcode, storageId) {
+        super();
+        this._id = storageId;
         this.cellphone = cellphone;
         this.otpcode = otpcode;
     }
-    get getID() {
+    get getStorageId() {
         return this._id;
+    }
+    set setStorageId(storageId) {
+        this._id = storageId;
     }
     set setCellphone(cellphone) {
         this.cellphone = cellphone;

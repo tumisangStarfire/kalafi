@@ -26,6 +26,21 @@ function createInjury(request, response) {
     });
 }
 exports.createInjury = createInjury;
+/**get all injuries */
+function getAllInjuries(request, response) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            yield InjuryHelper_1.InjuryHelper.getAllInjuryData(result => {
+                console.log(result);
+                response.json(result);
+            });
+        }
+        catch (error) {
+            console.log(error);
+        }
+    });
+}
+exports.getAllInjuries = getAllInjuries;
 /** get users Injury data */
 function userInjuryData(request, response) {
     return __awaiter(this, void 0, void 0, function* () {

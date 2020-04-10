@@ -16,7 +16,7 @@ class VaccinationHelper {
     static create(vacination, callback) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const query = yield MongoHelper_1.MongoHelper.client.db('Mooki_Development').collection('vaccination');
+                const query = yield MongoHelper_1.MongoHelper.client.db('Mooki_Development').collection('uservaccination');
                 var result = yield query.insertOne(vacination, function (err, data) {
                     if (err) {
                         console.log(err);
@@ -35,7 +35,7 @@ exports.VaccinationHelper = VaccinationHelper;
 /**function to remove vaccination record of id */
 VaccinationHelper.remove = (id, callback) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const query = yield MongoHelper_1.MongoHelper.client.db('Mooki_Development').collection('vaccination');
+        const query = yield MongoHelper_1.MongoHelper.client.db('Mooki_Development').collection('uservaccination');
         var deleteParams = { _id: new ObjectId(id) };
         var result = query.deleteOne(deleteParams, function (err, res) {
             if (err) {
@@ -43,6 +43,37 @@ VaccinationHelper.remove = (id, callback) => __awaiter(void 0, void 0, void 0, f
             }
             console.log(res);
             return callback(res.deletedCount);
+        });
+    }
+    catch (error) {
+        console.log(error);
+    }
+});
+/**function to get all vacinnes */
+VaccinationHelper.getAllVaccines = (callback) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const collection = MongoHelper_1.MongoHelper.client.db('Mooki_Development').collection('vaccines');
+        var result = collection.find({}).toArray(function (err, data) {
+            if (err) {
+                console.log(err);
+            }
+            console.log(data);
+            return callback(data);
+        });
+    }
+    catch (error) {
+        console.log(error);
+    }
+});
+VaccinationHelper.getAllUserVaccineData = (userId, callback) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const collection = MongoHelper_1.MongoHelper.client.db('Mooki_Development').collection('uservaccines');
+        var result = collection.find({ userId: userId }).toArray(function (err, data) {
+            if (err) {
+                console.log(err);
+            }
+            console.log(data);
+            return callback(data);
         });
     }
     catch (error) {

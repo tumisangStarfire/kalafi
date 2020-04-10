@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const mongoose_1 = require("mongoose");
 const AWS = require('aws-sdk');
 const fs = require('fs');
 const uuid = require('uuid');
@@ -7,9 +8,10 @@ var Gender;
 (function (Gender) {
     Gender[Gender["Male"] = 1] = "Male";
     Gender[Gender["Female"] = 0] = "Female";
+    Gender[Gender["other"] = 2] = "other";
 })(Gender || (Gender = {}));
 /**class for the users profile information */
-class UserProfile {
+class UserProfile extends mongoose_1.Document {
     /** User Profile Document Structure
      *  _id = ObjectId(121221qwqwqw)
      * date_of_birth : 1990-05-12, [required]
@@ -21,8 +23,11 @@ class UserProfile {
      *
      *
      */
-    constructor(date_of_birth, weight, height, gender, omang, profilePicture, bmi, bloodType, waistSize) {
-        this.date_of_birth = date_of_birth;
+    constructor(userId, dob, weight, height, gender, omang, profilePicture, bmi, bloodType, storageId, waistSize) {
+        super();
+        this._id = storageId;
+        this.userId = userId;
+        this.dob = dob;
         this.gender = gender;
         this.omang = omang;
         this.profilePicture = profilePicture;
@@ -32,11 +37,23 @@ class UserProfile {
         this.bloodType = bloodType;
         this.waistSize = waistSize;
     }
-    set setDateofBirth(date_of_birth) {
-        this.date_of_birth = date_of_birth;
+    get getStorageId() {
+        return this._id;
+    }
+    set setStorageId(storageId) {
+        this._id = storageId;
+    }
+    get getUserId() {
+        return this.userId;
+    }
+    set setUserId(userId) {
+        this.userId = userId;
+    }
+    set setDateofBirth(dob) {
+        this.dob = dob;
     }
     get getDateofBirth() {
-        return this.date_of_birth;
+        return this.dob;
     }
     set setGender(gender) {
         this.gender = gender;
@@ -73,6 +90,18 @@ class UserProfile {
     }
     get getBMI() {
         return this.bmi;
+    }
+    set SetBloodType(bloodType) {
+        this.bloodType = bloodType;
+    }
+    get getBloodType() {
+        return this.bloodType;
+    }
+    set setWaistSize(waistSize) {
+        this.waistSize = waistSize;
+    }
+    get setWaistSize() {
+        return this.waistSize;
     }
     /**calculate the age of the user */
     calculateAge(date_of_birth) {

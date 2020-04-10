@@ -1,15 +1,16 @@
-import { ObjectId } from "mongodb";
+import { Document } from "mongoose";
 import { HealthFacility } from "./HealthFacility";
-import { VaccinationType } from "./VaccinationType";
+
+import { Vaccine } from "./Vaccine";
 
 
 
-export class Vaccination {
+export class UserVaccine extends Document {
 
-  _id: ObjectId;
+  _id: string;
   private userId: string;
-  private typeOfVaccination: VaccinationType;
-  private date_administered: Date;
+  private vaccine: Vaccine;
+  private dateAdministered: Date;
   private healthFacility: HealthFacility;
 
   /**vaccination dcocument Structure 
@@ -28,10 +29,18 @@ export class Vaccination {
         "Speciality": {}
       }
    */
-  constructor(userId: string, typeOfVaccination: VaccinationType, date_administered: Date, healthFacility: HealthFacility) {
+  constructor( 
+    userId: string,
+    vaccine: Vaccine, 
+     dateAdministered: Date,
+    healthFacility: HealthFacility, 
+    storageId:string,
+    ) {
+    super(); 
+    this._id = storageId;
     this.userId = userId;
-    this.typeOfVaccination = typeOfVaccination;
-    this.date_administered = date_administered;
+    this.vaccine = vaccine;
+    this.dateAdministered = dateAdministered;
     this.healthFacility = healthFacility;
   }
 

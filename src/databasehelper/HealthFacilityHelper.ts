@@ -1,5 +1,6 @@
 import { HealthFacility } from "../models/HealthFacility";
 import { MongoHelper } from "../database/MongoHelper";
+import { JsonResponseInterface } from "../interfaces/JsonResponseInterface";
 const fs = require("fs");
 
 
@@ -10,11 +11,25 @@ export class HealthFacilityHelper {
             const query = await MongoHelper.client.db('Mooki_Development').collection('healthfacilities');
             query.find({}).toArray(function (err, res) {
                 if (err) {
-                    console.log(err)
+                    var JsonResponse = {
+                        status: 'failed',
+                        message: 'failed to fetch health facility data', 
+                        data: {},
+                        code: 404
+                    }   
+                     console.log(err);
+                    var jsonres : JsonResponseInterface = JsonResponse ; 
+                    return callback(jsonres);
                 }
                 var healthFacility: Array<HealthFacility>;
-                healthFacility = res;
-                return callback(healthFacility);
+                healthFacility = res; 
+
+                var jsonres : JsonResponseInterface; 
+                jsonres.status = 'success';
+                jsonres.message = 'Health facility data has been fetched'; 
+                jsonres.data = healthFacility; 
+                jsonres.code =200;
+                return callback(jsonres);
             });
         } catch (error) {
             console.log(error);

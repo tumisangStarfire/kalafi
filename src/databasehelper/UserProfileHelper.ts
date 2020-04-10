@@ -47,11 +47,11 @@ export class UserProfileHelper {
         }
     }
 
-    static getUserProfile = async (userId, callback) => {
+    static getUserProfile = async (userId:string, callback) => {
         try {
             const collection = MongoHelper.client.db('Mooki_Development').collection('userprofile');
 
-            var result = collection.findOne({ _id: new ObjectId(userId) }, function (err, res) {
+            var result = collection.findOne({ _id: userId }, function (err, res) {
                 if (err) {
                     console.log(err);
                 }

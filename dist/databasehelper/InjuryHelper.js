@@ -17,8 +17,8 @@ exports.InjuryHelper = InjuryHelper;
 /** save the vitals , afterwards save the injury, save the PillPresriptio data  */
 InjuryHelper.create = (injury, callback) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const query = yield MongoHelper_1.MongoHelper.client.db('Mooki_Development').collection('injury');
-        var result = yield query.insertOne(injury, function (err, data) {
+        const query = MongoHelper_1.MongoHelper.client.db('Mooki_Development').collection('injury');
+        var result = query.insertOne(injury, function (err, data) {
             if (err) {
                 console.log(err);
             }
@@ -30,10 +30,10 @@ InjuryHelper.create = (injury, callback) => __awaiter(void 0, void 0, void 0, fu
         console.log(error);
     }
 });
-InjuryHelper.remove = (id, callback) => __awaiter(void 0, void 0, void 0, function* () {
+InjuryHelper.remove = (storageId, callback) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const query = yield MongoHelper_1.MongoHelper.client.db('Mooki_Development').collection('injury');
-        var deleteParams = { _id: new ObjectId(id) };
+        const query = MongoHelper_1.MongoHelper.client.db('Mooki_Development').collection('injury');
+        var deleteParams = { _id: storageId };
         var result = query.deleteOne(deleteParams, function (err, res) {
             if (err) {
                 console.log(err);
@@ -49,14 +49,29 @@ InjuryHelper.remove = (id, callback) => __awaiter(void 0, void 0, void 0, functi
 InjuryHelper.getUserInjuriesUsingUserId = (userId, callback) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const collection = MongoHelper_1.MongoHelper.client.db('Mooki_Development').collection('injury');
-        var result = collection.find({ userId: new ObjectId(userId) }).toArray(function (err, res) {
+        var result = collection.find({ userId: userId }).toArray(function (err, res) {
             if (err) {
                 console.log(err);
             }
-            var illness;
-            illness = res;
-            console.log(illness);
-            return callback(illness);
+            var injury;
+            injury = res;
+            console.log(injury);
+            return callback(injury);
+        });
+    }
+    catch (error) {
+        console.log(error);
+    }
+});
+InjuryHelper.getAllInjuryData = (callback) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const collection = MongoHelper_1.MongoHelper.client.db('Mooki_Development').collection('typesofinjuries');
+        var result = collection.find().toArray(function (err, data) {
+            if (err) {
+                console.log(err);
+            }
+            console.log(data);
+            return callback(data);
         });
     }
     catch (error) {

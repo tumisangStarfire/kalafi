@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const mongoose_1 = require("mongoose");
 const bcrypt = require("bcrypt");
 /*constants */
 var Status;
@@ -9,7 +10,7 @@ var Status;
     Status[Status["Suspended"] = 2] = "Suspended";
 })(Status || (Status = {}));
 /** a class */
-class User {
+class User extends mongoose_1.Document {
     /** user document structure
      *  _id = ObjectId(121221qwqwqw) ,
      * firstName : John [required],
@@ -21,7 +22,9 @@ class User {
      * verified : false
      *
      */
-    constructor(firstName, lastName, cellphone, password, email, status, verified) {
+    constructor(firstName, lastName, cellphone, password, email, status, verified, userId) {
+        super();
+        this._id = userId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.cellphone = cellphone;
@@ -85,6 +88,12 @@ class User {
     }
     checkIfUnencryptedPasswordIsValid(unencryptedPassword) {
         return bcrypt.compareSync(unencryptedPassword, this.password);
+    }
+    static checkIfPasswordAndConfirmPasswordMatch(password, confirmPassword) {
+        if (password === confirmPassword)
+            return true;
+        else
+            return false;
     }
 }
 exports.User = User;

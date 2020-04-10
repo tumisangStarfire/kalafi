@@ -40,11 +40,11 @@ function removeCurrentMedication(request, response) {
     });
 }
 exports.removeCurrentMedication = removeCurrentMedication;
-function getData(request, response) {
+function getUserMedicationData(request, response) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            let userId = request.params.id;
-            yield CurrentMedicationHelper_1.CurrentMedicationHelper.getDataUsingUserId(userId, result => {
+            let userId = request.params.userId;
+            yield CurrentMedicationHelper_1.CurrentMedicationHelper.getMedicationDataUsingUserId(userId, result => {
                 return response.json(result);
             });
         }
@@ -53,5 +53,5 @@ function getData(request, response) {
         }
     });
 }
-exports.getData = getData;
+exports.getUserMedicationData = getUserMedicationData;
 //# sourceMappingURL=CurrentMedicationController.js.map

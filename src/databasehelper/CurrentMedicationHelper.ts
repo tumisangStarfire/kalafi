@@ -1,34 +1,56 @@
-import { CurrentMedication } from 'models/CurrentMedication';
+import { CurrentMedication } from '../models/CurrentMedication';
 import { MongoHelper } from '../database/MongoHelper';
+import { JsonResponseInterface } from '../interfaces/JsonResponseInterface';
 var ObjectId = require('mongodb').ObjectID;
 
 export class CurrentMedicationHelper {
 
-    static create = async (CurrentMedication: CurrentMedication, callback) => {
+    static create = async (currentMedication: CurrentMedication, callback) => {
         try {
-            const query = await MongoHelper.client.db('Mooki_Development').collection('currentmedication');
-            var result = await query.insertOne(CurrentMedication, function (err, data) {
+            const query =  MongoHelper.client.db('Mooki_Development').collection('currentmedication');
+            var result = query.insertOne(currentMedication, function (err, res) {
                 if (err) {
-                    console.log(err);
-                }
-                console.log(data)
-                return callback(data.insertedId);
+                    console.log(err); 
+                    var jsonRes : JsonResponseInterface; 
+                    jsonRes.status = 'failed';  
+                    jsonRes.message ='failed to add medication information'; 
+                    jsonRes.data =err; 
+                    jsonRes.code =404;
+                }   
+                var jsonRes : JsonResponseInterface; 
+                    jsonRes.status = 'success';  
+                    jsonRes.message ='medication information added succesfully'; 
+                    jsonRes.data =res.insertedId; 
+                    jsonRes.code =200;
+
+                console.log(res);
+                return callback(jsonRes);
             });
         } catch (error) {
             console.log(error);
         }
     }
 
-    static remove = async (id, callback) => {
+    static remove = async (storageId:string, callback) => {
         try {
-            const query = await MongoHelper.client.db('Mooki_Development').collection('currentmedication');
-            var deleteParams = { _id: new ObjectId(id) };
+            const query =  MongoHelper.client.db('Mooki_Development').collection('currentmedication');
+            var deleteParams = { _id: storageId };
             var result = query.deleteOne(deleteParams, function (err, res) {
                 if (err) {
-                    console.log(err);
+                    console.log(err); 
+                    var jsonRes : JsonResponseInterface; 
+                    jsonRes.status = 'failed';  
+                    jsonRes.message ='failed to delete medication information'; 
+                    jsonRes.data =err; 
+                    jsonRes.code =404;
                 }
-                console.log(res)
-                return callback(res.deletedCount);
+                console.log(res);
+                var jsonRes : JsonResponseInterface; 
+                    jsonRes.status = 'success';  
+                    jsonRes.message ='medication information deleted succesfully'; 
+                    jsonRes.data =res.deletedCount; 
+                    jsonRes.code =201;
+                return callback(jsonRes);
             });
 
         } catch (error) {
@@ -36,22 +58,38 @@ export class CurrentMedicationHelper {
         }
     }
 
-    static getDataUsingUserId = async (userId, callback) => {
+    static getMedicationDataUsingUserId = async (userId:string, callback) => {
         try {
             const collection = MongoHelper.client.db('Mooki_Development').collection('currentmedication');
 
-            var result = collection.find({ userId: new ObjectId(userId) }).toArray(function (err, res) {
+            var result = collection.find({ userId: userId }).toArray(function (err, res) {
                 if (err) {
-                    console.log(err);
-                }
+                    var JsonResponse = {
+                        status: 'failed',
+                        message: 'failed to fetch user medication information', 
+                        data: {},
+                        code: 404
+                    }   
+                     console.log(err);
+                    var jsonres : JsonResponseInterface = JsonResponse ; 
+                    return callback(jsonres);
+                }  
+
+                //array of medical data 
                 var currentmedication: Array<CurrentMedication>;
                 currentmedication = res;
-                console.log(currentmedication);
-                return callback(currentmedication);
+               // console.log(currentmedication); 
+                var jsonres : JsonResponseInterface; 
+                jsonres.status = 'success';
+                jsonres.message = 'user medication data has been fetched'; 
+                jsonres.data = currentmedication; 
+                jsonres.code =200; 
+                
+                return callback(jsonres);
             });
 
         } catch (error) {
-
+            console.log(error);
         }
     }
 }

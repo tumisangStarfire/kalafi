@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 class PillPrescription {
-    constructor(pillName, date_prescribed, dailyDosage) {
+    constructor(pillName, datePrescribed, dailyDosage) {
         this.pillName = pillName;
-        this.date_prescribed = date_prescribed;
+        this.datePrescribed = datePrescribed;
         this.dailyDosage = dailyDosage;
     }
     //gets the prescriptions remaining pills
-    static getRemainingPills(pillsGiven, pillsUsed) {
-        let result = pillsGiven - pillsUsed;
+    static getRemainingPills(numberOfPillsGiven, numberOfPillsUsed) {
+        let result = numberOfPillsGiven - numberOfPillsUsed;
         return result;
     }
 }

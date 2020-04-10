@@ -1,4 +1,4 @@
-
+import { Document } from "mongoose"; 
 import { ObjectId, Timestamp } from "mongodb";
 import * as bcrypt from 'bcrypt';
 
@@ -11,11 +11,10 @@ enum Status {
 
 }
 /** a class */
-export class User {
+export class User extends Document  {
 
   /**Defines primary id that will be used as _id of the mongo collection. */
-  _id: ObjectId;
-
+  _id: string;
   private firstName: string;
   private lastName: string;
   private cellphone: number;
@@ -45,8 +44,11 @@ export class User {
     password: string,
     email?: string,
     status?: Status,
-    verified?: boolean,
-  ) {
+    verified?: boolean, 
+    userId?: string,
+  ) { 
+    super(); 
+    this._id =userId;
     this.firstName = firstName;
     this.lastName = lastName;
     this.cellphone = cellphone;
@@ -60,11 +62,11 @@ export class User {
   }
 
 
-  get getUserId(): ObjectId {
+  get getUserId(): string {
     return this._id;
   }
 
-  set setUserId(_id: ObjectId) {
+  set setUserId(_id: string) {
     this._id = _id;
   }
 
@@ -130,6 +132,14 @@ export class User {
 
   checkIfUnencryptedPasswordIsValid(unencryptedPassword: string) {
     return bcrypt.compareSync(unencryptedPassword, this.password);
+  } 
+
+ static checkIfPasswordAndConfirmPasswordMatch(password :string, confirmPassword: string){ 
+    if(password === confirmPassword) 
+      return true 
+    else 
+      return false 
+
   }
 
 }

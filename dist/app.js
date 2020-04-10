@@ -10,6 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express = require("express");
+var cors = require('cors');
 const MongoHelper_1 = require("./database/MongoHelper");
 /* import * as bodyParser from 'body-parser'; */
 const router_1 = require("./router/router");
@@ -31,7 +32,8 @@ class App {
         this.testPublicPath();
     }
     initializeMiddlewares() {
-        //this.app.use(bodyParser.json()); 
+        //this.app.use(bodyParser.json());  
+        this.app.use(cors());
         this.app.use(express.json());
         this.app.use(express.urlencoded({ extended: true }));
         this.app.use(loggerMiddleware_1.loggerMiddleware);
