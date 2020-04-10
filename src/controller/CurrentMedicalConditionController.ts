@@ -1,5 +1,5 @@
-import { CurrentMedicalCondition } from "models/CurrentMedicalCondition";
-import { CurrentMedicalConditionHelper } from "databasehelper/CurrentMedicalConditionHelper";
+import { CurrentMedicalCondition } from "../models/CurrentMedicalCondition";
+import { CurrentMedicalConditionHelper } from "../databasehelper/CurrentMedicalConditionHelper";
 import { Request, Response } from 'express';
 
 export async function saveCurrentMedicalCondition(request: Request, response: Response) {

@@ -1,4 +1,4 @@
-import { CurrentMedication } from 'models/CurrentMedication';
+import { CurrentMedication } from '../models/CurrentMedication';
 import { MongoHelper } from '../database/MongoHelper';
 import { JsonResponseInterface } from '../interfaces/JsonResponseInterface';
 var ObjectId = require('mongodb').ObjectID;

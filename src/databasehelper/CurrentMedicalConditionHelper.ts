@@ -1,6 +1,6 @@
 import { CurrentMedicalCondition } from "../models/CurrentMedicalCondition";
-import { JsonResponseInterface } from "interfaces/JsonResponseInterface";
-import { MongoHelper } from "database/MongoHelper";
+import { JsonResponseInterface } from "../interfaces/JsonResponseInterface";
+import { MongoHelper } from "../database/MongoHelper";
 
 export class CurrentMedicalConditionHelper {
    

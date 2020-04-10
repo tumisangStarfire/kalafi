@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { Address } from '../models/Address';
-import { AddressHelper } from 'databasehelper/AddressHelper';
+import { AddressHelper } from '../databasehelper/AddressHelper';
 
 //post
 export async function updateAddress(request: Request, response: Response) {
