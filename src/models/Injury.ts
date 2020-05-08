@@ -3,6 +3,7 @@ import { PillPrescription } from './PillPrescription';
 
 import { ObjectId } from 'mongodb';
 import { HealthFacility } from './HealthFacility';
+import { VitalsInterface } from 'interfaces/VitalsInterface';
 
 export class Injury {
 
@@ -12,7 +13,7 @@ export class Injury {
   date_of_injury: Date;
   medicationPrescribed: Array<PillPrescription>; 
   healthFacility : HealthFacility
- //  vitals: Vitals; //pills given to the patient [ { id: 1 } ]
+  vitals: VitalsInterface
   doctorsNotes?: string;
 
   /** when you create the injury add vitals information to create a complete document
@@ -36,7 +37,7 @@ export class Injury {
    * } 
    * 
    */
-  constructor(userId: string, vitals: Vitals,healthFacility :HealthFacility, injuryType: string, date_of_injury: Date, doctorsNotes?: string) {
+  constructor(userId: string, vitals: VitalsInterface,healthFacility :HealthFacility, injuryType: string, date_of_injury: Date, doctorsNotes?: string) {
 
     this.userId = userId;
     this.injuryType = injuryType;

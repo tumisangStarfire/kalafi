@@ -1,6 +1,7 @@
 import { PillPrescription } from "./PillPrescription";
 import mongoose, { Model, Schema, Document } from 'mongoose';
 import { HealthFacility } from "./HealthFacility";
+import { VitalsInterface } from "interfaces/VitalsInterface";
 
 /**Illness has vitals */
 export class Illness extends Document {
@@ -11,7 +12,8 @@ export class Illness extends Document {
     date_of_diagnosis: Date;
     doctorsNotes?: string;
     medicationPrescribed: Array<PillPrescription>;
-    healthFacility: HealthFacility
+    healthFacility: HealthFacility; 
+    vitals: VitalsInterface
 
     /** when you create the illness add vitals information to create a complete document
    * 
@@ -35,7 +37,7 @@ export class Illness extends Document {
    * 
    */
 
-    constructor(userId: number, type_of_illness: string, date_of_diagnosis: Date, vitals: Vitals, healthFacility: HealthFacility, doctorsNotes?: string) {
+    constructor(userId: number, type_of_illness: string, date_of_diagnosis: Date, vitals: VitalsInterface, healthFacility: HealthFacility, doctorsNotes?: string) {
         super();
         this.userId = userId;
         this.type_of_illness = type_of_illness;
