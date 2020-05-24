@@ -4,9 +4,9 @@ enum Status {
   }
 
 
-export interface JsonResponseInterface{ 
-    status : string, 
-    message: string, 
-    data: {}, 
-    code :number
+export interface JsonResponseInterface{
+    status : string,
+    message: string,
+    data: {},
+
 }

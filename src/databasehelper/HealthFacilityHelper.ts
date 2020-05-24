@@ -17,7 +17,7 @@ export class HealthFacilityHelper {
                         status: 'failed',
                         message: 'failed to fetch health facility data',
                         data: {},
-                        code: 404
+
                     }    ;
                     return callback(jsonres);
                 }
@@ -28,7 +28,7 @@ export class HealthFacilityHelper {
                     status: 'success',
                     message: 'Health facility data has been fetched',
                     data:healthFacility,
-                    code: 200
+
                 } ;*/
 
                 return callback(healthFacility);
