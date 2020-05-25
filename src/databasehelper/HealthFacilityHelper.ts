@@ -12,7 +12,7 @@ export class HealthFacilityHelper {
             query.find({}).toArray(function (err, res) {
                 if (err) {
 
-                     console.log(err);
+                    // console.log(err);
                     var jsonres : JsonResponseInterface = {
                         status: 'failed',
                         message: 'failed to fetch health facility data',
@@ -22,7 +22,7 @@ export class HealthFacilityHelper {
                     return callback(jsonres);
                 }
                 var healthFacility: Array<HealthFacility>;
-                healthFacility = res; 
+                healthFacility = res;
 
                /* var jsonres : JsonResponseInterface = {
                     status: 'success',
