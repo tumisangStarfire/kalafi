@@ -24,16 +24,16 @@ export class MongoHelper {
 
   public static connect(): Promise<any> {
     return new Promise<any>((resolve, reject) => {
-      //console.log(connectionString);
+      console.log(connectionString);
       mongo.MongoClient.connect(connectionString, { useUnifiedTopology: true, useNewUrlParser: true }, (err, client: mongo.MongoClient) => {
         if (err) {
           reject(err);
         } else {
           MongoHelper.client = client;
-          this.database = client.db('test');
+          this.database = client.db(MongoDatabase);
 
 
-          resolve(client.db('test'));
+          resolve(client.db(MongoDatabase));
         }
       });
     });
