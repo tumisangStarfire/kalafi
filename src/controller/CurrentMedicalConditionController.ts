@@ -10,9 +10,9 @@ export async function saveCurrentMedicalCondition(request: Request, response: Re
         const newCurrentMedicalCondition: CurrentMedicalCondition = request.body;
 
         await CurrentMedicalConditionHelper.create(newCurrentMedicalCondition, result => {
-            response.json(result);
+            response.json(result).status(200);
         });
-        // const sendOTP =  thorough email or sms
+
     } catch (error) {
         throw (error)
     }
@@ -36,7 +36,7 @@ export async function removeCurrentMedicalCondition(request: Request, response: 
 export async function getUserMedicalConditionData(request: Request, response: Response) {
     try {
         let userId = request.params.userId;
-        console.log("userid on controller" + userId);
+       // console.log("userid on controller" + userId);
        // return response.json(userId).status(200);
         await CurrentMedicalConditionHelper.getMedicationConditionDataUsingUserId(userId, result => {
             return response.json(result).status(200);
