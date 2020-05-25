@@ -9,7 +9,7 @@ export async function healthFacilityData(request: Request, response: Response) {
         });
 
     } catch (error) {
-        console.log('request error : ', error);
+        return response.json(error);
     }
 }
 
@@ -20,6 +20,6 @@ export async function uploadHealthFacilities(request: Request, response: Respons
             response.json(result).status(200);
         });
     } catch (error) {
-        console.log('request error : ', error);
+        return response.json(error);
     }
 }
