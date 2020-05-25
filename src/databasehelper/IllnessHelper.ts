@@ -90,7 +90,7 @@ export class IllnessHelper {
                     message : 'user medication data has been fetched',
                     data : illness,
                 }
-                return callback(jsonres);
+                return callback(illness);
             });
 
         } catch (error) {

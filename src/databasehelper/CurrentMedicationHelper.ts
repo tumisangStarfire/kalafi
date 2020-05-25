@@ -11,19 +11,21 @@ export class CurrentMedicationHelper {
             var result = query.insertOne(currentMedication, function (err, res) {
                 if (err) {
                     console.log(err);
-                    var jsonRes : JsonResponseInterface;
-                    jsonRes.status = 'failed';
-                    jsonRes.message ='failed to add medication information';
-                    jsonRes.data =err;
-
+                    var jsonRes : JsonResponseInterface={
+                        status : 'failed',
+                        message :'failed to add medication information',
+                        data :err,
+                    };
+                    return callback(jsonRes);
                 }
-                var jsonRes : JsonResponseInterface;
-                    jsonRes.status = 'success';
-                    jsonRes.message ='medication information added succesfully';
-                    jsonRes.data =res.insertedId;
+                var jsonRes : JsonResponseInterface= {
+                    status : 'success',
+                    message :'medication information added succesfully',
+                    data :res.insertedId,
+                };
 
 
-                console.log(res);
+                //console.log(res);
                 return callback(jsonRes);
             });
         } catch (error) {
@@ -38,17 +40,21 @@ export class CurrentMedicationHelper {
             var result = query.deleteOne(deleteParams, function (err, res) {
                 if (err) {
                     console.log(err);
-                    var jsonRes : JsonResponseInterface;
-                    jsonRes.status = 'failed';
-                    jsonRes.message ='failed to delete medication information';
-                    jsonRes.data =err;
+                    var jsonRes : JsonResponseInterface={
+                        status : 'failed',
+                        message :'failed to delete medication information',
+                        data :err,
+                    }
+                    return callback(jsonRes);
 
                 }
-                console.log(res);
-                var jsonRes : JsonResponseInterface;
-                    jsonRes.status = 'success';
-                    jsonRes.message ='medication information deleted succesfully';
-                    jsonRes.data =res.deletedCount;
+                //console.log(res);
+                var jsonRes : JsonResponseInterface={
+                    status : 'success',
+                    message :'medication information deleted succesfully',
+                    data :res.deletedCount,
+                };
+
 
                 return callback(jsonRes);
             });
@@ -70,7 +76,7 @@ export class CurrentMedicationHelper {
                         data: {},
 
                     }
-                     console.log(err);
+                // console.log(err);
                     var jsonres : JsonResponseInterface = JsonResponse ;
                     return callback(jsonres);
                 }
@@ -79,13 +85,15 @@ export class CurrentMedicationHelper {
                 var currentmedication: Array<CurrentMedication>;
                 currentmedication = res;
                // console.log(currentmedication);
-                var jsonres : JsonResponseInterface;
-                jsonres.status = 'success';
-                jsonres.message = 'user medication data has been fetched';
-                jsonres.data = currentmedication;
+                var jsonres : JsonResponseInterface={
+                    status :'success',
+                    message :'user medication data has been fetched',
+                    data : currentmedication,
+
+                };
 
 
-                return callback(jsonres);
+                return callback(currentmedication);
             });
 
         } catch (error) {
