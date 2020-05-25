@@ -12,15 +12,15 @@ export class CurrentMedicalConditionHelper {
             const query =  MongoHelper.client.db('Mooki_Development').collection('currentmedicalcondition');
             var result = query.insertOne(currentMedicalCondition, function (err, res) {
                 if (err) {
-                    console.log(err); 
+                    console.log(err);
                     var jsonRes : JsonResponseInterface ={
-                    status : 'failed',  
+                    status : 'failed',
                     message:'failed to add medical information',
-                    data :err,                   
-                   } 
+                    data :err,
+                   }
                  return callback(jsonRes);
-                }   
-            
+                }
+
                 var jsonRes : JsonResponseInterface = {
                     status : 'success',
                     message :'medical information added succesfully',
@@ -87,12 +87,12 @@ export class CurrentMedicalConditionHelper {
                 var currentmedication: Array<CurrentMedicalCondition>;
                 currentmedication = res;
                 //console.log(res);
-                var jsonres : JsonResponseInterface ={
+               /* var jsonres : JsonResponseInterface ={
                     status : 'success',
                     message : 'user medication data has been fetched',
                     data : currentmedication,
-                }
-                return callback(jsonres);
+                }*/
+                return callback(currentmedication);
             });
 
         } catch (error) {
