@@ -40,7 +40,7 @@ export class InjuryHelper {
         }
     }
 
-    static remove = async (storageId:string, callback) => {
+    static remove = async (storageId : string, callback) => {
         try {
             const query = MongoHelper.client.db('Mooki_Development').collection('injury');
             var deleteParams = { _id: storageId };
@@ -71,7 +71,7 @@ export class InjuryHelper {
         }
     }
 
-    static getUserInjuriesUsingUserId = async (userId:string, callback) => {
+    static getUserInjuriesUsingUserId = async (userId : string, callback) => {
         try {
             const collection = MongoHelper.client.db('Mooki_Development').collection('injury');
             var query = { userId: userId };
@@ -86,15 +86,15 @@ export class InjuryHelper {
                     };
                     return callback(jsonRes);
                 }
-                var injury: Array<UserInjury>;
-                injury = res;
+                var userinjury: Array<UserInjury>;
+                userinjury = res;
                 var jsonres : JsonResponseInterface ={
                     status : 'success',
                     message : 'user medication data has been fetched',
-                    data : injury,
+                    data : userinjury,
                 }
                 //console.log(injury);
-                return callback(jsonRes);
+                return callback(userinjury);
             });
 
 
