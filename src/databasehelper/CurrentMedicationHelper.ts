@@ -10,18 +10,18 @@ export class CurrentMedicationHelper {
             const query =  MongoHelper.client.db('Mooki_Development').collection('currentmedication');
             var result = query.insertOne(currentMedication, function (err, res) {
                 if (err) {
-                    console.log(err); 
-                    var jsonRes : JsonResponseInterface; 
-                    jsonRes.status = 'failed';  
-                    jsonRes.message ='failed to add medication information'; 
-                    jsonRes.data =err; 
-                    jsonRes.code =404;
-                }   
-                var jsonRes : JsonResponseInterface; 
-                    jsonRes.status = 'success';  
-                    jsonRes.message ='medication information added succesfully'; 
-                    jsonRes.data =res.insertedId; 
-                    jsonRes.code =200;
+                    console.log(err);
+                    var jsonRes : JsonResponseInterface;
+                    jsonRes.status = 'failed';
+                    jsonRes.message ='failed to add medication information';
+                    jsonRes.data =err;
+
+                }
+                var jsonRes : JsonResponseInterface;
+                    jsonRes.status = 'success';
+                    jsonRes.message ='medication information added succesfully';
+                    jsonRes.data =res.insertedId;
+
 
                 console.log(res);
                 return callback(jsonRes);
@@ -37,19 +37,19 @@ export class CurrentMedicationHelper {
             var deleteParams = { _id: storageId };
             var result = query.deleteOne(deleteParams, function (err, res) {
                 if (err) {
-                    console.log(err); 
-                    var jsonRes : JsonResponseInterface; 
-                    jsonRes.status = 'failed';  
-                    jsonRes.message ='failed to delete medication information'; 
-                    jsonRes.data =err; 
-                    jsonRes.code =404;
+                    console.log(err);
+                    var jsonRes : JsonResponseInterface;
+                    jsonRes.status = 'failed';
+                    jsonRes.message ='failed to delete medication information';
+                    jsonRes.data =err;
+
                 }
                 console.log(res);
-                var jsonRes : JsonResponseInterface; 
-                    jsonRes.status = 'success';  
-                    jsonRes.message ='medication information deleted succesfully'; 
-                    jsonRes.data =res.deletedCount; 
-                    jsonRes.code =201;
+                var jsonRes : JsonResponseInterface;
+                    jsonRes.status = 'success';
+                    jsonRes.message ='medication information deleted succesfully';
+                    jsonRes.data =res.deletedCount;
+
                 return callback(jsonRes);
             });
 
@@ -66,25 +66,25 @@ export class CurrentMedicationHelper {
                 if (err) {
                     var JsonResponse = {
                         status: 'failed',
-                        message: 'failed to fetch user medication information', 
+                        message: 'failed to fetch user medication information',
                         data: {},
-                        code: 404
-                    }   
-                     console.log(err);
-                    var jsonres : JsonResponseInterface = JsonResponse ; 
-                    return callback(jsonres);
-                }  
 
-                //array of medical data 
+                    }
+                     console.log(err);
+                    var jsonres : JsonResponseInterface = JsonResponse ;
+                    return callback(jsonres);
+                }
+
+                //array of medical data
                 var currentmedication: Array<CurrentMedication>;
                 currentmedication = res;
-               // console.log(currentmedication); 
-                var jsonres : JsonResponseInterface; 
+               // console.log(currentmedication);
+                var jsonres : JsonResponseInterface;
                 jsonres.status = 'success';
-                jsonres.message = 'user medication data has been fetched'; 
-                jsonres.data = currentmedication; 
-                jsonres.code =200; 
-                
+                jsonres.message = 'user medication data has been fetched';
+                jsonres.data = currentmedication;
+
+
                 return callback(jsonres);
             });
 

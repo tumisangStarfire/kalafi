@@ -1,9 +1,11 @@
 import { CurrentMedicalCondition } from "../models/CurrentMedicalCondition";
 import { JsonResponseInterface } from "../interfaces/JsonResponseInterface";
 import { MongoHelper } from "../database/MongoHelper";
+import { ObjectId } from "mongodb";
+//var ObjectId = require('mongodb').ObjectID;
 
 export class CurrentMedicalConditionHelper {
-   
+
 
     static create = async (currentMedicalCondition: CurrentMedicalCondition, callback) => {
         try {
@@ -14,23 +16,24 @@ export class CurrentMedicalConditionHelper {
                     var jsonRes : JsonResponseInterface ={
                     status : 'failed',  
                     message:'failed to add medical information',
-                    data :{},
-                    code :404 
-                   }
+                    data :err,                   
+                   } 
+                 return callback(jsonRes);
                 }   
-                var jsonRes : JsonResponseInterface={ 
-                   status:  'success',  
-                    message :'medical information added succesfully', 
-                   data :res.insertedId, 
-                    code :200
-                   }
-                console.log(res);
+            
+                var jsonRes : JsonResponseInterface = {
+                    status : 'success',
+                    message :'medical information added succesfully',
+                    data :res.insertedId,
+
+                }
+
                 return callback(jsonRes);
             });
         } catch (error) {
             console.log(error);
         }
-    }    
+    }
 
     static remove = async (storageId:string, callback) => {
         try {
@@ -38,19 +41,21 @@ export class CurrentMedicalConditionHelper {
             var deleteParams = { _id: storageId };
             var result = query.deleteOne(deleteParams, function (err, res) {
                 if (err) {
-                    console.log(err); 
-                    var jsonRes : JsonResponseInterface; 
-                    jsonRes.status = 'failed';  
-                    jsonRes.message ='failed to delete medical information'; 
-                    jsonRes.data =err; 
-                    jsonRes.code =404;
+                    console.log(err);
+                    var jsonRes : JsonResponseInterface ={
+                        status : 'failed',
+                        message :'failed to delete medical information',
+                        data :err,
+
+                    };
+                    return callback(jsonRes);
                 }
                 console.log(res);
-                var jsonRes : JsonResponseInterface; 
-                    jsonRes.status = 'success';  
-                    jsonRes.message ='medical information deleted succesfully'; 
-                    jsonRes.data =res.deletedCount; 
-                    jsonRes.code =201;
+                var jsonRes : JsonResponseInterface={
+                    status : 'success',
+                    message :'medical information deleted succesfully',
+                    data :res.deletedCount,
+                };
                 return callback(jsonRes);
             });
 
@@ -59,33 +64,34 @@ export class CurrentMedicalConditionHelper {
         }
     }
 
-    static getMedicationConditionDataUsingUserId=async(userId: string, callback) =>  {
+    static getMedicationConditionDataUsingUserId = async(userId : string, callback) =>  {
         try {
-            const collection = MongoHelper.client.db('Mooki_Development').collection('currentmedicalcondition');
-
-            var result = collection.find({ userId: userId }).toArray(function (err, res) {
+            //console.log("user id on helper" + vuserId);
+            var query = { userId: userId };
+            console.log(query)
+            const collection =  MongoHelper.client.db('Mooki_Development').collection('currentmedicalcondition');
+            await collection.find(query).toArray(function (err, res) {
                 if (err) {
                     var JsonResponse = {
                         status: 'failed',
-                        message: 'failed to fetch user medication information', 
-                        data: {},
-                        code: 404
-                    }   
-                     console.log(err);
-                    var jsonres : JsonResponseInterface = JsonResponse ; 
-                    return callback(jsonres);
-                }  
+                        message: 'failed to fetch user medication information',
+                        data: err,
 
-                //array of medical data 
+                    }
+                     console.log(err);
+                    var jsonres : JsonResponseInterface = JsonResponse ;
+                    return callback(jsonres);
+                }
+
+                //array of medical data
                 var currentmedication: Array<CurrentMedicalCondition>;
                 currentmedication = res;
-               // console.log(currentmedication); 
-                var jsonres : JsonResponseInterface; 
-                jsonres.status = 'success';
-                jsonres.message = 'user medication data has been fetched'; 
-                jsonres.data = currentmedication; 
-                jsonres.code =200; 
-                
+                //console.log(res);
+                var jsonres : JsonResponseInterface ={
+                    status : 'success',
+                    message : 'user medication data has been fetched',
+                    data : currentmedication,
+                }
                 return callback(jsonres);
             });
 

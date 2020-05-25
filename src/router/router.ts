@@ -7,7 +7,7 @@ import { login } from '../controller/auth/LoginController';
 import { createAddress,updateAddress,getUserAddress } from "../controller/AddressController";
 import { healthFacilityData, uploadHealthFacilities } from '../controller/HealthFacilityController';
 import { createIllness, userIllnessData, deleteIllness, getAPIIllness } from '../controller/IllnessController';
-import { createInjury, userInjuryData, deleteInjury,getAllInjuries } from '../controller/InjuryController'; 
+import { createInjury, userInjuryData, deleteInjury,getAllInjuries } from '../controller/InjuryController';
 import { saveCurrentMedicalCondition, removeCurrentMedicalCondition,getUserMedicalConditionData } from '../controller/CurrentMedicalConditionController';
 import { saveCurrentMedication, removeCurrentMedication,getUserMedicationData } from '../controller/CurrentMedicationController';
 import { getAllRegions, uploadRegionData } from '../controller/RegionController';
@@ -16,7 +16,7 @@ import { createUserVaccination, removeUserVaccination,getAllVaccines,getUserVacc
 import { getUser } from '../controller/UserController';
 import { createUserProfile ,updateUserProfile,updateProfilePicture,getUserProfile } from '../controller/UserProfileController';
 const fs = require("fs");
-  
+
 
 const router = Router();
 router.use(bodyParser.json());
@@ -24,7 +24,7 @@ router.use(bodyParser.json());
 // Home page of the application
 router.get("/", (req, res) => {
     console.log('here');
-    
+
 });
 
 
@@ -37,20 +37,20 @@ router.route('/getUser:userId').get(getUser);
 /**User adddress */
 router.route('/createAddress').post(createAddress);
 router.route('/updateAddress').post(updateAddress);
-router.route('/getUserAddress:userId').get(getUserAddress); 
+router.route('/getUserAddress:userId').get(getUserAddress);
 
 
 
-/** user profile */ 
-router.route('/createUserProfile').post(createUserProfile); 
+/** user profile */
+router.route('/createUserProfile').post(createUserProfile);
 router.route('/updateUserProfile:id').post(updateUserProfile)
-router.route('/uploadProfilePicture').post(updateProfilePicture); 
-router.route('/getUserProfile:userId').get(getUserProfile); 
+router.route('/uploadProfilePicture').post(updateProfilePicture);
+router.route('/getUserProfile:userId').get(getUserProfile);
 
-/**CurrentMedicalCondition */ 
+/**CurrentMedicalCondition */
 router.route('/saveCurrentMedicalCondition').post(saveCurrentMedicalCondition);
-router.route('/removeCurrentMedicalCondition:storageId').post(removeCurrentMedicalCondition);
-router.route('/getUserMedicalConditionData:userId').get(getUserMedicalConditionData);
+router.route('/removeCurrentMedicalCondition/:storageId').delete(removeCurrentMedicalCondition);
+router.route('/getUserMedicalConditionData/:userId').get(getUserMedicalConditionData);
 
 /** */
 router.route('/healthFacilityData').get(healthFacilityData);
@@ -58,10 +58,10 @@ router.route('/uploadHealthFacilitesData').get(uploadHealthFacilities);
 
 router.route('/getAllRegions').get(getAllRegions);
 router.route('/uploadRegionData').get(uploadRegionData);
- 
+
 /**users medication */
 router.route('/saveCurrentMedication').post(saveCurrentMedication);
-router.route('/deleteCurrentMedication:id').delete(removeCurrentMedication); 
+router.route('/deleteCurrentMedication:id').delete(removeCurrentMedication);
 router.route('/getUserMedicationData:userId').get(getUserMedicationData);
 
 
@@ -71,12 +71,12 @@ router.route('/deleteAllergy:id').post(removeAllergy);
 /*vaccination api routes*/
 router.route('/createUserVaccination').post(createUserVaccination);
 router.route('/deleteUserVaccination:storageId').delete(removeUserVaccination);
-router.route('/getAllVaccines').get(getAllVaccines); 
+router.route('/getAllVaccines').get(getAllVaccines);
 router.route('/getUserVaccines:userId').get(getUserVaccines);
 
 /**Illness api routes */
 router.route('/createIllness').post(createIllness);
-router.route('/userIllnessData:userId').get(userIllnessData); 
+router.route('/userIllnessData:userId').get(userIllnessData);
 router.route('/deleteIllness:userId').delete(deleteIllness);
 router.route('/getAPIIllness').get(getAPIIllness);
 

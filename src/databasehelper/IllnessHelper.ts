@@ -1,7 +1,9 @@
-import { UserIllness } from 'models/UserIllness';
+import { UserIllness } from '../models/UserIllness';
 import { MongoHelper } from '../database/MongoHelper';
+import { JsonResponseInterface } from "../interfaces/JsonResponseInterface";
 var ObjectId = require('mongodb').ObjectID;
 const axios = require('axios').default;
+
 var stringify = require('json-stringify-safe');
 
 export class IllnessHelper {
@@ -10,12 +12,25 @@ export class IllnessHelper {
         try {
 
             const query = MongoHelper.client.db('Mooki_Development').collection('illness');
-            var result = query.insertOne(illness, function (err, data) {
+            var result = query.insertOne(illness, function (err, res) {
                 if (err) {
-                    console.log(err);
+                   // console.log(err);
+                    var jsonRes : JsonResponseInterface ={
+                        status : 'failed',
+                        message :'failed to add medical information',
+                        data :err,
+
+                    };
+                    return callback(jsonRes);
                 }
-                console.log(data);
-                return callback(data.insertedId);
+                var jsonRes : JsonResponseInterface = {
+                    status : 'success',
+                    message :'medical information added succesfully',
+                    data :res.insertedId,
+
+                }
+                //console.log(data);
+                return callback(jsonRes);
             });
 
         } catch (error) {
@@ -29,10 +44,21 @@ export class IllnessHelper {
             var deleteParams = { _id: new ObjectId(id) };
             var result = query.deleteOne(deleteParams, function (err, res) {
                 if (err) {
-                    console.log(err);
+                    var jsonRes : JsonResponseInterface ={
+                        status : 'failed',
+                        message :'failed to delete medical information',
+                        data :err,
+
+                    };
+                    return callback(jsonRes);
                 }
-                console.log(res)
-                return callback(res.deletedCount);
+                var jsonRes : JsonResponseInterface = {
+                    status : 'success',
+                    message :'medical information deleted succesfully',
+                    data :res.deletedCount,
+
+                }
+                return callback(jsonRes);
             });
 
         } catch (error) {
@@ -42,16 +68,29 @@ export class IllnessHelper {
     /**return historical data of patients illness */
     static getUserIllnessDataUsingUserId = async (userId, callback) => {
         try {
+            var query = { userId: userId };
             const collection = MongoHelper.client.db('Mooki_Development').collection('illness');
 
-            var result = collection.find({ userId: new ObjectId(userId) }).toArray(function (err, res) {
+            var result = collection.find(query).toArray(function (err, res) {
                 if (err) {
-                    console.log(err);
+                   // console.log(err);
+                    var jsonRes : JsonResponseInterface ={
+                        status : 'failed',
+                        message :'failed to fetch medical information',
+                        data :err,
+
+                    };
+                    return callback(jsonres);
                 }
                 var illness: Array<UserIllness>;
                 illness = res;
-                console.log(illness);
-                return callback(illness);
+                //console.log(illness);
+                var jsonres : JsonResponseInterface ={
+                    status : 'success',
+                    message : 'user medication data has been fetched',
+                    data : illness,
+                }
+                return callback(jsonres);
             });
 
         } catch (error) {
