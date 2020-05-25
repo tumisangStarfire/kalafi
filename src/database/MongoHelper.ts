@@ -4,7 +4,7 @@ const mongoClient = require('mongodb').MongoClient;
 const dotenv = require('dotenv');
 import mongoose from 'mongoose';
 
-dotenv.config({path: __dirname + '/.env'}); 
+dotenv.config({path: __dirname + '/.env'});
 
 console.log(require('dotenv').config())
 
@@ -24,7 +24,7 @@ export class MongoHelper {
 
   public static connect(): Promise<any> {
     return new Promise<any>((resolve, reject) => {
-      console.log(connectionString);
+      //console.log(connectionString);
       mongo.MongoClient.connect(connectionString, { useUnifiedTopology: true, useNewUrlParser: true }, (err, client: mongo.MongoClient) => {
         if (err) {
           reject(err);
