@@ -1,6 +1,5 @@
 
-import * as express from 'express'; 
-var cors = require('cors');
+import * as express from 'express'; var cors = require('cors');
 import { MongoHelper } from './database/MongoHelper';
 import { mongooseConnector } from './database/mongooseConnector';
 /* import * as bodyParser from 'body-parser'; */

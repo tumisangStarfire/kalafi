@@ -11,18 +11,19 @@ export class CurrentMedicalConditionHelper {
             var result = query.insertOne(currentMedicalCondition, function (err, res) {
                 if (err) {
                     console.log(err); 
-                    var jsonRes : JsonResponseInterface; 
-                    jsonRes.status = 'failed';  
-                    jsonRes.message ='failed to add medical information'; 
-                    jsonRes.data =err; 
-                    jsonRes.code =404;
+                    var jsonRes : JsonResponseInterface ={
+                    status : 'failed',  
+                    message:'failed to add medical information',
+                    data :{},
+                    code :404 
+                   }
                 }   
-                var jsonRes : JsonResponseInterface; 
-                    jsonRes.status = 'success';  
-                    jsonRes.message ='medical information added succesfully'; 
-                    jsonRes.data =res.insertedId; 
-                    jsonRes.code =200;
-
+                var jsonRes : JsonResponseInterface={ 
+                   status:  'success',  
+                    message :'medical information added succesfully', 
+                   data :res.insertedId, 
+                    code :200
+                   }
                 console.log(res);
                 return callback(jsonRes);
             });

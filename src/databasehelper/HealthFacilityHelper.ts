@@ -24,12 +24,13 @@ export class HealthFacilityHelper {
                 var healthFacility: Array<HealthFacility>;
                 healthFacility = res; 
 
-                var jsonres : JsonResponseInterface; 
-                jsonres.status = 'success';
-                jsonres.message = 'Health facility data has been fetched'; 
-                jsonres.data = healthFacility; 
-                jsonres.code =200;
-                return callback(jsonres);
+                var jsonres : JsonResponseInterface = {
+                    status: 'success',
+                    message: 'Health facility data has been fetched', 
+                    data:healthFacility,
+                    code: 200
+                };
+                 return callback(healthFacility);
             });
         } catch (error) {
             console.log(error);
