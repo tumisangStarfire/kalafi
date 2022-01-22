@@ -14,12 +14,12 @@ function healthFacilityData(request, response) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             yield HealthFacilityHelper_1.HealthFacilityHelper.getHealthFacilities(result => {
-                console.log('result', result);
+                // console.log('result', result);
                 response.json(result).status(200);
             });
         }
         catch (error) {
-            console.log('request error : ', error);
+            return response.json(error);
         }
     });
 }
@@ -28,12 +28,12 @@ function uploadHealthFacilities(request, response) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             yield HealthFacilityHelper_1.HealthFacilityHelper.uploadHealthFacilityData(result => {
-                console.log('result', result);
+                // console.log('result', result);
                 response.json(result).status(200);
             });
         }
         catch (error) {
-            console.log('request error : ', error);
+            return response.json(error);
         }
     });
 }

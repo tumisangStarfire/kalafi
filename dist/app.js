@@ -12,13 +12,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express = require("express");
 var cors = require('cors');
 const MongoHelper_1 = require("./database/MongoHelper");
-/* import * as bodyParser from 'body-parser'; */
 const router_1 = require("./router/router");
 const loggerMiddleware_1 = require("./middleware/loggerMiddleware");
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
-const jquery_1 = require("jquery");
-const $ = jquery_1.default;
 var path = require('path');
 const dotenv = require('dotenv');
 process.env.PWD = process.cwd();

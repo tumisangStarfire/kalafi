@@ -28,20 +28,20 @@ router.get("/", (req, res) => {
 router.route('/register').post(RegisterController_2.registerUser);
 router.route('/login').post(LoginController_1.login);
 router.route('/registerBeta').post(RegisterController_1.registerBeta);
-router.route('/getUser:userId').get(UserController_1.getUser);
+router.route('/getUser/:userId').get(UserController_1.getUser);
 /**User adddress */
 router.route('/createAddress').post(AddressController_1.createAddress);
 router.route('/updateAddress').post(AddressController_1.updateAddress);
-router.route('/getUserAddress:userId').get(AddressController_1.getUserAddress);
+router.route('/getUserAddress/:userId').get(AddressController_1.getUserAddress);
 /** user profile */
 router.route('/createUserProfile').post(UserProfileController_1.createUserProfile);
-router.route('/updateUserProfile:id').post(UserProfileController_1.updateUserProfile);
+router.route('/updateUserProfile/:id').post(UserProfileController_1.updateUserProfile);
 router.route('/uploadProfilePicture').post(UserProfileController_1.updateProfilePicture);
-router.route('/getUserProfile:userId').get(UserProfileController_1.getUserProfile);
+router.route('/getUserProfile/:userId').get(UserProfileController_1.getUserProfile);
 /**CurrentMedicalCondition */
 router.route('/saveCurrentMedicalCondition').post(CurrentMedicalConditionController_1.saveCurrentMedicalCondition);
-router.route('/removeCurrentMedicalCondition:storageId').post(CurrentMedicalConditionController_1.removeCurrentMedicalCondition);
-router.route('/getUserMedicalConditionData:userId').get(CurrentMedicalConditionController_1.getUserMedicalConditionData);
+router.route('/removeCurrentMedicalCondition/:storageId').delete(CurrentMedicalConditionController_1.removeCurrentMedicalCondition);
+router.route('/getUserMedicalConditionData/:userId').get(CurrentMedicalConditionController_1.getUserMedicalConditionData);
 /** */
 router.route('/healthFacilityData').get(HealthFacilityController_1.healthFacilityData);
 router.route('/uploadHealthFacilitesData').get(HealthFacilityController_1.uploadHealthFacilities);
@@ -49,10 +49,10 @@ router.route('/getAllRegions').get(RegionController_1.getAllRegions);
 router.route('/uploadRegionData').get(RegionController_1.uploadRegionData);
 /**users medication */
 router.route('/saveCurrentMedication').post(CurrentMedicationController_1.saveCurrentMedication);
-router.route('/deleteCurrentMedication:id').delete(CurrentMedicationController_1.removeCurrentMedication);
-router.route('/getUserMedicationData:userId').get(CurrentMedicationController_1.getUserMedicationData);
+router.route('/deleteCurrentMedication/:id').delete(CurrentMedicationController_1.removeCurrentMedication);
+router.route('/getUserMedicationData/:userId').get(CurrentMedicationController_1.getUserMedicationData);
 router.route('/createAllergy').post(UserAllergyController_1.createAllergy);
-router.route('/deleteAllergy:id').post(UserAllergyController_1.removeAllergy);
+router.route('/deleteAllergy/:id').post(UserAllergyController_1.removeAllergy);
 /*vaccination api routes*/
 router.route('/createUserVaccination').post(VaccinationController_1.createUserVaccination);
 router.route('/deleteUserVaccination:storageId').delete(VaccinationController_1.removeUserVaccination);
@@ -60,13 +60,13 @@ router.route('/getAllVaccines').get(VaccinationController_1.getAllVaccines);
 router.route('/getUserVaccines:userId').get(VaccinationController_1.getUserVaccines);
 /**Illness api routes */
 router.route('/createIllness').post(IllnessController_1.createIllness);
-router.route('/userIllnessData:userId').get(IllnessController_1.userIllnessData);
-router.route('/deleteIllness:userId').delete(IllnessController_1.deleteIllness);
+router.route('/userIllnessData/:userId').get(IllnessController_1.userIllnessData);
+router.route('/deleteIllness/:userId').delete(IllnessController_1.deleteIllness);
 router.route('/getAPIIllness').get(IllnessController_1.getAPIIllness);
 /**Injury api routes */
 router.route('/createInjury').post(InjuryController_1.createInjury);
-router.route('/userInjuryData:userId').get(InjuryController_1.userInjuryData);
-router.route('/deleteInjury:userId').delete(InjuryController_1.deleteInjury);
+router.route('/userInjuryData/:userId').get(InjuryController_1.userInjuryData);
+router.route('/deleteInjury/:userId').delete(InjuryController_1.deleteInjury);
 router.route('/getAllInjuryData').get(InjuryController_1.getAllInjuries);
 exports.default = router;
 //# sourceMappingURL=router.js.map

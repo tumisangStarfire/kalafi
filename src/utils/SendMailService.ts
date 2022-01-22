@@ -1,10 +1,10 @@
-let nodemailer = require('nodemailer');
-let aws = require('aws-sdk');
-const dotenv = require('dotenv');
+
+import nodemailer from 'nodemailer';
+import  aws from 'aws-sdk';
+import dotenv from 'dotenv';
 
 // create Nodemailer SES transporter 
-dotenv.config();
-
+dotenv.config()
 let transporter = nodemailer.createTransport({
     SES: new aws.SES({
         apiVersion: '2010-12-01',
@@ -15,10 +15,8 @@ let transporter = nodemailer.createTransport({
     })
 });
 
-
-const sendEmail = async (to, subject = null, text, attachmemt = null) => {
-    // send mail with defined transport object 
-    let info = transporter.sendMail({
+export const sendEmail = async (to, subject = null, text, attachmemt = null) =>{
+    let info = await transporter.sendMail({
         from: 'healthcard@mookidigitalhealth.co.bw',
         to: to,
         subject: subject,
@@ -29,7 +27,4 @@ const sendEmail = async (to, subject = null, text, attachmemt = null) => {
     }).catch(function (error) {
         console.log(error);
     });
-
 }
-
-module.exports = sendEmail();

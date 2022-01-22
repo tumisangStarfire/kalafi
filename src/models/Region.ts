@@ -1,39 +1,36 @@
-import { Document } from "mongoose"; 
+import { ObjectId, Timestamp } from "mongodb";
 
-export class Region extends Document {
-  _id: string; 
-   regionId :number;
-  regionName: string;  
+export default  class Region {
+  
+  _id: ObjectId;
+  name: string;  
+  created_at : Timestamp;
+  updated_at : Timestamp;
 
-  constructor(regionId:number, regionName,storageId:string){ 
-    super(); 
-    this._id=storageId; 
-    this.regionId = regionId; 
-    this.regionName = regionName;
+  constructor(_id:ObjectId, name ? : string){ 
+   
+    this._id=_id;
+    this.name = name;
   } 
 
-  get getStorageId() : string { 
+  get getId() : ObjectId { 
     return this._id; 
  } 
 
-  set getStorageId(storageId: string) {
-    this._id = storageId;
+  set getId(_id: ObjectId) {
+    this._id = _id;
   }  
 
-  get getRegionId() : number { 
-    return this.regionId; 
-  } 
-
-  set setRegionId(regionId: number) {
-  this.regionId = regionId;
+  get getRegionId() : ObjectId { 
+    return this._id; 
   }  
 
-  get getRegionName():string{ 
-    return this.regionName;
+  get getName():string{ 
+    return this.name;
   }  
 
-  set setRegionName(regionName : string){ 
-    this.regionName =regionName;
+  set setName(name : string){ 
+    this.name =name;
   }
 
 

@@ -1,14 +1,10 @@
 
 import * as express from 'express'; var cors = require('cors');
 import { MongoHelper } from './database/MongoHelper';
-import { mongooseConnector } from './database/mongooseConnector';
-/* import * as bodyParser from 'body-parser'; */
 import router from './router/router';
 import { loggerMiddleware } from './middleware/loggerMiddleware';
 import * as jsdom from 'jsdom';
-const { JSDOM } = jsdom;   
-import jQuery from 'jquery'
-const $ = jQuery; 
+const { JSDOM } = jsdom;    
 var path = require('path'); 
 const dotenv = require('dotenv');
 process.env.PWD = process.cwd()

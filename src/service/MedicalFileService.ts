@@ -1,14 +1,12 @@
 
-import { databaseConnector } from "../database/databaseConnector";
 import { createFile, deleteFileAfterUpload } from '../controller/FileCreaterController';
-import { MedicalFile } from "models/MedicalFile";
+import  MedicalFile  from "../models/MedicalFile";
 import { MongoHelper } from "../database/MongoHelper";
-const uuid = require('uuid');
-var ObjectId = require('mongodb').ObjectID;
-
-const fs = require('fs');
-const AWS = require('aws-sdk');
-const dotenv = require('dotenv');
+import uuid from 'uuid'; 
+import { ObjectId } from 'mongodb';
+import fs from 'fs';
+import AWS from 'aws-sdk';
+import dotenv from 'dotenv';
 
 // Create S3 service object
 const s3 = new AWS.S3({
@@ -17,11 +15,11 @@ const s3 = new AWS.S3({
 });
 
 
-export class MedicalFileLogic {
+export default  class MedicalFileService {
     /**creates and saves a new medicalfile for a patinet */
-    static create = async (medicalFile: MedicalFile, callback) => {
+    static storeReferenceToDatabase = async (medicalFile: MedicalFile, callback) => {
         try {
-            const query = await MongoHelper.client.db('Mooki_Development').collection('medicalfile');
+            const query = await MongoHelper.getDatabase().collection('medicalfile');
             var result = await query.insertOne(medicalFile, function (err, data) {
                 if (err) {
                     console.log(err);
@@ -55,7 +53,7 @@ export class MedicalFileLogic {
                 var fileStream = fs.createReadStream(result);
 
                 //pass the file to the body 
-                uploadParams.Body = fileStream;
+               // uploadParams.Body = fileStream;
                 //pass the filename to key  
                 uploadParams.Key = medicalFile.getfilePath;
 
@@ -82,7 +80,7 @@ export class MedicalFileLogic {
                         medicalFile.setDateUploaded = date_today.toLocaleDateString();
                         console.log(medicalFile);
 
-                        await MedicalFileLogic.create(medicalFile, result => {
+                        await this.create(medicalFile, result => {
                             console.log(result);
                             return callback(result);
                         });
@@ -98,8 +96,7 @@ export class MedicalFileLogic {
     static removeUploadedFile = async (id, callback) => {
         try {
             //first the the s3key from the Database, use the key to remove th file from s3, after that delete from DB 
-            const connection = await databaseConnector();
-            const collection = await MongoHelper.client.db('Mooki_Development').collection('medicalfile');
+            const collection = await MongoHelper.client.db('kalafi').collection('medicalfile');
             var result = await collection.findOne({ _id: new ObjectId(id) }, async function (err, res) {
                 console.log(err);
                 if (err) {
@@ -144,7 +141,7 @@ export class MedicalFileLogic {
     /**return all images/files of the user */
     static getMedicalFilesUsingUserId = async (userId, callback) => {
         try {
-            const collection = MongoHelper.client.db('Mooki_Development').collection('medicalFiles');
+            const collection = MongoHelper.client.db('kalafi').collection('medicalFiles');
             var result = collection.findOne({ _id: new ObjectId(userId) }, function (err, res) {
                 if (err) {
                     console.log(err);

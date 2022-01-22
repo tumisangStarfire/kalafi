@@ -1,6 +1,6 @@
-import { Document } from "mongoose"; 
 import { ObjectId, Timestamp } from "mongodb";
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcrypt'; 
+import  Profile  from './UserProfile'; 
 
 /*constants */
 
@@ -11,18 +11,20 @@ enum Status {
 
 }
 /** a class */
-export class User extends Document  {
+export default class User  {
 
   /**Defines primary id that will be used as _id of the mongo collection. */
-  _id: string;
+  _id: ObjectId;
   private firstName: string;
   private lastName: string;
   private cellphone: number;
   private password: string;
   private email?: string;
   private status?: Status; //default status of the user
+  private profile : Profile;
   private verified?: boolean;
-  private created_at: string;
+  private created_at : Date;
+  private updated_at : Date;
 
 
 
@@ -38,35 +40,39 @@ export class User extends Document  {
    * 
    */
   constructor(
+    _id : ObjectId,
     firstName: string,
     lastName: string,
     cellphone: number,
     password: string,
     email?: string,
     status?: Status,
+    profile ?:  Profile,
     verified?: boolean, 
-    userId?: string,
+    created_at?: Date,
+    updated_at?: Date,
   ) { 
-    super(); 
-    this._id =userId;
+    this._id = _id;
     this.firstName = firstName;
     this.lastName = lastName;
     this.cellphone = cellphone;
     this.password = password;
     this.email = email;
     this.status = status;
+    this.profile = profile
     this.verified = verified;
 
     /*initialize the timestamp when saving the documennt*/
-    this.created_at = Date.now().toString();
+    this.created_at = created_at,
+    this.updated_at = updated_at
   }
 
 
-  get getUserId(): string {
+  get getUserId(): ObjectId {
     return this._id;
   }
 
-  set setUserId(_id: string) {
+  set setUserId(_id: ObjectId) {
     this._id = _id;
   }
 
@@ -116,6 +122,14 @@ export class User extends Document  {
 
   set setStatus(status: Status) {
     this.status = status;
+  } 
+
+   get getProfile(): Profile {
+    return this.profile;
+  }
+
+  set setProfile(profile: Profile) {
+    this.profile = profile;
   }
 
   get getVerifified(): boolean {
@@ -124,6 +138,14 @@ export class User extends Document  {
 
   set setVerified(verified: boolean) {
     this.verified = verified;
+  } 
+
+  set setCreatedAt(created_at :Date){
+    this.created_at = new Date();
+  } 
+
+  set setUpdatedAt(updated_at :Date){
+    this.updated_at = new Date();
   }
 
   public hashPassword() {

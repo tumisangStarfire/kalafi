@@ -1,20 +1,28 @@
-import { User } from "./User";
 import { ObjectId } from "mongodb";
 
-
-export class EmergencyContact {
+export default class EmergencyContact {
   _id: ObjectId;
-  /**belongs to user */
-  protected belongsTo: string;
-  protected firstName: string;
-  private cellphone: number;
+  private belongsTo: ObjectId;
+  private firstName: string;
+  private cellphone?: number;
   private relation?: string;
 
-  /*  constructor(belongsTo: string, firstName: string, cellphone: number, relation: string) {
-     super(firstName,);
-     this.belongsTo = belongsTo;
- 
-   } */
+  
+  constructor(
+    _id : ObjectId,
+    belongsTo: ObjectId, 
+    name: string, 
+    firstName: string, 
+    cellphone: number, 
+    relation : string,
+    ) {
+  
+    this._id= _id; 
+    this.belongsTo =belongsTo;
+    this.firstName = firstName;
+    this.cellphone = cellphone;
+    this.relation = relation
+  }
 
 
 

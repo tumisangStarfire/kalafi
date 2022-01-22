@@ -3,7 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const mongo = require("mongodb");
 const mongoClient = require('mongodb').MongoClient;
 const dotenv = require('dotenv');
-dotenv.config();
+dotenv.config({ path: __dirname + '/.env' });
+console.log(require('dotenv').config());
 var mongoURL = process.env.MONGO_Url;
 var MongoDatabase = process.env.MONGO_DATABASE;
 var MongoUser = process.env.MONGO_USER;
@@ -14,15 +15,15 @@ class MongoHelper {
     }
     static connect() {
         return new Promise((resolve, reject) => {
-            // console.log(connectionString);
+            console.log(connectionString);
             mongo.MongoClient.connect(connectionString, { useUnifiedTopology: true, useNewUrlParser: true }, (err, client) => {
                 if (err) {
                     reject(err);
                 }
                 else {
                     MongoHelper.client = client;
-                    this.database = client.db('test');
-                    resolve(client.db('test'));
+                    this.database = client.db(MongoDatabase);
+                    resolve(client.db(MongoDatabase));
                 }
             });
         });

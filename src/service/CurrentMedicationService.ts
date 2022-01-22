@@ -1,13 +1,12 @@
-import { CurrentMedication } from '../models/CurrentMedication';
-import { MongoHelper } from '../database/MongoHelper';
-import { JsonResponseInterface } from '../interfaces/JsonResponseInterface';
-var ObjectId = require('mongodb').ObjectID;
+import CurrentMedication from "models/CurrentMedication";
+import { MongoHelper } from "../database/MongoHelper";
+import { JsonResponseInterface } from "../interfaces/JsonResponseInterface";
 
-export class CurrentMedicationHelper {
+export default class CurrentMedicationService { 
 
-    static create = async (currentMedication: CurrentMedication, callback) => {
+    static store = async (currentMedication: CurrentMedication, callback) => {
         try {
-            const query =  MongoHelper.client.db('Mooki_Development').collection('currentmedication');
+            const query = await MongoHelper.getDatabase().collection('usermedications');
             var result = query.insertOne(currentMedication, function (err, res) {
                 if (err) {
                     console.log(err);
@@ -33,9 +32,9 @@ export class CurrentMedicationHelper {
         }
     }
 
-    static remove = async (storageId:string, callback) => {
+    static destroy = async (storageId:string, callback) => {
         try {
-            const query =  MongoHelper.client.db('Mooki_Development').collection('currentmedication');
+           const query = await MongoHelper.getDatabase().collection('usermedications');
             var deleteParams = { _id: storageId };
             var result = query.deleteOne(deleteParams, function (err, res) {
                 if (err) {
@@ -64,9 +63,9 @@ export class CurrentMedicationHelper {
         }
     }
 
-    static getMedicationDataUsingUserId = async (userId:string, callback) => {
+    static getMedicationUsingUserId = async (userId:string, callback) => {
         try {
-            const collection = MongoHelper.client.db('Mooki_Development').collection('currentmedication');
+            const collection = MongoHelper.getDatabase().collection('usermedications');
 
             var result = collection.find({ userId: userId }).toArray(function (err, res) {
                 if (err) {
@@ -99,5 +98,6 @@ export class CurrentMedicationHelper {
         } catch (error) {
             console.log(error);
         }
-    }
+    } 
+
 }

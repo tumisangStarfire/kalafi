@@ -1,13 +1,12 @@
 import { Request, Response } from 'express';
-import { User } from '../models/User';
-import { UserHelper } from '../databasehelper/UserHelper';
+import  Service  from '../service/UserService';
 
 
 //post function
 export async function checkPhoneNumber(request: Request, response: Response) {
     try {
         let cellphone = request.body.cellphone;
-          const valid = await UserHelper.verifyUserCellphone(cellphone, res => {
+          const valid = await Service.verifyUserCellphone(cellphone, res => {
              console.log(res);
              return res;
          });
@@ -24,7 +23,7 @@ export async function createUserPassword(request: Request, response: Response) {
         let userId = request.body.userId;
         let password =request.body.password;
         let confirmPassword = request.body.confirmPassword; 
-        const result = await UserHelper.createPassword(userId,password,confirmPassword,res =>{ 
+        const result = await Service.createPassword(userId,password,confirmPassword,res =>{ 
             console.log(res); 
             return res;
         });
@@ -40,7 +39,7 @@ export async function resetPassword(request: Request, response: Response){
         let userId = request.body.userId;
         let password =request.body.password;
         let confirmPassword = request.body.confirmPassword; 
-        const result = await UserHelper.resetPassword(userId,password,confirmPassword,res =>{ 
+        const result = await Service.resetPassword(userId,password,confirmPassword,res =>{ 
             console.log(res); 
             return res;
         })
@@ -50,12 +49,11 @@ export async function resetPassword(request: Request, response: Response){
 }
 
 //get function
-export async function getUser(request: Request, response: Response) {
+export async function findUser(request: Request, response: Response) {
     try {
         let id = request.params.userId;
-        await UserHelper.getUserById(id, res => {
+        await Service.findUser(id, res => {
             console.log(res);
-            //const user: User = res;
             response.json(res);
         })
 
@@ -63,4 +61,5 @@ export async function getUser(request: Request, response: Response) {
         console.log(error);
     }
 
-}
+} 
+

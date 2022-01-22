@@ -1,47 +1,26 @@
-import { Region } from "./Region"; 
-import { Document } from "mongoose";
-export class Address extends Document{
+import Region from "./Region"; 
 
-   _id : string; 
-  private userId : string;
+export default class Address {
+
   private city?: string;
   private town?: string;
   private village?: string;
   private streetName?: string;
   private houseNumber?: string; 
   private ward?:string;
-  private region: Region;
+  private region?: Region;
 
-  constructor(userId :string,region: Region,storageId?:string, city?: string, town?: string, village?: string, streetName?: string, houseNumber?: string,ward?:string) {
-    super();
-    this._id= storageId; 
-    this.userId =userId;
+  constructor(city?: string, town?: string, village?: string, streetName?: string, houseNumber?: string,ward?:string,region?: Region) {
     this.city = city;
     this.town = town;
     this.village = village;
     this.streetName = streetName;
     this.houseNumber = houseNumber; 
-    this.ward =ward
+    this.ward = ward
     this.region = region;
 
   } 
 
-  
-  get getStorageId() : string { 
-     return this._id; 
-  } 
-
-  set getStorageId(storageId: string) {
-    this._id = storageId;
-  } 
-
-  get getUserId (): string{ 
-    return this.userId;
-  } 
-
-  set setUserId(userId : string){
-    this.userId =userId;
-  }
 
   get getCity(): string {
 

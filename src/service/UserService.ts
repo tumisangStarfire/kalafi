@@ -1,55 +1,53 @@
-import { User } from '../models/User';
+import User from '../models/User';
 import { MongoHelper } from '../database/MongoHelper';
-import { OTPHelper } from './OTPHelper';
 import { LoginInterface } from '../interfaces/LoginInterface';
 import { JsonResponseInterface } from '../interfaces/JsonResponseInterface';
 import { TokenData } from '../interfaces/TokenData';
-var ObjectId = require('mongodb').ObjectID;
+import { ObjectId, Timestamp } from "mongodb";
 import * as bcrypt from 'bcrypt';
 import * as jwt from "jsonwebtoken";
+import UserInjury from 'models/UserInjury';
+import UserIllness from 'models/UserIllness';
 const dotenv = require('dotenv');
 dotenv.config();
 
 
 export const JWT_SECRET_KEY = process.env.JWT_SECRET;
 
-export class UserHelper {
+export default class UserService {
 
 
     /**function to save a new user registration, it wil be called by the Registration Controller */
     static create = async (user: User, callback) => {
         try {
 
-            const query =await MongoHelper.client.db('Mooki_Development').collection('users');
+            const query =await MongoHelper.getDatabase().collection('users');
 
-            if (query.findOne({ cellphone: user.getCellphone })) {
+            if (query.findOne({ email: user.getEmail })) {
                 var jsonRes : JsonResponseInterface ={
                     status : 'failed',
-                    message :'user with that number already exists',
-                    data :{},
-
+                    message :'user with that email already exists',
+                    data : null
                 };
                 return callback(jsonRes);
             } else {
                 var result = query.insertOne(user);
-
+               
                 result.then(async (res) => {
-                    //id user created
-                    await OTPHelper.saveOTP(user.getCellphone, data => {
-                        //console.log(result);
-                        //return the response
-                        var jsonres : JsonResponseInterface = {
-                            status: 'success',
-                            message: 'user sucessfully created',
-                            data: res.insertedCount,
-
-                        }
-
-                        return callback(jsonres);
-                    });
-                });
+                    var jsonRes : JsonResponseInterface ={
+                    status : 'success',
+                    message :'User Created',
+                    data :res
+                    };
+                    return callback(jsonRes);
+                }); 
                 /** return the error to the response*/
                 result.catch((err) => {
+                    var jsonRes : JsonResponseInterface ={
+                        status : 'error',
+                        message :'Something happened please try again later.c',
+                        data :err
+                    };
                     return callback(err);
                 });
 
@@ -58,14 +56,40 @@ export class UserHelper {
         } catch (error) {
             console.log(error);
         }
+    } 
+
+    static findUser = async (_id :string,callback) =>{
+         try {
+            const collection =  MongoHelper.getDatabase().collection('users');
+
+            var result = collection.findOne({ _id: _id }).then( (res) => {
+                var jsonres : JsonResponseInterface={
+                    status :'success',
+                    message :'user medication data has been fetched',
+                    data : res,
+
+                };
+
+                return callback(jsonres);
+            }).catch((err) =>{
+                var jsonres : JsonResponseInterface={
+                    status :'success',
+                    message :'user medication data has been fetched',
+                    data : err,
+
+                };
+            });
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     static login = async (login: LoginInterface, callback) => {
         try {
             //  const logInData: LoginInterface = login; //TODO check if the account is verified, check if the account status is active
-            const collection = MongoHelper.client.db('Mooki_Development').collection('users');
+            const collection =  MongoHelper.getDatabase().collection('users');
             //check if the user exists
-            const userExists = await collection.findOne({ cellphone: login.cellphone });
+            const userExists = await collection.findOne({ email: login.email });
             if (userExists) {
 
                 const isPasswordMatching = await bcrypt.compare(login.password, userExists.password);
@@ -93,7 +117,7 @@ export class UserHelper {
         const match = User.checkIfPasswordAndConfirmPasswordMatch(password, confirmPassword);
 
         if(match == true){
-            const collection = MongoHelper.client.db('Mooki_Development').collection('users');
+            const collection =  MongoHelper.getDatabase().collection('users');
             var findUser = collection.findOne({ _id: new ObjectId(userId) });
             /**if user exists then do the following*/
             findUser.then((res) => {
@@ -140,7 +164,7 @@ export class UserHelper {
 
     static getUserById = async (id, callback) => {
         try {
-           const collection = MongoHelper.client.db('Mooki_Development').collection('users');
+           const collection =  MongoHelper.getDatabase().collection('users');
             var result = collection.findOne({ _id: id }, function (err, res) {
                 if (err) {
                     var JsonResponse = {
@@ -170,7 +194,7 @@ export class UserHelper {
         try {
             //find the user with id, check if password and confirmPassword strings match,  if they match save the password.
             if (User.checkIfPasswordAndConfirmPasswordMatch(password,confirmPassword)) {
-                const collection = MongoHelper.client.db('Mooki_Development').collection('users');
+                const collection =  MongoHelper.getDatabase().collection('users');
                 var findUser = collection.findOne({ _id: new ObjectId(id) });
                 /**if user exists then do the following */
                 findUser.then((res) => {
@@ -224,7 +248,7 @@ export class UserHelper {
 
     static registerBetaUser = async (user: User, callback) =>{
         try {
-            const query = MongoHelper.client.db('Mooki_Development').collection('betaUsers');
+            const query =  MongoHelper.getDatabase().collection('betaUsers');
 
                 var result = query.insertOne(user,function(err,res){
                     if(err){
@@ -247,7 +271,7 @@ export class UserHelper {
     static verifyUserCellphone = (cellphone: number, callback) => {
         try {
             var cellphoneExists = false;
-            const collection = MongoHelper.client.db('Mooki_Development').collection('users');
+            const collection =  MongoHelper.getDatabase().collection('users');
             var result = collection.findOne({ cellphone: cellphone }, function (err, res) {
                 if (err) {
                     //return a proper response to the user
@@ -289,7 +313,7 @@ export class UserHelper {
 
     static saveAccessToken = (tokenData: TokenData, callback) => {
         try {
-            const collection = MongoHelper.client.db('Mooki_Development').collection('users');
+            const collection =  MongoHelper.getDatabase().collection('users');
             var result = collection.insertOne(tokenData).then(() => callback(null))
                 .catch(error => callback(error))
 
@@ -298,10 +322,11 @@ export class UserHelper {
         }
     }
 
-    /* validate token for API calls**/
-    static validateToken = () => {
+   
 
-    }
+    
+
+    
 
 
 

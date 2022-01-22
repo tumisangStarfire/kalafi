@@ -1,63 +1,37 @@
 
-import { PillPrescription } from './PillPrescription';
+import  PillPrescription  from './PillPrescription';
 import { VitalsInterface } from '../interfaces/VitalsInterface';
 import { ObjectId } from 'mongodb' ; 
-import mongoose, { Model, Schema, Document } from 'mongoose';
-import { HealthFacility } from './HealthFacility';
-import { InjuryInterface } from '../interfaces/InjuryInterface';
+import HealthFacility from './HealthFacility';
+import Injury from './Injury';
 
-export class UserInjury extends Document implements VitalsInterface{
 
-  _id: string;
-  userId: string;
+export default class UserInjury implements VitalsInterface{
+
+  _id: ObjectId;
+  userId: ObjectId;
   dateOfInjury: Date;
   medicationPrescribed: Array<PillPrescription>; 
   healthFacility : HealthFacility;
-  injury:InjuryInterface;
- // vitals: Vitals; //pills given to the patient [ { id: 1 } ]
+  injury: Injury;
   doctorsNotes?: string;
-  recordedOn: Date;
-  temperature: number;
-  bloodPressure: number;
-  pulseRate?: number;
-  /** when you create the injury add vitals information to create a complete document
-   * 
-   * { 
-   *    objectID(23232ewwewwee), 
-   *    userID : 212121212 
-   *    injuryType : Leg Burn 
-   *    date of injury : 2013-04-23,
-   *    pillPrescription : { _id : objectId, name : paracetamol }, 
-   *    vitals: { temp: 39, bp: 85  }
-   *    doctorsNotes :  
-   *    healthFacility : { 
-   *      id: 2,
-   *      name: Extension 2 Clinic, 
-   *      region :1
-   *      speciality :{}
-   *      
-   *    }
-   * 
-   * } 
-   * 
-   */
+
   constructor
-  ( 
-    userId: string,
+  (  
+    _id : ObjectId,
+    userId: ObjectId,
     bloodPressure:number,
     temperature:number,
-    injury:InjuryInterface,
+    injury:Injury,
     healthFacility :HealthFacility, 
     medicationPrescribed:PillPrescription,
     dateOfInjury: Date, 
     doctorsNotes?: string,
-    storageId?:string,
     pulseRate?:number,
     recordedOn?:Date
     ) {  
 
-    super();
-    this._id=storageId;
+    this._id=_id;
     this.userId = userId;
     this.dateOfInjury = dateOfInjury;
     this.bloodPressure=bloodPressure;
@@ -69,20 +43,24 @@ export class UserInjury extends Document implements VitalsInterface{
     this.medicationPrescribed.push(medicationPrescribed);
     this.healthFacility = healthFacility;
   } 
+  recordedOn: Date;
+  temperature: number;
+  bloodPressure: number;
+  pulseRate?: number;
 
-  get getStorageId(): string {
+  get getId(): ObjectId {
     return this._id;
   }
     
-  set setStorageId(storageId: string) {
-    this._id = storageId;
+  set setId(_id: ObjectId) {
+    this._id = _id;
    }
 
-  get getUserId(): string {
+  get getUserId(): ObjectId {
     return this.userId;
    }
     
-  set setUserId(userId: string) {
+  set setUserId(userId: ObjectId) {
     this.userId = userId;
   }  
   
@@ -102,11 +80,11 @@ export class UserInjury extends Document implements VitalsInterface{
     this.temperature= temperature;
   }  
 
-  get getInjury():InjuryInterface{ 
+  get getInjury():Injury{ 
     return this.injury;
   } 
 
-  set setInjury(injury: InjuryInterface){ 
+  set setInjury(injury: Injury){ 
     this.injury= injury;
   }  
 
@@ -151,16 +129,6 @@ export class UserInjury extends Document implements VitalsInterface{
   }
   
 
-  addInjuryPills(medicationPrescribed: PillPrescription) {
-    this.medicationPrescribed.push(medicationPrescribed);
-  } 
 
-  removePillPrescription(medicationPrescribed:PillPrescription){ 
-    //this.medicationPrescribed.
-  } 
-
-  getPillPrescriptions():Array<PillPrescription>{
-    return this.medicationPrescribed;
-  } 
 
 }

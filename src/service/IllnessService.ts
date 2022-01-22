@@ -1,4 +1,4 @@
-import { UserIllness } from '../models/UserIllness';
+import  Illness  from '../models/UserIllness';
 import { MongoHelper } from '../database/MongoHelper';
 import { JsonResponseInterface } from "../interfaces/JsonResponseInterface";
 var ObjectId = require('mongodb').ObjectID;
@@ -6,12 +6,12 @@ const axios = require('axios').default;
 
 var stringify = require('json-stringify-safe');
 
-export class IllnessHelper {
+export default class IllnessService {
     /**creates and saves a new illness a patient has gone through */
-    static create = async (illness: UserIllness, callback) => {
+    static create = async (illness: Illness, callback) => {
         try {
 
-            const query = MongoHelper.client.db('Mooki_Development').collection('illness');
+            const query = MongoHelper.getDatabase().collection('illnesses');
             var result = query.insertOne(illness, function (err, res) {
                 if (err) {
                    // console.log(err);
@@ -36,11 +36,15 @@ export class IllnessHelper {
         } catch (error) {
             console.log(error);
         }
+    } 
+
+    static getIllnessById = async(id : string,callbacl) =>{
+
     }
     /**removes any illness data */
     static remove = async (id, callback) => {
         try {
-            const query = MongoHelper.client.db('Mooki_Development').collection('illness');
+            const query = MongoHelper.getDatabase().collection('illnesses');
             var deleteParams = { _id: new ObjectId(id) };
             var result = query.deleteOne(deleteParams, function (err, res) {
                 if (err) {
@@ -65,38 +69,7 @@ export class IllnessHelper {
             console.log(error);
         }
     }
-    /**return historical data of patients illness */
-    static getUserIllnessDataUsingUserId = async (userId, callback) => {
-        try {
-            var query = { userId: userId };
-            const collection = MongoHelper.client.db('Mooki_Development').collection('illness');
 
-            var result = collection.find(query).toArray(function (err, res) {
-                if (err) {
-                   // console.log(err);
-                    var jsonRes : JsonResponseInterface ={
-                        status : 'failed',
-                        message :'failed to fetch medical information',
-                        data :err,
-
-                    };
-                    return callback(jsonres);
-                }
-                var illness: Array<UserIllness>;
-                illness = res;
-                //console.log(illness);
-                var jsonres : JsonResponseInterface ={
-                    status : 'success',
-                    message : 'user medication data has been fetched',
-                    data : illness,
-                }
-                return callback(illness);
-            });
-
-        } catch (error) {
-            console.log(error);
-        }
-    }
 
     static illnessApi = callback => {
         try {

@@ -1,5 +1,5 @@
 
-import { AllergyTypes } from './AllergyType';
+import { AllergyTypes } from '../interfaces/AllergyType';
 import { ObjectId } from "mongodb";
 
 export class UserAllergy {

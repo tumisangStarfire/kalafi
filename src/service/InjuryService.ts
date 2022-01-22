@@ -1,17 +1,16 @@
 
-import { UserInjury } from '../models/UserInjury';
 import { JsonResponseInterface } from "../interfaces/JsonResponseInterface";
 import { MongoHelper } from '../database/MongoHelper';
-import { Injury } from '../models/Injury';
+import Injury from '../models/Injury';
 var ObjectId = require('mongodb').ObjectID;
 
 
-export class InjuryHelper {
+export default class InjuryService {
     /** save the vitals , afterwards save the injury, save the PillPresriptio data  */
-    static create = async (injury: UserInjury, callback) => {
+    static create = async (injury: Injury, callback) => {
         try {
 
-            const query = MongoHelper.client.db('Mooki_Development').collection('injury');
+            const query =MongoHelper.getDatabase().collection('injuries');
             var result = query.insertOne(injury, function (err, res) {
                 if (err) {
                    // console.log(err);
@@ -40,10 +39,10 @@ export class InjuryHelper {
         }
     }
 
-    static remove = async (storageId : string, callback) => {
+    static remove = async (_id : string, callback) => {
         try {
-            const query = MongoHelper.client.db('Mooki_Development').collection('injury');
-            var deleteParams = { _id: storageId };
+            const query =MongoHelper.getDatabase().collection('injuries');
+            var deleteParams = { _id: _id };
             var result = query.deleteOne(deleteParams, function (err, res) {
                 if (err) {
                     //console.log(err);
@@ -71,41 +70,11 @@ export class InjuryHelper {
         }
     }
 
-    static getUserInjuriesUsingUserId = async (userId : string, callback) => {
-        try {
-            const collection = MongoHelper.client.db('Mooki_Development').collection('injury');
-            var query = { userId: userId };
-            var result = collection.find({ userId: userId }).toArray(function (err, res) {
-                if (err) {
-                    console.log(err);
-                    var jsonRes : JsonResponseInterface ={
-                        status : 'failed',
-                        message :'failed to fetch medical information',
-                        data :err,
-
-                    };
-                    return callback(jsonRes);
-                }
-                var userinjury: Array<UserInjury>;
-                userinjury = res;
-                var jsonres : JsonResponseInterface ={
-                    status : 'success',
-                    message : 'user medication data has been fetched',
-                    data : userinjury,
-                }
-                //console.log(injury);
-                return callback(userinjury);
-            });
-
-
-        } catch (error) {
-            console.log(error);
-        }
-    }
+    
 
     static getAllInjuryData = async callback=>{
         try {
-            const collection = MongoHelper.client.db('Mooki_Development').collection('typesofinjuries');
+            const collection = MongoHelper.getDatabase().collection('injuries');
 
             var result = collection.find({}).toArray(function(err,res){
                 if (err) {
