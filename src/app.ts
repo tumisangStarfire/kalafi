@@ -1,14 +1,10 @@
 
 import * as express from 'express'; var cors = require('cors');
 import { MongoHelper } from './database/MongoHelper';
-import { mongooseConnector } from './database/mongooseConnector';
-/* import * as bodyParser from 'body-parser'; */
 import router from './router/router';
 import { loggerMiddleware } from './middleware/loggerMiddleware';
 import * as jsdom from 'jsdom';
-const { JSDOM } = jsdom;   
-import jQuery from 'jquery'
-const $ = jQuery; 
+const { JSDOM } = jsdom;    
 var path = require('path'); 
 const dotenv = require('dotenv');
 process.env.PWD = process.cwd()
@@ -34,31 +30,15 @@ export class App {
         this.app.use(loggerMiddleware);
         this.app.use(express.static(path.join(process.env.PWD ,'/public'))); 
         this.app.use(express.static(path.join(__dirname , '/public'))); 
-       
-        //this.app.set('views', path.join(__dirname + '/public/web'));
-        //this.app.engine('html', require('ejs').renderFile);
-        //this.app.set('view engine', 'html');
-     
-
-
     }  
     public testPublicPath(){
         var test =  path.join(process.env.PWD ,'/public');
-        console.log(test);
+    
     }
 
     private initializeRoute() {
         this.app.use('/v1/api', router);
-        this.app.get("/", function (req, res) {
-            var page_template= res.sendFile('./public/web/views/index.html', { root: __dirname });
-            var document = new jsdom.JSDOM(page_template); 
-           
-        });
-        this.app.get('/legal/privacy-policy', function (req, res) {
-            res.sendFile('./public/web/views/privacy_policy.html', { root: __dirname });
-        })
     }
-
     private envSettings() {
         const PORT = process.env.PORT || 3000;
         const NODE_ENV = process.env.NODE_ENV || "development"; //development environment

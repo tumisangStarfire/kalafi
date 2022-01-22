@@ -3,7 +3,7 @@ const uuid = require('uuid');
 var path = require('path');
 const fs = require('fs');
 
-export async function createFile(filename: string, base64String: string, fileExtension: string, callback) {
+export const  createFile = async (filename: string, base64String: string, fileExtension: string, callback) => {
     try {
         var systemUploadPath = path.normalize(process.cwd() + '/src/public/img/');
 
@@ -28,7 +28,7 @@ export async function createFile(filename: string, base64String: string, fileExt
         console.log(error);
     }
 }
-export function deleteFileAfterUpload(filePath) {
+export const deleteFileAfterUpload = (filePath) => {
     const deleteFile = fs.unlink(filePath, function (err) {
         if (err) {
             console.log(err);

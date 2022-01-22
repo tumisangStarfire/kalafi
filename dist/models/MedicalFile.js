@@ -1,40 +1,27 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const mongoose_1 = require("mongoose");
-class MedicalFile extends mongoose_1.Document {
-    /**Medical File Document Structure 1:N
-     *  _id : ObjectId(121221qwqwqw),
-     * userID :   ObjectId(23232wewew)
-     * fileName : Head Injury scan
-     * filePath : s3 file Path
-     * date_uploaded :2020-02-13
-     * medicalFileType{
-     *       "id": 3,
-             "name": "CAT-Scan"
-     * }
-     *
-     */
-    constructor(userId, medicalFileType, fileName, base64Stringfile, date_uploaded, filePath) {
-        super();
+class MedicalFile {
+    constructor(_id, userId, medicalFileType, name, base64Stringfile, date_uploaded, filePath) {
+        this._id = _id;
         this.userId = userId;
-        this.fileName = fileName;
+        this.name = name;
         this.base64Stringfile = base64Stringfile;
         this.date_uploaded = date_uploaded;
         this.filePath = filePath;
         this.medicalFileType = medicalFileType;
     }
-    get getStorageId() {
+    get getId() {
         return this._id;
     }
-    set getStorageId(storageId) {
-        this._id = storageId;
+    set getId(_id) {
+        this._id = _id;
     }
     /**accessors */
     get getFileName() {
-        return this.fileName;
+        return this.name;
     }
-    set setFileName(value) {
-        this.fileName = value;
+    set setFileName(name) {
+        this.name = name;
     }
     get getfilePath() {
         return this.filePath;
@@ -55,5 +42,5 @@ class MedicalFile extends mongoose_1.Document {
         this.base64Stringfile = base64Stringfile;
     }
 }
-exports.MedicalFile = MedicalFile;
+exports.default = MedicalFile;
 //# sourceMappingURL=MedicalFile.js.map

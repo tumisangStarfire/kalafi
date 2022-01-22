@@ -1,22 +1,11 @@
-import { Document } from "mongoose";
-import { ObjectId } from "mongodb";
-
-const AWS = require('aws-sdk');
-const fs = require('fs');
-const uuid = require('uuid');
-
-
-
 enum Gender {
   Male = 1,
   Female = 0,
-  other=2
+  other= 2
 }
 /**class for the users profile information */
-export class UserProfile  extends Document {
+export default class UserProfile {
 
-  _id: string;
-  userId: string;
   /** private modeifies allows us to use access modifiers get and set, strong coding practices. Consistency, Readbility */
   private dob: Date;
   private gender?: Gender;
@@ -40,7 +29,6 @@ export class UserProfile  extends Document {
    * 
    */
   constructor( 
-    userId: string,
     dob: Date,
     weight: number,
     height: number, 
@@ -52,9 +40,6 @@ export class UserProfile  extends Document {
     storageId?:string,
     waistSize?: number,
       ) {
-    super();
-    this._id=storageId;
-    this.userId=userId;
     this.dob = dob;
     this.gender = gender;
     this.omang = omang;
@@ -67,22 +52,6 @@ export class UserProfile  extends Document {
 
   }
   
-  get getStorageId(): string {
-    return this._id;
-  }
-    
-  set setStorageId(storageId: string) {
-    this._id = storageId;
-   }
-
-  get getUserId(): string {
-    return this.userId;
-   }
-    
-  set setUserId(userId: string) {
-    this.userId = userId;
-  } 
-
   set setDateofBirth(dob: Date) {
     this.dob = dob;
   }

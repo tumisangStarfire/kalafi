@@ -1,78 +1,88 @@
-import { Document } from "mongoose";
+import { ObjectId, Timestamp } from "mongodb";
+import Pharmacy from "./pharmacy";
 
-export class CurrentMedication extends Document {
+export default class CurrentMedication {
   
-  _id : string; 
-  userId :string; 
-  pillName: string;
+  _id : ObjectId; 
+  userId :ObjectId; 
+  name: string;
   datePrescribed: Date; 
-  pharmaceutical : string; 
   frequency: number; //frequency (hours between medication)
   dailyDosage: number;
-
-
-  constructor(userId: string, pillName: string, datePrescribed: Date, dailyDosage: number,frequency : number, storageId? : string) {
-    super();
-    this._id= storageId; 
+  pharmacy : Pharmacy; 
+  created_at : Timestamp;
+  updated_at : Timestamp; 
+  
+  constructor(
+    _id : ObjectId,
+    userId: ObjectId, 
+    name: string, 
+    datePrescribed: Date, 
+    dailyDosage: number, 
+    frequency : number,
+    pharmacy : Pharmacy
+    ) {
+  
+    this._id= _id; 
     this.userId =userId;
     this.frequency = frequency;
-    this.pillName = pillName;
+    this.name = name;
     this.datePrescribed = datePrescribed;
     this.dailyDosage = dailyDosage;
-
+    this.pharmacy = pharmacy
   }
    
    
-  get getStorageId() : string { 
+  get getId() : ObjectId { 
     return this._id; 
- } 
+  } 
 
- set getStorageId(storageId: string) {
-   this._id = storageId;
- } 
+  set getId(_id: ObjectId) {
+    this._id = _id;
+  } 
 
- get getUserId (): string{ 
-   return this.userId;
- } 
+  get getUserId (): ObjectId{ 
+    return this.userId;
+  } 
 
- set setUserId(userId : string){
-   this.userId =userId;
- }
+  set setUserId(userId : ObjectId){
+    this.userId =userId;
+  }
 
- get getPillName(): string{  
-   return this.pillName;
- }
+  get getName(): string{  
+    return this.name;
+  }
 
- set setPillName(pillName :string){ 
-   this.pillName = pillName;
- }
+  set setName(name :string){ 
+    this.name = name;
+  }
 
- get getDatePrescribed():Date{  
-    return  this.datePrescribed;   
- }
- 
- set setDatePrescribed(datePrescribed : Date){ 
-   this.datePrescribed =datePrescribed;
- }
+  get getDatePrescribed():Date{  
+      return  this.datePrescribed;   
+  }
+  
+  set setDatePrescribed(datePrescribed : Date){ 
+    this.datePrescribed =datePrescribed;
+  }
 
- get getDailyDosage(): number{ 
-   return this.dailyDosage;
- } 
+  get getDailyDosage(): number{ 
+    return this.dailyDosage;
+  } 
 
-set setFrequency(frequency : number){ 
-  this.frequency =frequency;
-}
+  set setFrequency(frequency : number){ 
+    this.frequency = frequency;
+  }
 
-get getFrequency(): number{ 
-  return this.frequency;
-}  
+  get getFrequency(): number{ 
+    return this.frequency;
+  }  
 
-set setPharmaceutical( pharmaceutical:string){ 
-  this.pharmaceutical= pharmaceutical;
-}
- 
-get getPharmaceutical():string{ 
-  return this.pharmaceutical;
-}
+  set setPharmacy( pharmacy : Pharmacy){ 
+    this.pharmacy = pharmacy;
+  }
+  
+  get getPharmacy () : Pharmacy { 
+    return this.pharmacy;
+  }
 
 }

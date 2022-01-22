@@ -1,24 +1,13 @@
 import { Request, Response } from 'express';
-import { HealthFacilityHelper } from '../databasehelper/HealthFacilityHelper';
+import Service from '../service/HealthFacilityService';
 
-export async function healthFacilityData(request: Request, response: Response) {
+export const findAllHealthFacilities = async(request: Request, response: Response) => {
     try {
-        await HealthFacilityHelper.getHealthFacilities(result => {
-           // console.log('result', result);
+        await Service.getHealthFacilities(result => {
+            // console.log('result', result);
             response.json(result).status(200);
         });
 
-    } catch (error) {
-        return response.json(error);
-    }
-}
-
-export async function uploadHealthFacilities(request: Request, response: Response) {
-    try {
-        await HealthFacilityHelper.uploadHealthFacilityData(result => {
-           // console.log('result', result);
-            response.json(result).status(200);
-        });
     } catch (error) {
         return response.json(error);
     }

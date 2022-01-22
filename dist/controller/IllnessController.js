@@ -9,59 +9,49 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const IllnessHelper_1 = require("../databasehelper/IllnessHelper");
+const IllnessService_1 = require("../service/IllnessService");
 /** create the illness  */
-function createIllness(request, response) {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            var newIllness = request.body; /** reqeust body sent  */
-            yield IllnessHelper_1.IllnessHelper.create(newIllness, result => {
-                console.log(result);
-                response.json(result);
-            });
-        }
-        catch (error) {
-            console.log(error);
-        }
-    });
-}
-exports.createIllness = createIllness;
-/** get users Illness data */
-function userIllnessData(request, response) {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            var userId = request.params.userId;
-            yield IllnessHelper_1.IllnessHelper.getUserIllnessDataUsingUserId(userId, result => {
-                console.log(result);
-                response.json(result);
-            });
-        }
-        catch (error) {
-            console.log(error);
-        }
-    });
-}
-exports.userIllnessData = userIllnessData;
-/** remove the illness */
-function deleteIllness(request, response) {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            var illnessId = request.params.id; //send the id as a parameter
-            yield IllnessHelper_1.IllnessHelper.remove(illnessId, result => {
-                console.log(result);
-                response.json(result);
-            });
-        }
-        catch (error) {
-            console.log(error);
-        }
-    });
-}
-exports.deleteIllness = deleteIllness;
-function getAPIIllness(request, response) {
+exports.store = (request, response) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        var result = IllnessHelper_1.IllnessHelper.illnessApi(res => {
-            var strings = ["transmission", "diagnosis", "treatment", "prevention"];
+        var newIllness = request.body; /** reqeust body sent  */
+        yield IllnessService_1.default.create(newIllness, result => {
+            console.log(result);
+            response.json(result);
+        });
+    }
+    catch (error) {
+        console.log(error);
+    }
+});
+/** get users Illness data */
+exports.findOne = (request, response) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        var userId = request.params.userId;
+        yield IllnessService_1.default.getIllnessById(userId, result => {
+            console.log(result);
+            response.json(result);
+        });
+    }
+    catch (error) {
+        console.log(error);
+    }
+});
+/** remove the illness */
+exports.destroy = (request, response) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        var illnessId = request.params.id; //send the id as a parameter
+        yield IllnessService_1.default.remove(illnessId, result => {
+            console.log(result);
+            response.json(result);
+        });
+    }
+    catch (error) {
+        console.log(error);
+    }
+});
+exports.findAll = (request, response) => {
+    try {
+        var result = IllnessService_1.default.illnessApi(res => {
             let data = res.data;
             var cleanUp = JSON.stringify(data);
             cleanUp.replace('\n\t', '');
@@ -71,6 +61,5 @@ function getAPIIllness(request, response) {
     catch (error) {
         console.log(error);
     }
-}
-exports.getAPIIllness = getAPIIllness;
+};
 //# sourceMappingURL=IllnessController.js.map

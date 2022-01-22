@@ -1,31 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const mongoose_1 = require("mongoose");
-class Region extends mongoose_1.Document {
-    constructor(regionId, regionName, storageId) {
-        super();
-        this._id = storageId;
-        this.regionId = regionId;
-        this.regionName = regionName;
+class Region {
+    constructor(_id, name) {
+        this._id = _id;
+        this.name = name;
     }
-    get getStorageId() {
+    get getId() {
         return this._id;
     }
-    set getStorageId(storageId) {
-        this._id = storageId;
+    set getId(_id) {
+        this._id = _id;
     }
     get getRegionId() {
-        return this.regionId;
+        return this._id;
     }
-    set setRegionId(regionId) {
-        this.regionId = regionId;
+    get getName() {
+        return this.name;
     }
-    get getRegionName() {
-        return this.regionName;
-    }
-    set setRegionName(regionName) {
-        this.regionName = regionName;
+    set setName(name) {
+        this.name = name;
     }
 }
-exports.Region = Region;
+exports.default = Region;
 //# sourceMappingURL=Region.js.map

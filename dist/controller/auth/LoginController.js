@@ -9,14 +9,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const UserHelper_1 = require("../../databasehelper/UserHelper");
+const UserService_1 = require("../../service/UserService");
 // DB
 function login(request, response) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             //TODO login with cellphone and password  
-            const loginCredentials = request.body;
-            yield UserHelper_1.UserHelper.login(loginCredentials, result => {
+            const email = request.body.email;
+            const password = request.body.password;
+            yield UserService_1.default.login(email, password, result => {
                 console.log(result);
                 return response.json(result).status(result.code);
             });

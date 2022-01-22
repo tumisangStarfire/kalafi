@@ -3,9 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const mongo = require("mongodb");
 const mongoClient = require('mongodb').MongoClient;
 const dotenv = require('dotenv');
-dotenv.config();
-var mongoURL = process.env.MONGO_Url;
-var MongoDatabase = process.env.MONGO_DATABASE;
+dotenv.config({ path: __dirname + '/.env' });
+require('dotenv').config();
+var mongoURL = process.env.LOCAL_DB_URL;
+var MongoDatabase = process.env.LOCAL_MONGO_DATABASE;
 var MongoUser = process.env.MONGO_USER;
 var MONGO_PASSWORD = process.env.MONGO_PASSWORD;
 const connectionString = `mongodb+srv://${MongoUser}:${MONGO_PASSWORD}${mongoURL}/${MongoDatabase}?retryWrites=true&w=majority`;
@@ -14,20 +15,19 @@ class MongoHelper {
     }
     static connect() {
         return new Promise((resolve, reject) => {
-            // console.log(connectionString);
-            mongo.MongoClient.connect(connectionString, { useUnifiedTopology: true, useNewUrlParser: true }, (err, client) => {
+            mongo.MongoClient.connect(mongoURL, { useUnifiedTopology: true, useNewUrlParser: true }, (err, client) => {
                 if (err) {
                     reject(err);
                 }
                 else {
                     MongoHelper.client = client;
-                    this.database = client.db('test');
-                    resolve(client.db('test'));
+                    this.database = client.db(MongoDatabase);
+                    resolve(client.db(MongoDatabase));
                 }
             });
         });
     }
-    getDatabase() {
+    static getDatabase() {
         return MongoHelper.database;
     }
     disconnect() {

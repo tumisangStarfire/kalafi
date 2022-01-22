@@ -1,12 +1,12 @@
-import { UserInjury } from '../models/UserInjury';
+import  Injury  from '../models/Injury';
 import { Request, Response } from 'express';
-import { InjuryHelper } from '../databasehelper/InjuryHelper';
+import Service from '../service/InjuryService';
 
 /** create the injury  */
-export async function createInjury(request: Request, response: Response) {
+export const store = async(request: Request, response: Response) => {
     try {
-        var newInjury: UserInjury = request.body; /** request body sent from client */
-        await InjuryHelper.create(newInjury, result => {
+        var newInjury: Injury = request.body; /** request body sent from client */
+        await Service.create(newInjury, result => {
             console.log(result);
             response.json(result);
         });
@@ -17,9 +17,9 @@ export async function createInjury(request: Request, response: Response) {
 
 /**get all injuries */ 
 
-export async function getAllInjuries(request:Request, response:Response){ 
+export const  findAll = async (request:Request, response:Response) =>{ 
     try {
-        await InjuryHelper.getAllInjuryData(result =>{  
+        await Service.getAllInjuryData(result =>{  
             console.log(result);
             response.json(result);
         });
@@ -27,25 +27,13 @@ export async function getAllInjuries(request:Request, response:Response){
         console.log(error);
     }
 }
-/** get users Injury data */
 
-export async function userInjuryData(request: Request, response: Response) {
-    try {
-        var userId = request.params.userId;
-        await InjuryHelper.getUserInjuriesUsingUserId(userId, result => {
-            console.log(result);
-            response.json(result);
-        });
-    } catch (error) {
-        console.log(error);
-    }
-}
 
 /** remove the injury */
-export async function deleteInjury(request: Request, response: Response) {
+export const destroy = async (request: Request, response: Response) =>  {
     try {
         var injuryId = request.params.id; //send the id as a parameter
-        await InjuryHelper.remove(injuryId, result => {
+        await Service.remove(injuryId, result => {
             console.log(result);
             response.json(result);
         });

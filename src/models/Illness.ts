@@ -1,54 +1,29 @@
-import { PillPrescription } from "./PillPrescription";
-import mongoose, { Model, Schema, Document } from 'mongoose';
-import { HealthFacility } from "./HealthFacility";
-import { VitalsInterface } from "interfaces/VitalsInterface";
+import { IllnessInterface } from 'interfaces/IllnessInterface';
+import { ObjectId } from 'mongodb';
 
-/**Illness has vitals */
-export class Illness extends Document {
+enum SEVERITYSCORE {
+    "Minor" = 0,
+    "Severe" = 1,
+    "Major" = 2,
+    "Critical" = 3 
+};
+export default class Illness implements IllnessInterface  {
 
-    _id: string;
-    userId: number;
-    type_of_illness: string;
-    date_of_diagnosis: Date;
-    doctorsNotes?: string;
-    medicationPrescribed: Array<PillPrescription>;
-    healthFacility: HealthFacility; 
-    vitals: VitalsInterface
+    _id: ObjectId;
+    name: string;
+    description: string;
+    severityScore : SEVERITYSCORE;
+    symptoms :Array<string>;
 
-    /** when you create the illness add vitals information to create a complete document
-   * 
-   * { 
-   *    objectID(23232ewwewwee), 
-   *    userID : 212121212 
-   *    type_of_illness : Stomach
-   *    date of injury : 2013-04-23,
-   *    pillPrescription : { _id : objectId, name : paracetamol }, 
-   *    vitals: { temp: 39, bp: 85  }
-   *    doctorsNotes :  
-   *    healthFacility : { 
-   *        id :1,
-   *        name: Extension 2 Clinic, 
-   *        region :1
-   *        speciality :{}
-   *    
-   *    }
-   * 
-   * } 
-   * 
-   */
 
-    constructor(userId: number, type_of_illness: string, date_of_diagnosis: Date, vitals: VitalsInterface, healthFacility: HealthFacility, doctorsNotes?: string) {
-        super();
-        this.userId = userId;
-        this.type_of_illness = type_of_illness;
-        this.date_of_diagnosis = date_of_diagnosis;
-        this.doctorsNotes = doctorsNotes;
-        this.vitals = vitals;
-        this.healthFacility = healthFacility;
+    constructor(_id : ObjectId, name: string, description : string, severityScore : SEVERITYSCORE, symptoms : Array<string>) {
+        this._id = _id, 
+        this.name = name;
+        this.description = description;
+        this.severityScore = severityScore;
+        this.symptoms = symptoms;
+       
     }
 
-    addInjuryPills(medicationPrescribed: PillPrescription) {
-        this.medicationPrescribed.push(medicationPrescribed);
-    }
-
+   
 }

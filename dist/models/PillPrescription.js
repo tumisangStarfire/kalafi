@@ -6,11 +6,6 @@ class PillPrescription {
         this.datePrescribed = datePrescribed;
         this.dailyDosage = dailyDosage;
     }
-    //gets the prescriptions remaining pills
-    static getRemainingPills(numberOfPillsGiven, numberOfPillsUsed) {
-        let result = numberOfPillsGiven - numberOfPillsUsed;
-        return result;
-    }
 }
-exports.PillPrescription = PillPrescription;
+exports.default = PillPrescription;
 //# sourceMappingURL=PillPrescription.js.map

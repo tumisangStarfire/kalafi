@@ -1,9 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const mongoose_1 = require("mongoose");
-const AWS = require('aws-sdk');
-const fs = require('fs');
-const uuid = require('uuid');
 var Gender;
 (function (Gender) {
     Gender[Gender["Male"] = 1] = "Male";
@@ -11,7 +7,7 @@ var Gender;
     Gender[Gender["other"] = 2] = "other";
 })(Gender || (Gender = {}));
 /**class for the users profile information */
-class UserProfile extends mongoose_1.Document {
+class UserProfile {
     /** User Profile Document Structure
      *  _id = ObjectId(121221qwqwqw)
      * date_of_birth : 1990-05-12, [required]
@@ -23,10 +19,7 @@ class UserProfile extends mongoose_1.Document {
      *
      *
      */
-    constructor(userId, dob, weight, height, gender, omang, profilePicture, bmi, bloodType, storageId, waistSize) {
-        super();
-        this._id = storageId;
-        this.userId = userId;
+    constructor(dob, weight, height, gender, omang, profilePicture, bmi, bloodType, storageId, waistSize) {
         this.dob = dob;
         this.gender = gender;
         this.omang = omang;
@@ -36,18 +29,6 @@ class UserProfile extends mongoose_1.Document {
         this.bmi = bmi;
         this.bloodType = bloodType;
         this.waistSize = waistSize;
-    }
-    get getStorageId() {
-        return this._id;
-    }
-    set setStorageId(storageId) {
-        this._id = storageId;
-    }
-    get getUserId() {
-        return this.userId;
-    }
-    set setUserId(userId) {
-        this.userId = userId;
     }
     set setDateofBirth(dob) {
         this.dob = dob;
@@ -151,5 +132,5 @@ class UserProfile extends mongoose_1.Document {
         }
     }
 }
-exports.UserProfile = UserProfile;
+exports.default = UserProfile;
 //# sourceMappingURL=UserProfile.js.map

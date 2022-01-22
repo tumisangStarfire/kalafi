@@ -17,19 +17,19 @@ PillPrescriptionLogic.create = (pillPrescription, callback) => __awaiter(void 0,
     try {
         const connection = yield databaseConnector_1.databaseConnector();
         yield connection.query('insert into PillPrescription set ?', [pillPrescription], function (err, res) {
-            //Do not throw err as it will crash the server. 
+            //Do not throw err as it will crash the server.
             if (err) {
                 console.log(err.message);
-                //rollback the operation  
+                //rollback the operation
                 connection.end();
                 const jsonResponse = {
                     message: 'something went wrong please try again',
                     status: 'failed',
-                    statusCode: 501
+                    data: err
                 };
                 return callback(jsonResponse);
             }
-            console.log(res);
+            //console.log(res);
             if (res.insertId !== null) {
                 const jsonResponse = {
                     message: 'data saved',

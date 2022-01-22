@@ -9,13 +9,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const UserHelper_1 = require("../databasehelper/UserHelper");
+const UserService_1 = require("../service/UserService");
 //post function
 function checkPhoneNumber(request, response) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             let cellphone = request.body.cellphone;
-            const valid = yield UserHelper_1.UserHelper.verifyUserCellphone(cellphone, res => {
+            const valid = yield UserService_1.default.verifyUserCellphone(cellphone, res => {
                 console.log(res);
                 return res;
             });
@@ -33,7 +33,7 @@ function createUserPassword(request, response) {
             let userId = request.body.userId;
             let password = request.body.password;
             let confirmPassword = request.body.confirmPassword;
-            const result = yield UserHelper_1.UserHelper.createPassword(userId, password, confirmPassword, res => {
+            const result = yield UserService_1.default.createPassword(userId, password, confirmPassword, res => {
                 console.log(res);
                 return res;
             });
@@ -50,7 +50,7 @@ function resetPassword(request, response) {
             let userId = request.body.userId;
             let password = request.body.password;
             let confirmPassword = request.body.confirmPassword;
-            const result = yield UserHelper_1.UserHelper.resetPassword(userId, password, confirmPassword, res => {
+            const result = yield UserService_1.default.resetPassword(userId, password, confirmPassword, res => {
                 console.log(res);
                 return res;
             });
@@ -62,13 +62,12 @@ function resetPassword(request, response) {
 }
 exports.resetPassword = resetPassword;
 //get function
-function getUser(request, response) {
+function findUser(request, response) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             let id = request.params.userId;
-            yield UserHelper_1.UserHelper.getUserById(id, res => {
+            yield UserService_1.default.findUser(id, res => {
                 console.log(res);
-                //const user: User = res;
                 response.json(res);
             });
         }
@@ -77,5 +76,5 @@ function getUser(request, response) {
         }
     });
 }
-exports.getUser = getUser;
+exports.findUser = findUser;
 //# sourceMappingURL=UserController.js.map
