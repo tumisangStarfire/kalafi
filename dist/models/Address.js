@@ -1,11 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const mongoose_1 = require("mongoose");
-class Address extends mongoose_1.Document {
-    constructor(userId, region, storageId, city, town, village, streetName, houseNumber, ward) {
-        super();
-        this._id = storageId;
-        this.userId = userId;
+class Address {
+    constructor(city, town, village, streetName, houseNumber, ward, region) {
         this.city = city;
         this.town = town;
         this.village = village;
@@ -13,18 +9,6 @@ class Address extends mongoose_1.Document {
         this.houseNumber = houseNumber;
         this.ward = ward;
         this.region = region;
-    }
-    get getStorageId() {
-        return this._id;
-    }
-    set getStorageId(storageId) {
-        this._id = storageId;
-    }
-    get getUserId() {
-        return this.userId;
-    }
-    set setUserId(userId) {
-        this.userId = userId;
     }
     get getCity() {
         return this.city;
@@ -63,5 +47,5 @@ class Address extends mongoose_1.Document {
         this.ward = ward;
     }
 }
-exports.Address = Address;
+exports.default = Address;
 //# sourceMappingURL=Address.js.map

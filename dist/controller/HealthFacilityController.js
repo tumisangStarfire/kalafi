@@ -9,33 +9,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const HealthFacilityHelper_1 = require("../databasehelper/HealthFacilityHelper");
-function healthFacilityData(request, response) {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            yield HealthFacilityHelper_1.HealthFacilityHelper.getHealthFacilities(result => {
-                // console.log('result', result);
-                response.json(result).status(200);
-            });
-        }
-        catch (error) {
-            return response.json(error);
-        }
-    });
-}
-exports.healthFacilityData = healthFacilityData;
-function uploadHealthFacilities(request, response) {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            yield HealthFacilityHelper_1.HealthFacilityHelper.uploadHealthFacilityData(result => {
-                // console.log('result', result);
-                response.json(result).status(200);
-            });
-        }
-        catch (error) {
-            return response.json(error);
-        }
-    });
-}
-exports.uploadHealthFacilities = uploadHealthFacilities;
+const HealthFacilityService_1 = require("../service/HealthFacilityService");
+exports.findAllHealthFacilities = (request, response) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        yield HealthFacilityService_1.default.getHealthFacilities(result => {
+            // console.log('result', result);
+            response.json(result).status(200);
+        });
+    }
+    catch (error) {
+        return response.json(error);
+    }
+});
 //# sourceMappingURL=HealthFacilityController.js.map

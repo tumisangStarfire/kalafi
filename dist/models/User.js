@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const mongoose_1 = require("mongoose");
 const bcrypt = require("bcrypt");
 /*constants */
 var Status;
@@ -10,7 +9,7 @@ var Status;
     Status[Status["Suspended"] = 2] = "Suspended";
 })(Status || (Status = {}));
 /** a class */
-class User extends mongoose_1.Document {
+class User {
     /** user document structure
      *  _id = ObjectId(121221qwqwqw) ,
      * firstName : John [required],
@@ -22,18 +21,19 @@ class User extends mongoose_1.Document {
      * verified : false
      *
      */
-    constructor(firstName, lastName, cellphone, password, email, status, verified, userId) {
-        super();
-        this._id = userId;
+    constructor(_id, firstName, lastName, cellphone, password, email, status, profile, verified, created_at, updated_at) {
+        this._id = _id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.cellphone = cellphone;
         this.password = password;
         this.email = email;
         this.status = status;
+        this.profile = profile;
         this.verified = verified;
         /*initialize the timestamp when saving the documennt*/
-        this.created_at = Date.now().toString();
+        this.created_at = created_at,
+            this.updated_at = updated_at;
     }
     get getUserId() {
         return this._id;
@@ -77,11 +77,23 @@ class User extends mongoose_1.Document {
     set setStatus(status) {
         this.status = status;
     }
+    get getProfile() {
+        return this.profile;
+    }
+    set setProfile(profile) {
+        this.profile = profile;
+    }
     get getVerifified() {
         return this.verified;
     }
     set setVerified(verified) {
         this.verified = verified;
+    }
+    set setCreatedAt(created_at) {
+        this.created_at = new Date();
+    }
+    set setUpdatedAt(updated_at) {
+        this.updated_at = new Date();
     }
     hashPassword() {
         this.password = bcrypt.hashSync(this.password, 8);
@@ -96,5 +108,5 @@ class User extends mongoose_1.Document {
             return false;
     }
 }
-exports.User = User;
+exports.default = User;
 //# sourceMappingURL=User.js.map

@@ -30,17 +30,10 @@ export class App {
         this.app.use(loggerMiddleware);
         this.app.use(express.static(path.join(process.env.PWD ,'/public'))); 
         this.app.use(express.static(path.join(__dirname , '/public'))); 
-       
-        //this.app.set('views', path.join(__dirname + '/public/web'));
-        //this.app.engine('html', require('ejs').renderFile);
-        //this.app.set('view engine', 'html');
-     
-
-
     }  
     public testPublicPath(){
         var test =  path.join(process.env.PWD ,'/public');
-        console.log(test);
+    
     }
 
     private initializeRoute() {

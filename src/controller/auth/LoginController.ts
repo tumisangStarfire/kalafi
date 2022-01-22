@@ -7,8 +7,9 @@ import { LoginInterface } from 'interfaces/LoginInterface';
 export async function login(request: Request, response: Response) {
     try {
         //TODO login with cellphone and password  
-        const loginCredentials: LoginInterface = request.body;
-        await Service.login(loginCredentials, result => {
+        const email : string = request.body.email;
+        const password : string = request.body.password;
+        await Service.login(email,password, result => {
             console.log(result);
             return response.json(result).status(result.code);
         })

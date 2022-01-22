@@ -14,7 +14,6 @@ const fs = require("fs");
 
 const router = Router();
 router.use(bodyParser.json());
-
 // Home page of the application
 router.get("/", (req, res) => {
     console.log('here');

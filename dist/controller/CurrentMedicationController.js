@@ -9,12 +9,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const CurrentMedicationHelper_1 = require("../databasehelper/CurrentMedicationHelper");
-function saveCurrentMedication(request, response) {
+const CurrentMedicationService_1 = require("../service/CurrentMedicationService");
+function storeCurrentMedication(request, response) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const newCurrentMedication = request.body;
-            yield CurrentMedicationHelper_1.CurrentMedicationHelper.create(newCurrentMedication, result => {
+            yield CurrentMedicationService_1.default.store(newCurrentMedication, result => {
                 response.json(result);
             });
             // const sendOTP =  thorough email or sms
@@ -24,12 +24,12 @@ function saveCurrentMedication(request, response) {
         }
     });
 }
-exports.saveCurrentMedication = saveCurrentMedication;
-function removeCurrentMedication(request, response) {
+exports.storeCurrentMedication = storeCurrentMedication;
+function destroyMedication(request, response) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             let CurrentMedicationId = request.params.id; //send the id as a parameter
-            yield CurrentMedicationHelper_1.CurrentMedicationHelper.remove(CurrentMedicationId, result => {
+            yield CurrentMedicationService_1.default.destroy(CurrentMedicationId, result => {
                 return response.json(result);
             });
             // const sendOTP =  thorough email or sms
@@ -39,12 +39,12 @@ function removeCurrentMedication(request, response) {
         }
     });
 }
-exports.removeCurrentMedication = removeCurrentMedication;
-function getUserMedicationData(request, response) {
+exports.destroyMedication = destroyMedication;
+function findUserMedication(request, response) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             let userId = request.params.userId;
-            yield CurrentMedicationHelper_1.CurrentMedicationHelper.getMedicationDataUsingUserId(userId, result => {
+            yield CurrentMedicationService_1.default.getMedicationUsingUserId(userId, result => {
                 return response.json(result);
             });
         }
@@ -53,5 +53,5 @@ function getUserMedicationData(request, response) {
         }
     });
 }
-exports.getUserMedicationData = getUserMedicationData;
+exports.findUserMedication = findUserMedication;
 //# sourceMappingURL=CurrentMedicationController.js.map

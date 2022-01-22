@@ -12,36 +12,32 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const uuid = require('uuid');
 var path = require('path');
 const fs = require('fs');
-function createFile(filename, base64String, fileExtension, callback) {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            var systemUploadPath = path.normalize(process.cwd() + '/src/public/img/');
-            // Remove header
-            let base64Image = base64String.split(';base64,').pop();
-            /**convert the string from base 64 */
-            var bitmap = new Buffer(base64Image, 'base64');
-            /* write path on the system */
-            var writePath = systemUploadPath + filename + fileExtension;
-            var writeFile = yield fs.writeFileSync(writePath, bitmap, function (err) {
-                if (err) {
-                    console.log(err);
-                }
-            });
-            return callback(writePath);
-        }
-        catch (error) {
-            console.log(error);
-        }
-    });
-}
-exports.createFile = createFile;
-function deleteFileAfterUpload(filePath) {
+exports.createFile = (filename, base64String, fileExtension, callback) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        var systemUploadPath = path.normalize(process.cwd() + '/src/public/img/');
+        // Remove header
+        let base64Image = base64String.split(';base64,').pop();
+        /**convert the string from base 64 */
+        var bitmap = new Buffer(base64Image, 'base64');
+        /* write path on the system */
+        var writePath = systemUploadPath + filename + fileExtension;
+        var writeFile = yield fs.writeFileSync(writePath, bitmap, function (err) {
+            if (err) {
+                console.log(err);
+            }
+        });
+        return callback(writePath);
+    }
+    catch (error) {
+        console.log(error);
+    }
+});
+exports.deleteFileAfterUpload = (filePath) => {
     const deleteFile = fs.unlink(filePath, function (err) {
         if (err) {
             console.log(err);
         }
         console.log('File deleted!');
     });
-}
-exports.deleteFileAfterUpload = deleteFileAfterUpload;
+};
 //# sourceMappingURL=FileCreaterController.js.map

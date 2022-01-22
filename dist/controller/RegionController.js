@@ -9,34 +9,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const RegionHelper_1 = require("../databasehelper/RegionHelper");
+const RegionService_1 = require("../service/RegionService");
 /** get all the regions/distrits */
-function getAllRegions(request, response) {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            yield RegionHelper_1.RegionHelper.getRegions(result => {
-                console.log(result);
-                return response.json(result);
-            });
-        }
-        catch (error) {
-            console.log(error);
-        }
-    });
-}
-exports.getAllRegions = getAllRegions;
-function uploadRegionData(request, response) {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            yield RegionHelper_1.RegionHelper.uploadRegionData(result => {
-                console.log(result);
-                return response.json(result).status(200);
-            });
-        }
-        catch (error) {
-            console.log(error);
-        }
-    });
-}
-exports.uploadRegionData = uploadRegionData;
+exports.findAllRegions = (request, response) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        yield RegionService_1.default.getRegions(result => {
+            console.log(result);
+            return response.json(result);
+        });
+    }
+    catch (error) {
+        console.log(error);
+    }
+});
 //# sourceMappingURL=RegionController.js.map

@@ -84,15 +84,15 @@ export default class UserService {
         }
     }
 
-    static login = async (login: LoginInterface, callback) => {
+    static login = async (email : string, password : string, callback) => {
         try {
             //  const logInData: LoginInterface = login; //TODO check if the account is verified, check if the account status is active
             const collection =  MongoHelper.getDatabase().collection('users');
             //check if the user exists
-            const userExists = await collection.findOne({ email: login.email });
+            const userExists = await collection.findOne({ email: email });
             if (userExists) {
 
-                const isPasswordMatching = await bcrypt.compare(login.password, userExists.password);
+                const isPasswordMatching = await bcrypt.compare(password, userExists.password);
 
                 if (isPasswordMatching) {
                     var JsonResponse = {
