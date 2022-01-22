@@ -45,16 +45,7 @@ export class App {
 
     private initializeRoute() {
         this.app.use('/v1/api', router);
-        this.app.get("/", function (req, res) {
-            var page_template= res.sendFile('./public/web/views/index.html', { root: __dirname });
-            var document = new jsdom.JSDOM(page_template); 
-           
-        });
-        this.app.get('/legal/privacy-policy', function (req, res) {
-            res.sendFile('./public/web/views/privacy_policy.html', { root: __dirname });
-        })
     }
-
     private envSettings() {
         const PORT = process.env.PORT || 3000;
         const NODE_ENV = process.env.NODE_ENV || "development"; //development environment
