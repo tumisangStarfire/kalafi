@@ -9,12 +9,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const UserHelper_1 = require("../../databasehelper/UserHelper");
-function registerUser(request, response, next) {
+const UserService_1 = require("../../service/UserService");
+function register(request, response, next) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const newUser = request.body;
-            var createUser = yield UserHelper_1.UserHelper.create(newUser, result => {
+            var createUser = yield UserService_1.default.create(newUser, result => {
                 console.log(result);
                 return response.json(result).status(200);
             });
@@ -24,12 +24,12 @@ function registerUser(request, response, next) {
         }
     });
 }
-exports.registerUser = registerUser;
+exports.register = register;
 function registerBeta(request, response) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const newUser = request.body;
-            var createUser = yield UserHelper_1.UserHelper.registerBetaUser(newUser, result => {
+            var createUser = yield UserService_1.default.registerBetaUser(newUser, result => {
                 console.log(result);
                 return response.json(result).status(200);
             });

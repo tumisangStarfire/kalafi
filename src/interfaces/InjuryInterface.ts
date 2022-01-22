@@ -1,5 +1,7 @@
+import { ObjectId } from 'mongodb';
+
 export interface InjuryInterface{  
-    id : string;
+    _id : ObjectId;
     name: string; 
     injurySeverityScore: string;
 }   

@@ -1,5 +1,5 @@
 
 export interface LoginInterface {
-    cellphone: number;
+    email: number;
     password: string;
 }

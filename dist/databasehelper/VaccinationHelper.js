@@ -17,12 +17,22 @@ class VaccinationHelper {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const query = yield MongoHelper_1.MongoHelper.client.db('Mooki_Development').collection('uservaccination');
-                var result = yield query.insertOne(vacination, function (err, data) {
+                var result = yield query.insertOne(vacination, function (err, res) {
                     if (err) {
                         console.log(err);
+                        var jsonRes = {
+                            status: 'failed',
+                            message: 'failed to add medical information',
+                            data: err,
+                        };
+                        return callback(jsonRes);
                     }
-                    console.log(data);
-                    return callback(data.insertedId);
+                    var jsonRes = {
+                        status: 'success',
+                        message: 'medical information added succesfully',
+                        data: res.insertedId,
+                    };
+                    return callback(jsonRes);
                 });
             }
             catch (error) {

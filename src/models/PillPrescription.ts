@@ -1,5 +1,5 @@
 
-export class PillPrescription {
+export default class PillPrescription {
   
   
   pillName: string;
@@ -14,11 +14,7 @@ export class PillPrescription {
     this.dailyDosage = dailyDosage;
 
   }
-  //gets the prescriptions remaining pills
-  static getRemainingPills(numberOfPillsGiven: number, numberOfPillsUsed: number) {
-    let result = numberOfPillsGiven - numberOfPillsUsed;
-    return result;
-  }
+ 
 
 
 

@@ -9,68 +9,43 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const InjuryHelper_1 = require("../databasehelper/InjuryHelper");
+const InjuryService_1 = require("../service/InjuryService");
 /** create the injury  */
-function createInjury(request, response) {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            var newInjury = request.body; /** request body sent from client */
-            yield InjuryHelper_1.InjuryHelper.create(newInjury, result => {
-                console.log(result);
-                response.json(result);
-            });
-        }
-        catch (error) {
-            console.log(error);
-        }
-    });
-}
-exports.createInjury = createInjury;
+exports.store = (request, response) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        var newInjury = request.body; /** request body sent from client */
+        yield InjuryService_1.default.create(newInjury, result => {
+            console.log(result);
+            response.json(result);
+        });
+    }
+    catch (error) {
+        console.log(error);
+    }
+});
 /**get all injuries */
-function getAllInjuries(request, response) {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            yield InjuryHelper_1.InjuryHelper.getAllInjuryData(result => {
-                console.log(result);
-                response.json(result);
-            });
-        }
-        catch (error) {
-            console.log(error);
-        }
-    });
-}
-exports.getAllInjuries = getAllInjuries;
-/** get users Injury data */
-function userInjuryData(request, response) {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            var userId = request.params.userId;
-            yield InjuryHelper_1.InjuryHelper.getUserInjuriesUsingUserId(userId, result => {
-                console.log(result);
-                response.json(result);
-            });
-        }
-        catch (error) {
-            console.log(error);
-        }
-    });
-}
-exports.userInjuryData = userInjuryData;
+exports.findAll = (request, response) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        yield InjuryService_1.default.getAllInjuryData(result => {
+            console.log(result);
+            response.json(result);
+        });
+    }
+    catch (error) {
+        console.log(error);
+    }
+});
 /** remove the injury */
-function deleteInjury(request, response) {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            var injuryId = request.params.id; //send the id as a parameter
-            yield InjuryHelper_1.InjuryHelper.remove(injuryId, result => {
-                console.log(result);
-                response.json(result);
-            });
-        }
-        catch (error) {
-            console.log(error);
-        }
-    });
-}
-exports.deleteInjury = deleteInjury;
+exports.destroy = (request, response) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        var injuryId = request.params.id; //send the id as a parameter
+        yield InjuryService_1.default.remove(injuryId, result => {
+            console.log(result);
+            response.json(result);
+        });
+    }
+    catch (error) {
+        console.log(error);
+    }
+});
 //# sourceMappingURL=InjuryController.js.map

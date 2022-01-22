@@ -18,12 +18,23 @@ exports.InjuryHelper = InjuryHelper;
 InjuryHelper.create = (injury, callback) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const query = MongoHelper_1.MongoHelper.client.db('Mooki_Development').collection('injury');
-        var result = query.insertOne(injury, function (err, data) {
+        var result = query.insertOne(injury, function (err, res) {
             if (err) {
-                console.log(err);
+                // console.log(err);
+                var jsonRes = {
+                    status: 'failed',
+                    message: 'failed to add medical information',
+                    data: err,
+                };
+                return callback(jsonRes);
             }
-            console.log(data);
-            return callback(data.insertedId);
+            // console.log(data);
+            var jsonRes = {
+                status: 'success',
+                message: 'medical information added succesfully',
+                data: res.insertedId,
+            };
+            return callback(jsonRes);
         });
     }
     catch (error) {
@@ -36,9 +47,20 @@ InjuryHelper.remove = (storageId, callback) => __awaiter(void 0, void 0, void 0,
         var deleteParams = { _id: storageId };
         var result = query.deleteOne(deleteParams, function (err, res) {
             if (err) {
-                console.log(err);
+                //console.log(err);
+                var jsonRes = {
+                    status: 'failed',
+                    message: 'failed to delete medical information',
+                    data: err,
+                };
+                return callback(jsonRes);
             }
-            console.log(res);
+            //console.log(res)
+            var jsonRes = {
+                status: 'success',
+                message: 'medical information deleted succesfully',
+                data: res.deletedCount,
+            };
             return callback(res.deletedCount);
         });
     }
@@ -49,14 +71,26 @@ InjuryHelper.remove = (storageId, callback) => __awaiter(void 0, void 0, void 0,
 InjuryHelper.getUserInjuriesUsingUserId = (userId, callback) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const collection = MongoHelper_1.MongoHelper.client.db('Mooki_Development').collection('injury');
+        var query = { userId: userId };
         var result = collection.find({ userId: userId }).toArray(function (err, res) {
             if (err) {
                 console.log(err);
+                var jsonRes = {
+                    status: 'failed',
+                    message: 'failed to fetch medical information',
+                    data: err,
+                };
+                return callback(jsonRes);
             }
-            var injury;
-            injury = res;
-            console.log(injury);
-            return callback(injury);
+            var userinjury;
+            userinjury = res;
+            var jsonres = {
+                status: 'success',
+                message: 'user medication data has been fetched',
+                data: userinjury,
+            };
+            //console.log(injury);
+            return callback(userinjury);
         });
     }
     catch (error) {
@@ -66,12 +100,20 @@ InjuryHelper.getUserInjuriesUsingUserId = (userId, callback) => __awaiter(void 0
 InjuryHelper.getAllInjuryData = (callback) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const collection = MongoHelper_1.MongoHelper.client.db('Mooki_Development').collection('typesofinjuries');
-        var result = collection.find().toArray(function (err, data) {
+        var result = collection.find({}).toArray(function (err, res) {
             if (err) {
-                console.log(err);
+                // console.log(err);
+                var jsonres = {
+                    status: 'failed',
+                    message: 'failed to fetch health facility data',
+                    data: {},
+                };
+                return callback(jsonres);
             }
-            console.log(data);
-            return callback(data);
+            var injury;
+            injury = res;
+            // console.log(data);
+            return callback(injury);
         });
     }
     catch (error) {

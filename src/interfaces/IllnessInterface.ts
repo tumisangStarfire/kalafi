@@ -1,9 +1,11 @@
+import { ObjectId } from 'mongodb';
+
 export interface IllnessInterface{ 
-    id:number; 
+    _id:ObjectId; 
     name:string; 
     dataUpdatedAt?: string; 
     facts?: Array<String>; 
-    symptoms? : null; 
+    symptoms? : Array<String>; 
     transmission?:null; 
     diagnosis?:null;
     treatment?:null; 

@@ -24,17 +24,16 @@ AddressHelper.create = (address, callback) => __awaiter(void 0, void 0, void 0, 
                     status: 'failed',
                     message: 'failed to created address information',
                     data: err,
-                    code: 400
                 };
                 const jsonres = JsonResponse;
                 return callback(jsonres);
             }
             console.log(res);
-            var jsonRes;
-            jsonRes.status = 'success';
-            jsonRes.message = 'address information successfully created';
-            jsonRes.data = res.insertedId;
-            jsonRes.code = 200;
+            var jsonRes = {
+                status: 'success',
+                message: 'address information successfully created',
+                data: res.insertedId,
+            };
             return callback(jsonRes);
         });
     }
@@ -62,7 +61,6 @@ AddressHelper.update = (address, storageId, callback) => __awaiter(void 0, void 
             jsonRes.status = 'success';
             jsonRes.message = 'address information updated successdully ';
             jsonRes.data = res.upsertedId;
-            jsonRes.code = 200;
         });
     }
     catch (error) {
@@ -90,7 +88,6 @@ AddressHelper.getUserAddress = (userId, callback) => __awaiter(void 0, void 0, v
             jsonres.status = 'success';
             jsonres.message = 'user address data has been fetched';
             jsonres.data = address;
-            jsonres.code = 200;
             return callback(jsonres);
         });
     }

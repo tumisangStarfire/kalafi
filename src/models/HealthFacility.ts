@@ -1,11 +1,28 @@
-import { Region } from '../models/Region'
-import { Address } from './Address';
-import { Document } from "mongoose";
+import { HealthFacilityInterface } from "interfaces/HealthFacilityInterface";
+import { ObjectId } from "mongodb";
+import Address from "./Address";
+import Region from "./Region";
 
-export interface HealthFacility extends Document {
-    _id: String;
-    latitude: number;
-    longitude: number;
-    name: string;
-    regionRef: Region;
+export default class HealthFacility implements HealthFacilityInterface{
+     _id: ObjectId;
+     name: string;
+     region: Region;
+     address: Address;
+     latitude?: number;
+     longitude?: number;
+    
+    constructor(
+         _id : ObjectId, 
+         name : string,
+        region : Region,
+        address : Address,
+        latitude? : number,
+        longitude? : number){
+            this._id = _id;
+            this.name = name; 
+            this.region = region; 
+            this.address = address;
+            this.longitude = longitude;
+            this.latitude = latitude;
+    }
 }

@@ -1,21 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const mongoose_1 = require("mongoose");
-class CurrentMedication extends mongoose_1.Document {
-    constructor(userId, pillName, datePrescribed, dailyDosage, frequency, storageId) {
-        super();
-        this._id = storageId;
+class CurrentMedication {
+    constructor(_id, userId, name, datePrescribed, dailyDosage, frequency, pharmacy) {
+        this._id = _id;
         this.userId = userId;
         this.frequency = frequency;
-        this.pillName = pillName;
+        this.name = name;
         this.datePrescribed = datePrescribed;
         this.dailyDosage = dailyDosage;
+        this.pharmacy = pharmacy;
     }
-    get getStorageId() {
+    get getId() {
         return this._id;
     }
-    set getStorageId(storageId) {
-        this._id = storageId;
+    set getId(_id) {
+        this._id = _id;
     }
     get getUserId() {
         return this.userId;
@@ -23,11 +22,11 @@ class CurrentMedication extends mongoose_1.Document {
     set setUserId(userId) {
         this.userId = userId;
     }
-    get getPillName() {
-        return this.pillName;
+    get getName() {
+        return this.name;
     }
-    set setPillName(pillName) {
-        this.pillName = pillName;
+    set setName(name) {
+        this.name = name;
     }
     get getDatePrescribed() {
         return this.datePrescribed;
@@ -44,12 +43,12 @@ class CurrentMedication extends mongoose_1.Document {
     get getFrequency() {
         return this.frequency;
     }
-    set setPharmaceutical(pharmaceutical) {
-        this.pharmaceutical = pharmaceutical;
+    set setPharmacy(pharmacy) {
+        this.pharmacy = pharmacy;
     }
-    get getPharmaceutical() {
-        return this.pharmaceutical;
+    get getPharmacy() {
+        return this.pharmacy;
     }
 }
-exports.CurrentMedication = CurrentMedication;
+exports.default = CurrentMedication;
 //# sourceMappingURL=CurrentMedication.js.map

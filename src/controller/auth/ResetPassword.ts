@@ -1,9 +1,9 @@
-import * as express from 'express';
-import { User } from '../../models/User';
+import { Request, Response } from 'express';
+
 // DB
 
 //outside the application
-export const forgotpassword = async (request: express.Request, response: express.Response) => {
+export const forgotpassword = async (request: Request, response: Response, next) => {
     try {
         //user clicks reset password from login page,users enters cellphone number, application verifies the cellphone number 
         //after verification is successfull application sends OTP code, user enters their OTP code,mobile App redirects to reset password page, user enters new password, re enter password. 
@@ -18,6 +18,6 @@ export const forgotpassword = async (request: express.Request, response: express
 }
 
 //inside the application
-export const resetpasssword = async (request: express.Request, response: express.Response) => {
+export const resetpasssword = async (request: Request, response: Response, next) => {
 
 }

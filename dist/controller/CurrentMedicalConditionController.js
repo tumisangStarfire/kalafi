@@ -10,14 +10,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const CurrentMedicalConditionHelper_1 = require("../databasehelper/CurrentMedicalConditionHelper");
+var ObjectId = require('mongodb').ObjectID;
 function saveCurrentMedicalCondition(request, response) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const newCurrentMedicalCondition = request.body;
             yield CurrentMedicalConditionHelper_1.CurrentMedicalConditionHelper.create(newCurrentMedicalCondition, result => {
-                response.json(result);
+                response.json(result).status(200);
             });
-            // const sendOTP =  thorough email or sms
         }
         catch (error) {
             throw (error);
@@ -43,8 +43,10 @@ function getUserMedicalConditionData(request, response) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             let userId = request.params.userId;
+            // console.log("userid on controller" + userId);
+            // return response.json(userId).status(200);
             yield CurrentMedicalConditionHelper_1.CurrentMedicalConditionHelper.getMedicationConditionDataUsingUserId(userId, result => {
-                return response.json(result);
+                return response.json(result).status(200);
             });
         }
         catch (error) {

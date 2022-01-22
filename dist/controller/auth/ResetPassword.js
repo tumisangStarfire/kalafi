@@ -11,7 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 // DB
 //outside the application
-exports.forgotpassword = (request, response) => __awaiter(void 0, void 0, void 0, function* () {
+exports.forgotpassword = (request, response, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         //user clicks reset password from login page,users enters cellphone number, application verifies the cellphone number 
         //after verification is successfull application sends OTP code, user enters their OTP code,mobile App redirects to reset password page, user enters new password, re enter password. 
@@ -26,6 +26,6 @@ exports.forgotpassword = (request, response) => __awaiter(void 0, void 0, void 0
     }
 });
 //inside the application
-exports.resetpasssword = (request, response) => __awaiter(void 0, void 0, void 0, function* () {
+exports.resetpasssword = (request, response, next) => __awaiter(void 0, void 0, void 0, function* () {
 });
 //# sourceMappingURL=ResetPassword.js.map

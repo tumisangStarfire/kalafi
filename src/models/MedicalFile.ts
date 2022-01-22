@@ -1,20 +1,20 @@
-import { MedicalFileType } from "./MedicalFileType";
 import { ObjectId } from "mongodb"; 
-import { Document } from "mongoose";
+import MedicalFileType from "./MedicalFileType";
 
 
-export class MedicalFile extends Document {
 
-    _id: string;
+export default class MedicalFile {
 
-    userId: string; /** users id*/
+    _id: ObjectId;
+
+    userId: ObjectId; /** users id*/
     private date_uploaded?: string;
     /**storage path in s3 */
     //s3 bucket -> Medical Files-> userId-> File Types (X-Rays)->file name  
     private filePath?: string;
 
     /**Filename given by the User i.e left leg scan */
-    private fileName: string;
+    private name: string;
 
 
     /** BASE 64 encdoded file */
@@ -22,42 +22,31 @@ export class MedicalFile extends Document {
 
     private medicalFileType: MedicalFileType;
 
-    /**Medical File Document Structure 1:N 
-     *  _id : ObjectId(121221qwqwqw),
-     * userID :   ObjectId(23232wewew)
-     * fileName : Head Injury scan 
-     * filePath : s3 file Path 
-     * date_uploaded :2020-02-13 
-     * medicalFileType{ 
-     *       "id": 3,
-             "name": "CAT-Scan"
-     * }
-     * 
-     */
-    constructor(userId: string, medicalFileType: MedicalFileType, fileName: string, base64Stringfile: string, date_uploaded?: string, filePath?: string) {
-        super();
+  
+    constructor(_id : ObjectId,userId: ObjectId, medicalFileType: MedicalFileType, name: string, base64Stringfile: string, date_uploaded?: string, filePath?: string) {
+       this._id =  _id
         this.userId = userId;
-        this.fileName = fileName;
+        this.name = name;
         this.base64Stringfile = base64Stringfile;
         this.date_uploaded = date_uploaded;
         this.filePath = filePath;
         this.medicalFileType = medicalFileType;
     } 
 
-    get getStorageId() : string { 
+    get getId() : ObjectId { 
         return this._id; 
      } 
     
-     set getStorageId(storageId: string) {
-       this._id = storageId;
+     set getId(_id: ObjectId) {
+       this._id = _id;
      } 
 
     /**accessors */
     public get getFileName(): string {
-        return this.fileName;
+        return this.name;
     }
-    public set setFileName(value: string) {
-        this.fileName = value;
+    public set setFileName(name: string) {
+        this.name = name;
     }
 
     public get getfilePath(): string {

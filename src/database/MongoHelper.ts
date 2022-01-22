@@ -5,27 +5,27 @@ const dotenv = require('dotenv');
 import mongoose from 'mongoose';
 
 dotenv.config({path: __dirname + '/.env'});
+require('dotenv').config()
 
-console.log(require('dotenv').config())
 
 
-var mongoURL = process.env.MONGO_Url;
-var MongoDatabase = process.env.MONGO_DATABASE;
+var mongoURL = process.env.LOCAL_DB_URL;
+var MongoDatabase = process.env.LOCAL_MONGO_DATABASE;
 var MongoUser = process.env.MONGO_USER;
 var MONGO_PASSWORD = process.env.MONGO_PASSWORD;
 const connectionString = `mongodb+srv://${MongoUser}:${MONGO_PASSWORD}${mongoURL}/${MongoDatabase}?retryWrites=true&w=majority`;
 
 export class MongoHelper {
+  
   public static client: mongo.MongoClient;
-  static database;
+  static database: mongo.Db;
 
   constructor() {
   }
 
   public static connect(): Promise<any> {
     return new Promise<any>((resolve, reject) => {
-      console.log(connectionString);
-      mongo.MongoClient.connect(connectionString, { useUnifiedTopology: true, useNewUrlParser: true }, (err, client: mongo.MongoClient) => {
+      mongo.MongoClient.connect(mongoURL, { useUnifiedTopology: true, useNewUrlParser: true }, (err, client: mongo.MongoClient) => {
         if (err) {
           reject(err);
         } else {
@@ -39,7 +39,7 @@ export class MongoHelper {
     });
   }
 
-  getDatabase() {
+  public static getDatabase(): mongo.Db {
     return MongoHelper.database;
   }
 

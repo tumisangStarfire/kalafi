@@ -20,18 +20,19 @@ CurrentMedicationHelper.create = (currentMedication, callback) => __awaiter(void
         var result = query.insertOne(currentMedication, function (err, res) {
             if (err) {
                 console.log(err);
-                var jsonRes;
-                jsonRes.status = 'failed';
-                jsonRes.message = 'failed to add medication information';
-                jsonRes.data = err;
-                jsonRes.code = 404;
+                var jsonRes = {
+                    status: 'failed',
+                    message: 'failed to add medication information',
+                    data: err,
+                };
+                return callback(jsonRes);
             }
-            var jsonRes;
-            jsonRes.status = 'success';
-            jsonRes.message = 'medication information added succesfully';
-            jsonRes.data = res.insertedId;
-            jsonRes.code = 200;
-            console.log(res);
+            var jsonRes = {
+                status: 'success',
+                message: 'medication information added succesfully',
+                data: res.insertedId,
+            };
+            //console.log(res);
             return callback(jsonRes);
         });
     }
@@ -46,18 +47,19 @@ CurrentMedicationHelper.remove = (storageId, callback) => __awaiter(void 0, void
         var result = query.deleteOne(deleteParams, function (err, res) {
             if (err) {
                 console.log(err);
-                var jsonRes;
-                jsonRes.status = 'failed';
-                jsonRes.message = 'failed to delete medication information';
-                jsonRes.data = err;
-                jsonRes.code = 404;
+                var jsonRes = {
+                    status: 'failed',
+                    message: 'failed to delete medication information',
+                    data: err,
+                };
+                return callback(jsonRes);
             }
-            console.log(res);
-            var jsonRes;
-            jsonRes.status = 'success';
-            jsonRes.message = 'medication information deleted succesfully';
-            jsonRes.data = res.deletedCount;
-            jsonRes.code = 201;
+            //console.log(res);
+            var jsonRes = {
+                status: 'success',
+                message: 'medication information deleted succesfully',
+                data: res.deletedCount,
+            };
             return callback(jsonRes);
         });
     }
@@ -74,22 +76,21 @@ CurrentMedicationHelper.getMedicationDataUsingUserId = (userId, callback) => __a
                     status: 'failed',
                     message: 'failed to fetch user medication information',
                     data: {},
-                    code: 404
                 };
-                console.log(err);
+                // console.log(err);
                 var jsonres = JsonResponse;
                 return callback(jsonres);
             }
-            //array of medical data 
+            //array of medical data
             var currentmedication;
             currentmedication = res;
-            // console.log(currentmedication); 
-            var jsonres;
-            jsonres.status = 'success';
-            jsonres.message = 'user medication data has been fetched';
-            jsonres.data = currentmedication;
-            jsonres.code = 200;
-            return callback(jsonres);
+            // console.log(currentmedication);
+            var jsonres = {
+                status: 'success',
+                message: 'user medication data has been fetched',
+                data: currentmedication,
+            };
+            return callback(currentmedication);
         });
     }
     catch (error) {

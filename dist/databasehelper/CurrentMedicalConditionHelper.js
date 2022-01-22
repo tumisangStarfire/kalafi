@@ -10,6 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const MongoHelper_1 = require("../database/MongoHelper");
+//var ObjectId = require('mongodb').ObjectID;
 class CurrentMedicalConditionHelper {
 }
 exports.CurrentMedicalConditionHelper = CurrentMedicalConditionHelper;
@@ -19,18 +20,18 @@ CurrentMedicalConditionHelper.create = (currentMedicalCondition, callback) => __
         var result = query.insertOne(currentMedicalCondition, function (err, res) {
             if (err) {
                 console.log(err);
-                var jsonRes;
-                jsonRes.status = 'failed';
-                jsonRes.message = 'failed to add medical information';
-                jsonRes.data = err;
-                jsonRes.code = 404;
+                var jsonRes = {
+                    status: 'failed',
+                    message: 'failed to add medical information',
+                    data: err,
+                };
+                return callback(jsonRes);
             }
-            var jsonRes;
-            jsonRes.status = 'success';
-            jsonRes.message = 'medical information added succesfully';
-            jsonRes.data = res.insertedId;
-            jsonRes.code = 200;
-            console.log(res);
+            var jsonRes = {
+                status: 'success',
+                message: 'medical information added succesfully',
+                data: res.insertedId,
+            };
             return callback(jsonRes);
         });
     }
@@ -45,18 +46,19 @@ CurrentMedicalConditionHelper.remove = (storageId, callback) => __awaiter(void 0
         var result = query.deleteOne(deleteParams, function (err, res) {
             if (err) {
                 console.log(err);
-                var jsonRes;
-                jsonRes.status = 'failed';
-                jsonRes.message = 'failed to delete medical information';
-                jsonRes.data = err;
-                jsonRes.code = 404;
+                var jsonRes = {
+                    status: 'failed',
+                    message: 'failed to delete medical information',
+                    data: err,
+                };
+                return callback(jsonRes);
             }
             console.log(res);
-            var jsonRes;
-            jsonRes.status = 'success';
-            jsonRes.message = 'medical information deleted succesfully';
-            jsonRes.data = res.deletedCount;
-            jsonRes.code = 201;
+            var jsonRes = {
+                status: 'success',
+                message: 'medical information deleted succesfully',
+                data: res.deletedCount,
+            };
             return callback(jsonRes);
         });
     }
@@ -66,29 +68,31 @@ CurrentMedicalConditionHelper.remove = (storageId, callback) => __awaiter(void 0
 });
 CurrentMedicalConditionHelper.getMedicationConditionDataUsingUserId = (userId, callback) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        //console.log("user id on helper" + vuserId);
+        var query = { userId: userId };
+        console.log(query);
         const collection = MongoHelper_1.MongoHelper.client.db('Mooki_Development').collection('currentmedicalcondition');
-        var result = collection.find({ userId: userId }).toArray(function (err, res) {
+        yield collection.find(query).toArray(function (err, res) {
             if (err) {
                 var JsonResponse = {
                     status: 'failed',
                     message: 'failed to fetch user medication information',
-                    data: {},
-                    code: 404
+                    data: err,
                 };
                 console.log(err);
                 var jsonres = JsonResponse;
                 return callback(jsonres);
             }
-            //array of medical data 
+            //array of medical data
             var currentmedication;
             currentmedication = res;
-            // console.log(currentmedication); 
-            var jsonres;
-            jsonres.status = 'success';
-            jsonres.message = 'user medication data has been fetched';
-            jsonres.data = currentmedication;
-            jsonres.code = 200;
-            return callback(jsonres);
+            //console.log(res);
+            /* var jsonres : JsonResponseInterface ={
+                 status : 'success',
+                 message : 'user medication data has been fetched',
+                 data : currentmedication,
+             }*/
+            return callback(currentmedication);
         });
     }
     catch (error) {

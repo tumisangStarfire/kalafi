@@ -1,8 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const mongoose_1 = require("mongoose");
 /**Illness has vitals */
-class UserIllness extends mongoose_1.Document {
+class UserIllness {
     /** when you create the illness add vitals information to create a complete document
    *
    * {
@@ -24,9 +23,8 @@ class UserIllness extends mongoose_1.Document {
    * }
    *
    */
-    constructor(userId, bloodPressure, temperature, illness, dateOfDiagnosis, medicationPrescribed, healthFacility, doctorsNotes, storageId, pulseRate, recordedOn) {
-        super();
-        this._id = storageId;
+    constructor(_id, userId, bloodPressure, temperature, illness, dateOfDiagnosis, medicationPrescribed, healthFacility, doctorsNotes, storageId, pulseRate, recordedOn) {
+        this._id = _id;
         this.userId = userId;
         this.bloodPressure = bloodPressure;
         this.temperature = temperature;
@@ -38,11 +36,11 @@ class UserIllness extends mongoose_1.Document {
         this.medicationPrescribed.push(medicationPrescribed);
         this.healthFacility = healthFacility;
     }
-    get getStorageId() {
+    get getId() {
         return this._id;
     }
-    set setStorageId(storageId) {
-        this._id = storageId;
+    set setStorageId(_id) {
+        this._id = _id;
     }
     get getUserId() {
         return this.userId;
@@ -108,5 +106,5 @@ class UserIllness extends mongoose_1.Document {
         return this.medicationPrescribed;
     }
 }
-exports.UserIllness = UserIllness;
+exports.default = UserIllness;
 //# sourceMappingURL=UserIllness.js.map

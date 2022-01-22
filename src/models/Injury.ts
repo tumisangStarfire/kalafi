@@ -1,54 +1,21 @@
-
-import { PillPrescription } from './PillPrescription';
-
+import { InjuryInterface } from 'interfaces/InjuryInterface';
 import { ObjectId } from 'mongodb';
-import { HealthFacility } from './HealthFacility';
-import { VitalsInterface } from 'interfaces/VitalsInterface';
 
-export class Injury {
 
-  _id: ObjectId;
-  userId: string;
-  injuryType: string;
-  date_of_injury: Date;
-  medicationPrescribed: Array<PillPrescription>; 
-  healthFacility : HealthFacility
-  vitals: VitalsInterface
-  doctorsNotes?: string;
+export default class Injury implements InjuryInterface{
 
-  /** when you create the injury add vitals information to create a complete document
-   * 
-   * { 
-   *    objectID(23232ewwewwee), 
-   *    userID : 212121212 
-   *    injuryType : Leg Burn 
-   *    date of injury : 2013-04-23,
-   *    pillPrescription : { _id : objectId, name : paracetamol }, 
-   *    vitals: { temp: 39, bp: 85  }
-   *    doctorsNotes :  
-   *    healthFacility : { 
-   *      id: 2,
-   *      name: Extension 2 Clinic, 
-   *      region :1
-   *      speciality :{}
-   *      
-   *    }
-   * 
-   * } 
-   * 
-   */
-  constructor(userId: string, vitals: VitalsInterface,healthFacility :HealthFacility, injuryType: string, date_of_injury: Date, doctorsNotes?: string) {
+    _id: ObjectId;
+    name: string;
+    description: string;
+    injurySeverityScore : string;
 
-    this.userId = userId;
-    this.injuryType = injuryType;
-    this.date_of_injury = date_of_injury;
-    this.doctorsNotes = doctorsNotes;
-    this.vitals = vitals; 
-    this.healthFacility = healthFacility;
-  }
-
-  addInjuryPills(medicationPrescribed: PillPrescription) {
-    this.medicationPrescribed.push(medicationPrescribed);
-  }
+    constructor(_id : ObjectId, name: string, description : string, injurySeverityScore : string ) {
+         this._id = _id, 
+        this.name = name;
+        this.description = description;
+        this.injurySeverityScore = injurySeverityScore;
+       
+    }
+    
 
 }

@@ -23,33 +23,31 @@ exports.UserHelper = UserHelper;
 /**function to save a new user registration, it wil be called by the Registration Controller */
 UserHelper.create = (user, callback) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const query = MongoHelper_1.MongoHelper.client.db('Mooki_Development').collection('users');
-        if (yield query.findOne({ cellphone: user.getCellphone })) {
-            var JsonResponse = {
+        const query = yield MongoHelper_1.MongoHelper.client.db('Mooki_Development').collection('users');
+        if (query.findOne({ cellphone: user.getCellphone })) {
+            var jsonRes = {
                 status: 'failed',
-                message: 'user with that cellphone exists',
-                code: 404
+                message: 'user with that number already exists',
+                data: {},
             };
-            return callback(JsonResponse);
+            return callback(jsonRes);
         }
         else {
             var result = query.insertOne(user);
             result.then((res) => __awaiter(void 0, void 0, void 0, function* () {
                 //id user created
-                yield OTPHelper_1.OTPHelper.saveOTP(user.getCellphone, result => {
+                yield OTPHelper_1.OTPHelper.saveOTP(user.getCellphone, data => {
                     //console.log(result);
-                    //return the response  
-                    var JsonResponse = {
+                    //return the response
+                    var jsonres = {
                         status: 'success',
                         message: 'user sucessfully created',
                         data: res.insertedCount,
-                        code: 200
                     };
-                    const jsonres = JsonResponse;
                     return callback(jsonres);
                 });
             }));
-            /** return the error to the response  */
+            /** return the error to the response*/
             result.catch((err) => {
                 return callback(err);
             });
@@ -71,7 +69,6 @@ UserHelper.login = (login, callback) => __awaiter(void 0, void 0, void 0, functi
                 var JsonResponse = {
                     status: 'success',
                     message: 'logged in',
-                    code: 200
                 };
                 return callback(JsonResponse);
             }
@@ -93,29 +90,28 @@ UserHelper.createPassword = (userId, password, confirmPassword, callback) => __a
     if (match == true) {
         const collection = MongoHelper_1.MongoHelper.client.db('Mooki_Development').collection('users');
         var findUser = collection.findOne({ _id: new ObjectId(userId) });
-        /**if user exists then do the following */
+        /**if user exists then do the following*/
         findUser.then((res) => {
-            //password hashing  
+            //password hashing
             const hashedPassword = bcrypt.hash(password, 10);
             var password = { $set: { password: hashedPassword } };
             var createdPassword = collection.updateOne({ _id: new ObjectId(userId) }, password, function (err, res) {
                 if (err) {
-                    /***return failed to create password to user */
+                    /***return failed to create password to user*/
                     console.log(err);
                 }
-                /**return password reset */
+                /**return password reset*/
                 console.log(res);
                 var JsonResponse = {
                     status: 'success',
                     message: 'password Created',
                     data: res.upsertedCount,
-                    code: 200
                 };
                 const jsonres = JsonResponse;
                 return callback(jsonres);
             });
         });
-        /** return the error to the response  */
+        /** return the error to the response*/
         findUser.catch((err) => {
             return callback(err);
         });
@@ -125,7 +121,6 @@ UserHelper.createPassword = (userId, password, confirmPassword, callback) => __a
             status: 'failed',
             message: 'password and confirm password should match',
             data: {},
-            code: 400
         };
         var jsonres = JsonResponse;
         return callback(jsonres);
@@ -134,13 +129,12 @@ UserHelper.createPassword = (userId, password, confirmPassword, callback) => __a
 UserHelper.getUserById = (id, callback) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const collection = MongoHelper_1.MongoHelper.client.db('Mooki_Development').collection('users');
-        var result = collection.findOne({ _id: new ObjectId(id) }, function (err, res) {
+        var result = collection.findOne({ _id: id }, function (err, res) {
             if (err) {
                 var JsonResponse = {
                     status: 'failed',
                     message: 'failed to fetch user',
                     data: {},
-                    code: 404
                 };
                 console.log(err);
                 var jsonres = JsonResponse;
@@ -148,12 +142,7 @@ UserHelper.getUserById = (id, callback) => __awaiter(void 0, void 0, void 0, fun
             }
             const user = res;
             console.log(user);
-            var jsonres;
-            jsonres.status = 'success';
-            jsonres.message = 'user data has been fetched';
-            jsonres.data = user;
-            jsonres.code = 200;
-            return callback(jsonres);
+            return callback(user);
         });
     }
     catch (error) {
@@ -162,13 +151,13 @@ UserHelper.getUserById = (id, callback) => __awaiter(void 0, void 0, void 0, fun
 });
 UserHelper.resetPassword = (id, password, confirmPassword, callback) => {
     try {
-        //find the user with id, check if password and confirmPassword strings match,  if they match save the password. 
+        //find the user with id, check if password and confirmPassword strings match,  if they match save the password.
         if (User_1.User.checkIfPasswordAndConfirmPasswordMatch(password, confirmPassword)) {
             const collection = MongoHelper_1.MongoHelper.client.db('Mooki_Development').collection('users');
             var findUser = collection.findOne({ _id: new ObjectId(id) });
             /**if user exists then do the following */
             findUser.then((res) => {
-                //password hashing  
+                //password hashing
                 const hashedPassword = bcrypt.hash(password, 10);
                 var newPassword = { $set: { password: hashedPassword } };
                 var updateUserPassword = collection.updateOne({ _id: new ObjectId(id) }, newPassword, function (err, updateRes) {
@@ -178,7 +167,6 @@ UserHelper.resetPassword = (id, password, confirmPassword, callback) => {
                             status: 'failed',
                             message: 'failed to reset user password',
                             data: {},
-                            code: 400
                         };
                         console.log(err);
                         var jsonres = JsonResponse;
@@ -189,7 +177,6 @@ UserHelper.resetPassword = (id, password, confirmPassword, callback) => {
                     jsonres.status = 'success';
                     jsonres.message = 'user password has been reset';
                     jsonres.data = updateRes.upsertedCount;
-                    jsonres.code = 200;
                     return callback(jsonres);
                 });
             });
@@ -202,7 +189,6 @@ UserHelper.resetPassword = (id, password, confirmPassword, callback) => {
             var JsonResponse = {
                 status: "failed",
                 message: "Password and Confirm Password do not match",
-                code: 404
             };
             return callback(JsonResponse);
         }
@@ -222,7 +208,6 @@ UserHelper.registerBetaUser = (user, callback) => __awaiter(void 0, void 0, void
             var JsonResponse = {
                 status: 'success',
                 message: 'Beta User registered',
-                code: 200
             };
             return callback(JsonResponse);
         });

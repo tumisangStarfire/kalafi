@@ -1,15 +1,15 @@
-import { PillPrescription } from "./PillPrescription";
+import { ObjectId } from 'mongodb';
+import  PillPrescription from "./PillPrescription";
 import { VitalsInterface } from "../interfaces/VitalsInterface";
-import mongoose, { Model, Schema, Document } from 'mongoose';
-import { HealthFacility } from "./HealthFacility";
-import { IllnessInterface } from "../interfaces/IllnessInterface";
+import HealthFacility from './HealthFacility';
+import Illness from './Illness';
 
 /**Illness has vitals */
-export class UserIllness extends Document implements VitalsInterface {
+export default class UserIllness  implements VitalsInterface {
 
-    _id: string;
-    userId: string;
-    illness: IllnessInterface;
+    _id: ObjectId;
+    userId: ObjectId;
+    illness: Illness;
     dateOfDiagnosis: Date;
     doctorsNotes?: string;
     medicationPrescribed: Array<PillPrescription>;
@@ -43,11 +43,12 @@ export class UserIllness extends Document implements VitalsInterface {
    * 
    */
 
-    constructor( 
-        userId: string,  
+    constructor(
+         _id : ObjectId, 
+        userId: ObjectId,  
         bloodPressure:number,
         temperature:number,
-        illness: IllnessInterface, 
+        illness: Illness, 
         dateOfDiagnosis: Date,
         medicationPrescribed:PillPrescription,
         healthFacility: HealthFacility,
@@ -56,8 +57,7 @@ export class UserIllness extends Document implements VitalsInterface {
         pulseRate?:number,
         recordedOn?:Date
         ) {
-        super(); 
-        this._id = storageId;
+        this._id = _id;
         this.userId = userId; 
         this.bloodPressure =bloodPressure; 
         this.temperature =temperature;
@@ -70,19 +70,19 @@ export class UserIllness extends Document implements VitalsInterface {
         this.healthFacility = healthFacility;
     } 
 
-    get getStorageId(): string {
+    get getId(): ObjectId {
       return this._id;
     }
       
-    set setStorageId(storageId: string) {
-      this._id = storageId;
+    set setStorageId(_id: ObjectId) {
+      this._id = _id;
      }
   
-    get getUserId(): string {
+    get getUserId(): ObjectId {
       return this.userId;
      }
       
-    set setUserId(userId: string) {
+    set setUserId(userId: ObjectId) {
       this.userId = userId;
     }  
     
@@ -102,11 +102,11 @@ export class UserIllness extends Document implements VitalsInterface {
       this.temperature= temperature;
     }  
 
-    get getIllness():IllnessInterface{ 
+    get getIllness():Illness{ 
       return this.illness;
     } 
 
-    set setIllness(illness: IllnessInterface){ 
+    set setIllness(illness: Illness){ 
       this.illness= illness;
     }  
 
@@ -154,12 +154,12 @@ export class UserIllness extends Document implements VitalsInterface {
         this.medicationPrescribed.push(medicationPrescribed);
       } 
     
-      removePillPrescription(medicationPrescribed:PillPrescription){ 
+    removePillPrescription(medicationPrescribed: PillPrescription){ 
         //this.medicationPrescribed.
       } 
     
-      getPillPrescriptions():Array<PillPrescription>{
-        return this.medicationPrescribed;
-      }  
+    getPillPrescriptions():Array<PillPrescription>{
+      return this.medicationPrescribed;
+     }  
 
 }
