@@ -19,7 +19,7 @@
     "@types/express": "^4.17.2",
     "@types/mongodb": "^3.3.16",
     "@types/node": "^10.12.2",
-    "aws-sdk": "^2.634.0",
+    "aws-sdk": ">=2.814.0",
     "axios": "^0.25.0",
     "bcrypt": "^3.0.8",
     "bcryptjs": "^2.4.3",
