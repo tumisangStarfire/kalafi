@@ -6,7 +6,7 @@ import  Service  from '../service/UserService';
 export async function checkPhoneNumber(request: Request, response: Response) {
     try {
         let cellphone = request.body.cellphone;
-          const valid = await Service.verifyUserCellphone(cellphone, res => {
+          const valid = await Service.verifyUserEmail(cellphone, res => {
              console.log(res);
              return res;
          });

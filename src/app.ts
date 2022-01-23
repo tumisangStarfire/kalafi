@@ -4,6 +4,7 @@ import { MongoHelper } from './database/MongoHelper';
 import router from './router/router';
 import { loggerMiddleware } from './middleware/loggerMiddleware';
 import * as jsdom from 'jsdom';
+import { errorHandler, notFound } from './middleware/errorMiddleware';
 const { JSDOM } = jsdom;    
 var path = require('path'); 
 const dotenv = require('dotenv');
@@ -28,6 +29,8 @@ export class App {
         this.app.use(express.json());
         this.app.use(express.urlencoded({ extended: true }));
         this.app.use(loggerMiddleware);
+        this.app.use(notFound);
+        this.app.use(errorHandler);
         this.app.use(express.static(path.join(process.env.PWD ,'/public'))); 
         this.app.use(express.static(path.join(__dirname , '/public'))); 
     }  

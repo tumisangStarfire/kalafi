@@ -3,11 +3,12 @@ import { MongoHelper } from '../database/MongoHelper';
 import { LoginInterface } from '../interfaces/LoginInterface';
 import { JsonResponseInterface } from '../interfaces/JsonResponseInterface';
 import { TokenData } from '../interfaces/TokenData';
-import { ObjectId, Timestamp } from "mongodb";
+import { ObjectId, ResumeToken, Timestamp } from "mongodb";
 import * as bcrypt from 'bcrypt';
 import * as jwt from "jsonwebtoken";
 import UserInjury from 'models/UserInjury';
 import UserIllness from 'models/UserIllness';
+import { IsEmpty } from 'class-validator';
 const dotenv = require('dotenv');
 dotenv.config();
 
@@ -18,21 +19,25 @@ export default class UserService {
 
 
     /**function to save a new user registration, it wil be called by the Registration Controller */
-    static create = async (user: User, callback) => {
+    static create =  (user: User, callback) => {
         try {
-
-            const query =await MongoHelper.getDatabase().collection('users');
-
-            if (query.findOne({ email: user.getEmail })) {
+            
+            const query = MongoHelper.getDatabase().collection('users');
+            var userExists = UserService.checkIfUserExists(user.email);
+            if (userExists) {
                 var jsonRes : JsonResponseInterface ={
                     status : 'failed',
                     message :'user with that email already exists',
                     data : null
                 };
                 return callback(jsonRes);
-            } else {
+            } else { 
+                var hashedPassword = User.hashPassword(user.password);
+                user.password = hashedPassword;
+                user.status = 1;
+                user.created_at = new Date();
+                user.updated_at = new Date();
                 var result = query.insertOne(user);
-               
                 result.then(async (res) => {
                     var jsonRes : JsonResponseInterface ={
                     status : 'success',
@@ -45,16 +50,22 @@ export default class UserService {
                 result.catch((err) => {
                     var jsonRes : JsonResponseInterface ={
                         status : 'error',
-                        message :'Something happened please try again later.c',
+                        message :'Something happened please try again later',
                         data :err
                     };
-                    return callback(err);
+                    return callback(jsonRes);
                 });
 
             }
 
         } catch (error) {
-            console.log(error);
+            var jsonRes : JsonResponseInterface ={
+                status : 'error',
+                message :error,
+                data :error
+                };
+            return callback(jsonRes);
+           
         }
     } 
 
@@ -86,26 +97,41 @@ export default class UserService {
 
     static login = async (email : string, password : string, callback) => {
         try {
-            //  const logInData: LoginInterface = login; //TODO check if the account is verified, check if the account status is active
+            //  const  = login; //TODO check if the account is verified, check if the account status is active
             const collection =  MongoHelper.getDatabase().collection('users');
             //check if the user exists
-            const userExists = await collection.findOne({ email: email });
+            var userExists = await UserService.checkIfUserExists(email);
+            console.log(userExists);
             if (userExists) {
-
-                const isPasswordMatching = await bcrypt.compare(password, userExists.password);
-
-                if (isPasswordMatching) {
-                    var JsonResponse = {
-                        status: 'success',
-                        message: 'logged in',
-
+                 var isPasswordMatching = true;
+                  var result = await collection.findOne({ email : email }).then( (res) => {
+                    //console.log(res);
+                    isPasswordMatching = User.checkIfUnencryptedPasswordIsValid(password,res.password)
+                    var JsonResponse = {}
+                    if (isPasswordMatching) {
+                        JsonResponse = {
+                            status: 'success',
+                            message: 'logged in',
+                            data : res
+                        }
+                        return callback(JsonResponse);
+                    } else {
+                        JsonResponse  = {
+                            status: 'failed',
+                            message: 'Email or Password Incorrect please try again.',
+                            data : { }
+                        }
+                        return callback(JsonResponse);
                     }
-                    return callback(JsonResponse);
-                } else {
-                    return callback(new Error('Password error'));
-                }
+                    
+                });
             } else {
-                return callback(new Error('wrong Credentials entered'));
+               var JsonResponse  = {
+                    status: 'error',
+                    message: 'Email or Password Incorrect please try again.',
+                        data : { }
+                    }
+                return callback(JsonResponse)
             }
         } catch (error) {
             console.log(error);
@@ -266,13 +292,23 @@ export default class UserService {
         } catch (error) {
             console.log(error);
         }
+    } 
+
+    static checkIfUserExists = (email: string) : boolean =>  {
+        var userExists = false;
+        const collection =  MongoHelper.getDatabase().collection('users');
+        var result = collection.findOne({ email: email });
+        if (result) {
+            userExists = true;
+        } 
+        return userExists;
     }
 
-    static verifyUserCellphone = (cellphone: number, callback) => {
+    static verifyUserEmail = (email: string, callback) => {
         try {
             var cellphoneExists = false;
             const collection =  MongoHelper.getDatabase().collection('users');
-            var result = collection.findOne({ cellphone: cellphone }, function (err, res) {
+            var result = collection.findOne({ email: email }, function (err, res) {
                 if (err) {
                     //return a proper response to the user
                     console.log(err);

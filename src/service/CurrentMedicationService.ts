@@ -7,6 +7,8 @@ export default class CurrentMedicationService {
     static store = async (currentMedication: CurrentMedication, callback) => {
         try {
             const query = await MongoHelper.getDatabase().collection('usermedications');
+            currentMedication.created_at = new Date();
+            currentMedication.updated_at = new Date();
             var result = query.insertOne(currentMedication, function (err, res) {
                 if (err) {
                     console.log(err);

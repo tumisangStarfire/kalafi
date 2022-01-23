@@ -10,8 +10,8 @@ export default class CurrentMedication {
   frequency: number; //frequency (hours between medication)
   dailyDosage: number;
   pharmacy : Pharmacy; 
-  created_at : Timestamp;
-  updated_at : Timestamp; 
+  created_at : Date;
+  updated_at : Date; 
   
   constructor(
     _id : ObjectId,

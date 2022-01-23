@@ -7,15 +7,15 @@ enum Gender {
 export default class UserProfile {
 
   /** private modeifies allows us to use access modifiers get and set, strong coding practices. Consistency, Readbility */
-  private dob: Date;
-  private gender?: Gender;
-  private omang?: number;
-  private profilePicture?: string;
-  private weight: number;
-  private height: number;
-  private bmi?: number;
-  private bloodType?: string;
-  private waistSize: number;
+   dob?: Date;
+   gender?: number;
+   omang?: number;
+   profilePicture?: string;
+   weight?: number;
+   height?: number;
+   bmi?: number;
+   bloodType?: string;
+   waistSize?: number;
 
   /** User Profile Document Structure 
    *  _id = ObjectId(121221qwqwqw) 
@@ -29,15 +29,14 @@ export default class UserProfile {
    * 
    */
   constructor( 
-    dob: Date,
-    weight: number,
-    height: number, 
-    gender?: Gender,
+    dob?: Date,
+    weight?: number,
+    height?: number, 
+    gender?: number,
     omang?: number, 
     profilePicture?: string,
     bmi?: number,
     bloodType?: string, 
-    storageId?:string,
     waistSize?: number,
       ) {
     this.dob = dob;
@@ -61,11 +60,11 @@ export default class UserProfile {
 
   }
 
-  set setGender(gender: Gender) {
+  set setGender(gender: number) {
     this.gender = gender;
   }
 
-  get getGender(): Gender {
+  get getGender(): number {
     return this.gender;
   }
 
