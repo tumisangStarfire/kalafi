@@ -94,10 +94,19 @@ export default class CurrentMedicationService {
                 };
 
 
-                return callback(currentmedication);
+                return callback(jsonres);
             });
 
-        } catch (error) {
+        } catch (error) { 
+             var jsonres : JsonResponseInterface={
+                    status :'success',
+                    message :'user medication data has been fetched',
+                    data : error,
+
+                };
+
+
+                return callback(jsonres);
             console.log(error);
         }
     } 
