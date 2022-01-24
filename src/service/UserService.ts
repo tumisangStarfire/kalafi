@@ -118,7 +118,7 @@ export default class UserService {
                     } else {
                         JsonResponse  = {
                             status: 'failed',
-                            message: 'Email or Password Incorrect please try again.',
+                            message: 'Email or Password incorrect please try again.',
                             data : { }
                         }
                         return callback(JsonResponse);
