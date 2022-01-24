@@ -15,16 +15,16 @@ export default class User  {
 
   /**Defines primary id that will be used as _id of the mongo collection. */
   _id: ObjectId;
-  private firstName: string;
-  private lastName: string;
-  private cellphone: number;
-  private password: string;
-  private email?: string;
-  private status?: Status; //default status of the user
-  private profile : Profile;
-  private verified?: boolean;
-  private created_at : Date;
-  private updated_at : Date;
+   firstName: string;
+   lastName: string;
+   cellphone: number;
+   password: string;
+   email?: string;
+   status?: Status; //default status of the user
+   profile : Profile;
+   verified?: boolean;
+   created_at : Date;
+   updated_at : Date;
 
 
 
@@ -148,12 +148,12 @@ export default class User  {
     this.updated_at = new Date();
   }
 
-  public hashPassword() {
-    this.password = bcrypt.hashSync(this.password, 8);
+  static  hashPassword(password: string) {
+    return bcrypt.hashSync(password, 8);
   }
 
-  checkIfUnencryptedPasswordIsValid(unencryptedPassword: string) {
-    return bcrypt.compareSync(unencryptedPassword, this.password);
+  static checkIfUnencryptedPasswordIsValid(unencryptedPassword: string,password : string) {
+    return bcrypt.compareSync(unencryptedPassword, password);
   } 
 
  static checkIfPasswordAndConfirmPasswordMatch(password :string, confirmPassword: string){ 

@@ -6,6 +6,7 @@ export async function register(request: Request, response: Response, next) {
     try {
 
         const newUser: User = request.body;
+        
         var createUser = await Service.create(newUser, result => {
             console.log(result);
             return response.json(result).status(200);
