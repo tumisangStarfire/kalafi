@@ -3,9 +3,7 @@ import * as express from 'express'; var cors = require('cors');
 import { MongoHelper } from './database/MongoHelper';
 import router from './router/router';
 import { loggerMiddleware } from './middleware/loggerMiddleware';
-import * as jsdom from 'jsdom';
 import { errorHandler, notFound } from './middleware/errorMiddleware';
-const { JSDOM } = jsdom;    
 var path = require('path'); 
 const dotenv = require('dotenv');
 process.env.PWD = process.cwd()
