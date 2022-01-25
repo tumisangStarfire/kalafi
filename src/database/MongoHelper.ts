@@ -7,8 +7,6 @@ import mongoose from 'mongoose';
 dotenv.config({path: __dirname + '/.env'});
 require('dotenv').config()
 
-
-
 var mongoURL = process.env.LOCAL_DB_URL;
 var MongoDatabase = process.env.LOCAL_MONGO_DATABASE;
 var MongoUser = process.env.MONGO_USER;
