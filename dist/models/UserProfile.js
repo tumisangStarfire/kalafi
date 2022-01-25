@@ -19,7 +19,7 @@ class UserProfile {
      *
      *
      */
-    constructor(dob, weight, height, gender, omang, profilePicture, bmi, bloodType, storageId, waistSize) {
+    constructor(dob, weight, height, gender, omang, profilePicture, bmi, bloodType, waistSize) {
         this.dob = dob;
         this.gender = gender;
         this.omang = omang;

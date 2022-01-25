@@ -95,11 +95,11 @@ class User {
     set setUpdatedAt(updated_at) {
         this.updated_at = new Date();
     }
-    hashPassword() {
-        this.password = bcrypt.hashSync(this.password, 8);
+    static hashPassword(password) {
+        return bcrypt.hashSync(password, 8);
     }
-    checkIfUnencryptedPasswordIsValid(unencryptedPassword) {
-        return bcrypt.compareSync(unencryptedPassword, this.password);
+    static checkIfUnencryptedPasswordIsValid(unencryptedPassword, password) {
+        return bcrypt.compareSync(unencryptedPassword, password);
     }
     static checkIfPasswordAndConfirmPasswordMatch(password, confirmPassword) {
         if (password === confirmPassword)

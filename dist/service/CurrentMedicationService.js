@@ -16,6 +16,8 @@ exports.default = CurrentMedicationService;
 CurrentMedicationService.store = (currentMedication, callback) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const query = yield MongoHelper_1.MongoHelper.getDatabase().collection('usermedications');
+        currentMedication.created_at = new Date();
+        currentMedication.updated_at = new Date();
         var result = query.insertOne(currentMedication, function (err, res) {
             if (err) {
                 console.log(err);
@@ -89,10 +91,16 @@ CurrentMedicationService.getMedicationUsingUserId = (userId, callback) => __awai
                 message: 'user medication data has been fetched',
                 data: currentmedication,
             };
-            return callback(currentmedication);
+            return callback(jsonres);
         });
     }
     catch (error) {
+        var jsonres = {
+            status: 'success',
+            message: 'user medication data has been fetched',
+            data: error,
+        };
+        return callback(jsonres);
         console.log(error);
     }
 });

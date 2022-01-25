@@ -20,10 +20,11 @@ class UserService {
 }
 exports.default = UserService;
 /**function to save a new user registration, it wil be called by the Registration Controller */
-UserService.create = (user, callback) => __awaiter(void 0, void 0, void 0, function* () {
+UserService.create = (user, callback) => {
     try {
-        const query = yield MongoHelper_1.MongoHelper.getDatabase().collection('users');
-        if (query.findOne({ email: user.getEmail })) {
+        const query = MongoHelper_1.MongoHelper.getDatabase().collection('users');
+        var userExists = UserService.checkIfUserExists(user.email);
+        if (userExists) {
             var jsonRes = {
                 status: 'failed',
                 message: 'user with that email already exists',
@@ -32,6 +33,11 @@ UserService.create = (user, callback) => __awaiter(void 0, void 0, void 0, funct
             return callback(jsonRes);
         }
         else {
+            var hashedPassword = User_1.default.hashPassword(user.password);
+            user.password = hashedPassword;
+            user.status = 1;
+            user.created_at = new Date();
+            user.updated_at = new Date();
             var result = query.insertOne(user);
             result.then((res) => __awaiter(void 0, void 0, void 0, function* () {
                 var jsonRes = {
@@ -45,17 +51,22 @@ UserService.create = (user, callback) => __awaiter(void 0, void 0, void 0, funct
             result.catch((err) => {
                 var jsonRes = {
                     status: 'error',
-                    message: 'Something happened please try again later.c',
+                    message: 'Something happened please try again later',
                     data: err
                 };
-                return callback(err);
+                return callback(jsonRes);
             });
         }
     }
     catch (error) {
-        console.log(error);
+        var jsonRes = {
+            status: 'error',
+            message: error,
+            data: error
+        };
+        return callback(jsonRes);
     }
-});
+};
 UserService.findUser = (_id, callback) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const collection = MongoHelper_1.MongoHelper.getDatabase().collection('users');
@@ -80,25 +91,42 @@ UserService.findUser = (_id, callback) => __awaiter(void 0, void 0, void 0, func
 });
 UserService.login = (email, password, callback) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        //  const logInData: LoginInterface = login; //TODO check if the account is verified, check if the account status is active
+        //  const  = login; //TODO check if the account is verified, check if the account status is active
         const collection = MongoHelper_1.MongoHelper.getDatabase().collection('users');
         //check if the user exists
-        const userExists = yield collection.findOne({ email: email });
+        var userExists = yield UserService.checkIfUserExists(email);
+        console.log(userExists);
         if (userExists) {
-            const isPasswordMatching = yield bcrypt.compare(password, userExists.password);
-            if (isPasswordMatching) {
-                var JsonResponse = {
-                    status: 'success',
-                    message: 'logged in',
-                };
-                return callback(JsonResponse);
-            }
-            else {
-                return callback(new Error('Password error'));
-            }
+            var isPasswordMatching = true;
+            var result = yield collection.findOne({ email: email }).then((res) => {
+                //console.log(res);
+                isPasswordMatching = User_1.default.checkIfUnencryptedPasswordIsValid(password, res.password);
+                var JsonResponse = {};
+                if (isPasswordMatching) {
+                    JsonResponse = {
+                        status: 'success',
+                        message: 'logged in',
+                        data: res
+                    };
+                    return callback(JsonResponse);
+                }
+                else {
+                    JsonResponse = {
+                        status: 'failed',
+                        message: 'Email or Password incorrect please try again.',
+                        data: {}
+                    };
+                    return callback(JsonResponse);
+                }
+            });
         }
         else {
-            return callback(new Error('wrong Credentials entered'));
+            var JsonResponse = {
+                status: 'error',
+                message: 'Email or Password Incorrect please try again.',
+                data: {}
+            };
+            return callback(JsonResponse);
         }
     }
     catch (error) {
@@ -237,11 +265,20 @@ UserService.registerBetaUser = (user, callback) => __awaiter(void 0, void 0, voi
         console.log(error);
     }
 });
-UserService.verifyUserCellphone = (cellphone, callback) => {
+UserService.checkIfUserExists = (email) => {
+    var userExists = false;
+    const collection = MongoHelper_1.MongoHelper.getDatabase().collection('users');
+    var result = collection.findOne({ email: email });
+    if (result) {
+        userExists = true;
+    }
+    return userExists;
+};
+UserService.verifyUserEmail = (email, callback) => {
     try {
         var cellphoneExists = false;
         const collection = MongoHelper_1.MongoHelper.getDatabase().collection('users');
-        var result = collection.findOne({ cellphone: cellphone }, function (err, res) {
+        var result = collection.findOne({ email: email }, function (err, res) {
             if (err) {
                 //return a proper response to the user
                 console.log(err);

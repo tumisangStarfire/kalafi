@@ -15,6 +15,7 @@ const MongoHelper_1 = require("./database/MongoHelper");
 const router_1 = require("./router/router");
 const loggerMiddleware_1 = require("./middleware/loggerMiddleware");
 const jsdom = require("jsdom");
+const errorMiddleware_1 = require("./middleware/errorMiddleware");
 const { JSDOM } = jsdom;
 var path = require('path');
 const dotenv = require('dotenv');
@@ -34,6 +35,8 @@ class App {
         this.app.use(express.json());
         this.app.use(express.urlencoded({ extended: true }));
         this.app.use(loggerMiddleware_1.loggerMiddleware);
+        this.app.use(errorMiddleware_1.notFound);
+        this.app.use(errorMiddleware_1.errorHandler);
         this.app.use(express.static(path.join(process.env.PWD, '/public')));
         this.app.use(express.static(path.join(__dirname, '/public')));
     }
