@@ -19,11 +19,12 @@ export default class UserService {
 
 
     /**function to save a new user registration, it wil be called by the Registration Controller */
-    static create =  (user: User, callback) => {
+    static create =  async (user: User, callback) => {
         try {
+             
             
-            const query = MongoHelper.getDatabase().collection('users');
-            var userExists = UserService.checkIfUserExists(user.email);
+            var userExists = await UserService.checkIfUserExists(user.email);
+           console.log(userExists);
             if (userExists) {
                 var jsonRes : JsonResponseInterface ={
                     status : 'failed',
@@ -32,6 +33,7 @@ export default class UserService {
                 };
                 return callback(jsonRes);
             } else { 
+                const query = MongoHelper.getDatabase().collection('users');
                 var hashedPassword = User.hashPassword(user.password);
                 user.password = hashedPassword;
                 user.status = 1;
@@ -294,14 +296,17 @@ export default class UserService {
         }
     } 
 
-    static checkIfUserExists = (email: string) : boolean =>  {
+    static checkIfUserExists = async (email: string) : Promise<boolean> =>  {
         var userExists = false;
         const collection =  MongoHelper.getDatabase().collection('users');
-        var result = collection.findOne({ email: email });
-        if (result) {
-            userExists = true;
-        } 
-        return userExists;
+       await collection.findOne({ email: email }).then(res =>{
+             if (res !== null) { 
+                console.log(res);
+                userExists = true;
+            } 
+            
+        });
+       return userExists;
     }
 
     static verifyUserEmail = (email: string, callback) => {
