@@ -15,7 +15,7 @@ function checkPhoneNumber(request, response) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             let cellphone = request.body.cellphone;
-            const valid = yield UserService_1.default.verifyUserCellphone(cellphone, res => {
+            const valid = yield UserService_1.default.verifyUserEmail(cellphone, res => {
                 console.log(res);
                 return res;
             });
