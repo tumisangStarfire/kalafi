@@ -43,7 +43,7 @@ export default class UserService {
                 result.then(async (res) => {
                     var jsonRes : JsonResponseInterface ={
                     status : 'success',
-                    message :'User Created',
+                    message :'Account created, redirecting to login.',
                     data :res
                     };
                     return callback(jsonRes);
@@ -120,7 +120,7 @@ export default class UserService {
                     } else {
                         JsonResponse  = {
                             status: 'failed',
-                            message: 'Email or Password incorrect please try again.',
+                            message: 'Sign-in failed,please try again.',
                             data : { }
                         }
                         return callback(JsonResponse);
@@ -130,7 +130,7 @@ export default class UserService {
             } else {
                var JsonResponse  = {
                     status: 'error',
-                    message: 'Email or Password Incorrect please try again.',
+                    message: 'Email or password incorrect, please try again.',
                         data : { }
                     }
                 return callback(JsonResponse)
