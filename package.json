@@ -29,7 +29,7 @@
     "dotenv": "^8.2.0",
     "ejs": "^3.0.1",
     "envalid": "^6.0.1",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "jsonwebtoken": "^8.5.1",
     "mongo-models": "^3.0.2",
     "mongodb": "^3.5.3",
