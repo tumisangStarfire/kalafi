@@ -24,7 +24,7 @@
     "axios": "^0.25.0",
     "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",
-    "class-validator": "^0.13.2",
+    "class-validator": "^0.14.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "ejs": "^3.0.1",
