@@ -33,7 +33,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongo-models": "^3.0.2",
     "mongodb": "^3.5.3",
-    "nodemailer": "^6.7.2",
+    "nodemailer": "^6.9.9",
     "ts-node": "^8.6.2",
     "typescript": "^3.8.3"
   },
