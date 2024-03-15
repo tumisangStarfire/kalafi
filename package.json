@@ -20,7 +20,7 @@
     "@types/jsonwebtoken": "^8.3.7",
     "@types/mongodb": "^3.3.20",
     "@types/node": "^10.12.2",
-    "aws-sdk": "^2.814.0",
+    "aws-sdk": "^2.1578.0",
     "axios": "^0.25.0",
     "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",
